@@ -1,70 +1,130 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { StyleSheet, TextInput } from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { useRef, useState } from "react";
+import { Button, Input } from "@rneui/base";
+import {
+  RankingFormModel,
+  validate,
+} from "@/validator/criar-ranking/validator";
+import { ErrorObject, Validation } from "@/validator/model";
+
+type InputRef = Input & TextInput;
 
 export default function HomeScreen() {
+  const [mes, setMes] = useState<string>();
+  const [ano, setAno] = useState<string>();
+  const [horario, setHorario] = useState<string>();
+
+  const [validationError, setValidationError] =
+    useState<ErrorObject<RankingFormModel>>();
+
+  const mesRef = useRef<InputRef>(null);
+  const anoRef = useRef<InputRef>(null);
+  const horarioRef = useRef<InputRef>(null);
+
+  const handleChangeMes = (mes: string) => setMes(mes);
+  const handleSubmitMes = () => anoRef.current?.focus();
+
+  const handleChangeAno = (ano: string) => setAno(ano);
+  const handleSubmitAno = () => horarioRef.current?.focus();
+
+  const handleChangeHorario = (horario: string) => setHorario(horario);
+
+  const handleSubmit = () => {
+    const validation = validate({ mes, ano, horario });
+    if (!validation.isValid()) {
+      setValidationError(validation.errors);
+    }
+  };
+
+  const handleClear = () => {
+    mesRef.current?.clear();
+    anoRef.current?.clear();
+    horarioRef.current?.clear();
+    mesRef.current?.focus();
+    setValidationError(undefined);
+  };
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+        <FontAwesome6 size={310} name="volleyball" style={styles.headerImage} />
+      }
+    >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">Criando um Ranking</ThemedText>
+        <ThemedText type="subtitle">Informações básicas</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
+        <Input
+          ref={mesRef}
+          label="Em qual mês esse ranking está sendo registrado?"
+          keyboardType="default"
+          placeholder="Exemplo: Janeiro"
+          value={mes}
+          onChangeText={handleChangeMes}
+          returnKeyType="next"
+          onSubmitEditing={handleSubmitMes}
+          blurOnSubmit
+          errorMessage={validationError?.mes}
+        />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
+        <Input
+          ref={anoRef}
+          label="Em qual ano esse ranking está sendo registrado?"
+          keyboardType="numeric"
+          placeholder="Exemplo: 2024"
+          value={ano}
+          onChangeText={handleChangeAno}
+          returnKeyType="next"
+          onSubmitEditing={handleSubmitAno}
+          blurOnSubmit
+          errorMessage={validationError?.ano}
+        />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+        <Input
+          ref={horarioRef}
+          label="Qual o horário da turma?"
+          keyboardType="numeric"
+          placeholder="Exemplo: 20"
+          value={horario}
+          onChangeText={handleChangeHorario}
+          returnKeyType="done"
+          blurOnSubmit
+          errorMessage={validationError?.horario}
+        />
       </ThemedView>
+      <Button size="lg" color="success" onPress={handleSubmit}>
+        Criar
+      </Button>
+      <Button size="lg" type="outline" onPress={handleClear}>
+        Limpar formulário
+      </Button>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "flex-start",
     gap: 8,
   },
   stepContainer: {
     gap: 8,
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  headerImage: {
+    color: "#808080",
+    bottom: -90,
+    left: -35,
+    position: "absolute",
   },
 });
