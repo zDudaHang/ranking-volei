@@ -1,8 +1,7 @@
 import { Validation } from "../model";
 
 export interface RankingFormModel {
-  mes?: string;
-  ano?: string;
+  diaSemana?: string;
   horario?: string;
 }
 
@@ -11,8 +10,7 @@ export function validate(
 ): Validation<RankingFormModel> {
   const errors = new Validation<RankingFormModel>();
 
-  errors.setError("mes", required(formValues.mes));
-  errors.setError("ano", required(formValues.ano));
+  errors.setError("diaSemana", required(formValues.diaSemana));
   errors.setError("horario", required(formValues.horario));
 
   return errors;
