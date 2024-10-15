@@ -93,7 +93,10 @@ export default function DefinirDuplasView() {
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Definir duplas</ThemedText>
+        <ThemedText type="title">Duplas</ThemedText>
+        <ThemedText type="default">
+          Defina as duplas da primeira rodada
+        </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Participantes restantes</ThemedText>

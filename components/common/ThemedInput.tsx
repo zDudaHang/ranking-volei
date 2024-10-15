@@ -21,12 +21,18 @@ export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
       "placeholder"
     )
 
+    const danger = useThemeColor(
+      { light: lightColor, dark: darkColor },
+      "danger"
+    )
+
     return (
       <Input
         {...rest}
         placeholderTextColor={placeholder}
         labelStyle={{ color: text }}
         ref={ref}
+        errorStyle={{ color: danger }}
       />
     )
   }

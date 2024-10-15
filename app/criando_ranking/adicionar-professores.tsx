@@ -34,7 +34,10 @@ export default function AdicionarProfessoresView() {
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Adicionando os professores</ThemedText>
+        <ThemedText type="title">Professores</ThemedText>
+        <ThemedText type="default">
+          Adicione os professores que vão participar
+        </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <AdicionarProfessores

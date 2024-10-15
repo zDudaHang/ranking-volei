@@ -54,7 +54,10 @@ export default function AdicionarTurmaView() {
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Informações sobre a turma</ThemedText>
+        <ThemedText type="title">Turma</ThemedText>
+        <ThemedText type="default">
+          Preencha as informações sobre a turma
+        </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedInput
@@ -81,7 +84,7 @@ export default function AdicionarTurmaView() {
           errorMessage={validation?.errors?.horario}
         />
       </ThemedView>
-      <ThemedButton size="lg" color="#02786D" onPress={handleSubmit}>
+      <ThemedButton size="lg" onPress={handleSubmit}>
         Avançar
       </ThemedButton>
       <ThemedButton
@@ -90,7 +93,7 @@ export default function AdicionarTurmaView() {
         color="secondary"
         onPress={handleClear}
       >
-        Limpar formulário
+        Limpar
       </ThemedButton>
     </ParallaxScrollView>
   )

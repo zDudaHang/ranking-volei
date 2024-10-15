@@ -33,7 +33,10 @@ export default function AdicionarAlunosView() {
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Adicionando os alunos</ThemedText>
+        <ThemedText type="title">Alunos</ThemedText>
+        <ThemedText type="default">
+          Adicione os alunos que vão participar
+        </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <AdicionarAlunos

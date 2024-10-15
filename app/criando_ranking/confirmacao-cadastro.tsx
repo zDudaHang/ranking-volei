@@ -33,8 +33,9 @@ export default function ConfirmacaoCadastroRankingView() {
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">Confirmação</ThemedText>
         <ThemedText type="default">
-          Confirme as informações registradas
+          Verifique se tudo está certo antes de criar o ranking
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
