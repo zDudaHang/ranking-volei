@@ -4,11 +4,12 @@ import { ThemedText } from "@/components/common/ThemedText"
 import { ThemedView } from "@/components/common/ThemedView"
 import { PontuarDupla } from "@/components/dupla/PontuarDupla"
 import { DuplasContext } from "@/context/DuplasContext"
-import React, { useContext, useRef } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { StyleSheet, TextInput } from "react-native"
 
 export default function PontuarDuplasView() {
-  const { duplasAtuais } = useContext(DuplasContext)
+  const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext)
+  const [pontuacoes, setPontuacoes] = useState<string[]>([])
 
   if (!duplasAtuais || duplasAtuais?.length === 0) {
     return null
@@ -28,30 +29,53 @@ export default function PontuarDuplasView() {
     }
   }
 
+  const handleChangePontuacao = (index: number, pontuacao: string) => {
+    pontuacoes[index] = pontuacao
+    setPontuacoes([...pontuacoes])
+  }
+
+  const handleSubmit = () => {
+    const duplasComPontuacao = duplasAtuais.map((dupla, index) => {
+      const pontuacao = pontuacoes[index]
+      if (pontuacao) {
+        dupla.pontuacao = Number(pontuacao)
+      } else {
+        dupla.pontuacao = 0
+      }
+      return dupla
+    })
+    adicionarDuplasHistorico(duplasComPontuacao)
+  }
+
+  const handleClear = () => {
+    setPontuacoes([])
+    refs.current.forEach((ref) => ref.clear())
+    refs.current[0].focus()
+  }
+
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Pontuação</ThemedText>
-        <ThemedText type="default">
-          Defina a pontuação de cada dupla{" "}
-        </ThemedText>
+        <ThemedText type="default">Defina a pontuação de cada dupla</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Duplas</ThemedText>
         {duplasAtuais.map((dupla, index) => (
           <PontuarDupla
             key={`dupla-${index}`}
+            ref={(element) => addRef(element, index)}
             dupla={dupla}
             index={index}
-            ref={(element) => addRef(element, index)}
+            pontuacao={pontuacoes[index]}
             onSubmitEditing={onSubmitEditing}
+            onChangePontuacao={handleChangePontuacao}
           />
         ))}
       </ThemedView>
-      <ThemedButton size="lg" color="#02786D" onPress={console.log}>
+      <ThemedButton size="lg" onPress={handleSubmit}>
         Avançar
       </ThemedButton>
-      <ThemedButton size="lg" type="outline" onPress={console.log}>
+      <ThemedButton size="lg" type="outline" onPress={handleClear}>
         Limpar
       </ThemedButton>
     </ParallaxScrollView>

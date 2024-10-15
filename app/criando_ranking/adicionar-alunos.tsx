@@ -1,13 +1,12 @@
+import { AdicionarAlunos } from "@/components/adicionar/AdicionarAlunos"
 import ParallaxScrollView from "@/components/common/ParallaxScrollView"
+import { ThemedButton } from "@/components/common/ThemedButton"
 import { ThemedText } from "@/components/common/ThemedText"
 import { ThemedView } from "@/components/common/ThemedView"
-import { AdicionarAlunos } from "@/components/adicionar/AdicionarAlunos"
 import { RankingContext } from "@/context/RankingContext"
-import { Button, Divider } from "@rneui/base"
 import { router } from "expo-router"
 import { useContext, useState } from "react"
 import { StyleSheet } from "react-native"
-import { ThemedButton } from "@/components/common/ThemedButton"
 
 export default function AdicionarAlunosView() {
   const [alunos, setAlunos] = useState<string[]>([])

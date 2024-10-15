@@ -8,10 +8,9 @@ import { InputRef } from "@/model/common"
 import { RankingFormModel, validate } from "@/validator/criar-ranking/validator"
 import { Validation } from "@/validator/model"
 
-import { Button, Input } from "@rneui/base"
 import { router } from "expo-router"
-import { useState, useRef, useContext } from "react"
-import { StyleSheet, TextInput } from "react-native"
+import { useContext, useRef, useState } from "react"
+import { StyleSheet } from "react-native"
 
 export default function AdicionarTurmaView() {
   const [diaSemana, setDiaSemana] = useState<string>()

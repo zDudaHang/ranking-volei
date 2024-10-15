@@ -1,13 +1,13 @@
-import { AdicionarCommon } from "./AdicionarCommon";
+import { AdicionarCommon } from "./AdicionarCommon"
 
 interface AdicionarAlunosProps {
-  alunos: string[];
-  adicionarAluno: (nome: string) => void;
-  removerAluno: (index: number) => void;
+  alunos: string[]
+  adicionarAluno: (nome: string) => void
+  removerAluno: (index: number) => void
 }
 
 export function AdicionarAlunos(props: AdicionarAlunosProps) {
-  const { alunos, adicionarAluno, removerAluno } = props;
+  const { alunos, adicionarAluno, removerAluno } = props
 
   return (
     <AdicionarCommon
@@ -16,5 +16,5 @@ export function AdicionarAlunos(props: AdicionarAlunosProps) {
       remover={removerAluno}
       isAlunos
     />
-  );
+  )
 }

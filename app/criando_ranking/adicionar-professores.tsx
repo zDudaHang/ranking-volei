@@ -1,13 +1,12 @@
+import { AdicionarProfessores } from "@/components/adicionar/AdicionarProfessores"
 import ParallaxScrollView from "@/components/common/ParallaxScrollView"
+import { ThemedButton } from "@/components/common/ThemedButton"
 import { ThemedText } from "@/components/common/ThemedText"
 import { ThemedView } from "@/components/common/ThemedView"
-import { AdicionarProfessores } from "@/components/adicionar/AdicionarProfessores"
 import { RankingContext } from "@/context/RankingContext"
-import { Button, Divider } from "@rneui/base"
 import { router } from "expo-router"
 import { useContext, useState } from "react"
 import { StyleSheet } from "react-native"
-import { ThemedButton } from "@/components/common/ThemedButton"
 
 export default function AdicionarProfessoresView() {
   const [professores, setProfessores] = useState<string[]>([])
@@ -27,7 +26,6 @@ export default function AdicionarProfessoresView() {
 
   const handleSubmit = () => {
     adicionarProfessores(professores)
-    console.log(ranking)
     router.navigate("/criando_ranking/confirmacao-cadastro")
   }
 

@@ -23,7 +23,6 @@ export function RemovableListItem(props: RemovableListItemProps) {
 
   return (
     <ListItem.Swipeable
-      key={`item-index`}
       containerStyle={{
         backgroundColor: "white",
         borderRadius: 8,

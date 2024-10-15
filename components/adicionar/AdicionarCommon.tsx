@@ -1,12 +1,10 @@
-import { Button, Input, ListItem } from "@rneui/base"
-import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content"
-import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title"
-import { useState, useRef } from "react"
+import { useThemeColor } from "@/hooks/useThemeColor"
+import { Input } from "@rneui/base"
+import { useRef, useState } from "react"
 import { TextInput } from "react-native"
-import { ThemedText } from "../common/ThemedText"
 import { RemovableListItem } from "../common/RemovableListItem"
 import { ThemedInput } from "../common/ThemedInput"
-import { useThemeColor } from "@/hooks/useThemeColor"
+import { ThemedText } from "../common/ThemedText"
 
 interface AdicionarCommonProps {
   lightColor?: string

@@ -6,7 +6,6 @@ import { ParticipanteView } from "@/components/participante/ParticipanteView"
 import { RankingContext } from "@/context/RankingContext"
 import { useStorage } from "@/hooks/useStorage"
 import { Ranking } from "@/model/ranking"
-import { Button } from "@rneui/base"
 import { Redirect, router } from "expo-router"
 import { useContext } from "react"
 import { StyleSheet } from "react-native"
@@ -14,7 +13,10 @@ import { StyleSheet } from "react-native"
 export default function ConfirmacaoCadastroRankingView() {
   const { ranking } = useContext(RankingContext)
 
-  const { store } = useStorage<Ranking>()
+  const onCompleteStore = () =>
+    router.navigate("/gerenciando_ranking/definir-duplas")
+
+  const { store, loading } = useStorage<Ranking>({ onCompleteStore })
 
   if (!ranking) {
     return <Redirect href="/criando_ranking/adicionar-turma" />
@@ -25,10 +27,7 @@ export default function ConfirmacaoCadastroRankingView() {
     participantes,
   } = ranking
 
-  const handleSubmit = async () => {
-    store(ranking, "Ranking")
-    router.navigate("/gerenciando_ranking/definir-duplas")
-  }
+  const handleSubmit = async () => store(ranking, "Ranking")
 
   return (
     <ParallaxScrollView>
@@ -54,7 +53,12 @@ export default function ConfirmacaoCadastroRankingView() {
           />
         ))}
       </ThemedView>
-      <ThemedButton size="lg" color="success" onPress={handleSubmit}>
+      <ThemedButton
+        size="lg"
+        color="success"
+        onPress={handleSubmit}
+        loading={loading}
+      >
         Confirmar e Salvar
       </ThemedButton>
     </ParallaxScrollView>

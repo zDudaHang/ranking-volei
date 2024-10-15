@@ -1,8 +1,7 @@
 import { useThemeColor } from "@/hooks/useThemeColor"
 import { InputRef } from "@/model/common"
-import { useTheme } from "@react-navigation/native"
 import { Input, InputProps } from "@rneui/base"
-import { RefObject, forwardRef } from "react"
+import { forwardRef } from "react"
 import { TextInputProps } from "react-native"
 
 interface ThemedInputProps extends TextInputProps, InputProps {
@@ -29,10 +28,11 @@ export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
     return (
       <Input
         {...rest}
+        ref={ref}
         placeholderTextColor={placeholder}
         labelStyle={{ color: text }}
-        ref={ref}
         errorStyle={{ color: danger }}
+        containerStyle={{ paddingLeft: 0 }}
       />
     )
   }

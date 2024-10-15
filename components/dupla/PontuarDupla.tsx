@@ -1,37 +1,35 @@
+import { InputRef } from "@/model/common"
 import { Dupla } from "@/model/duplas"
 import { formatDupla } from "@/util/format"
-import { Input, InputProps } from "@rneui/base"
-import { useState, useRef, Fragment, RefObject, forwardRef } from "react"
-import { TextInput } from "react-native"
-import { ThemedText } from "../common/ThemedText"
-import { InputRef } from "@/model/common"
+import { Fragment, forwardRef } from "react"
 import { ThemedInput } from "../common/ThemedInput"
+import { ThemedText } from "../common/ThemedText"
 
 interface PontuarDuplaProps {
   dupla: Dupla
   index: number
+  pontuacao: string | undefined
+  onChangePontuacao: (index: number, pontuacao: string) => void
   onSubmitEditing: (index: number) => void
 }
 
 export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
   (props, ref) => {
-    const { dupla, index, onSubmitEditing } = props
+    const { dupla, index, pontuacao, onChangePontuacao, onSubmitEditing } =
+      props
 
     if (!dupla) {
       return null
     }
 
-    const [pontuacao, setPontuacao] = useState<string>()
-
-    const handleChangePontuacao = (pontuacao: string) => {
-      setPontuacao(pontuacao)
-    }
-
     const handleSubmitPontuacao = () => onSubmitEditing(index)
 
+    const handleChangePontuacao = (pontuacao: string) =>
+      onChangePontuacao(index, pontuacao)
+
     return (
-      <Fragment key={`pontuacao-${index}`}>
-        <ThemedText type="defaultSemiBold">{formatDupla(dupla)}</ThemedText>
+      <Fragment>
+        <ThemedText type="subtitle">{formatDupla(dupla)}</ThemedText>
         <ThemedInput
           ref={ref}
           label="Pontuação"

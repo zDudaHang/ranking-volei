@@ -1,17 +1,16 @@
 import ParallaxScrollView from "@/components/common/ParallaxScrollView"
+import { ThemedButton } from "@/components/common/ThemedButton"
 import { ThemedText } from "@/components/common/ThemedText"
 import { ThemedView } from "@/components/common/ThemedView"
-import { ParticipanteView } from "@/components/participante/ParticipanteView"
-import { RankingContext } from "@/context/RankingContext"
-import { Participante } from "@/model/ranking"
-import { Dupla } from "@/model/duplas"
-import { StyleSheet } from "react-native"
-import React, { useContext, useState } from "react"
 import { DuplaView } from "@/components/dupla/DuplaView"
-import { Button } from "@rneui/base"
+import { ParticipanteView } from "@/components/participante/ParticipanteView"
 import { DuplasContext } from "@/context/DuplasContext"
+import { RankingContext } from "@/context/RankingContext"
+import { Dupla } from "@/model/duplas"
+import { Participante } from "@/model/ranking"
 import { router } from "expo-router"
-import { ThemedButton } from "@/components/common/ThemedButton"
+import React, { useContext, useState } from "react"
+import { StyleSheet } from "react-native"
 
 export default function DefinirDuplasView() {
   const { ranking } = useContext(RankingContext)
@@ -105,6 +104,7 @@ export default function DefinirDuplasView() {
         )}
         {participantesRestantes.map((participante, index) => (
           <ParticipanteView
+            key={`participante-${index}`}
             participante={participante}
             index={index}
             onPress={onPress}
