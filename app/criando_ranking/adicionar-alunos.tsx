@@ -45,12 +45,11 @@ export default function AdicionarAlunosView() {
           removerAluno={removerAluno}
         />
       </ThemedView>
-      <Divider />
       <ThemedButton size="lg" color="success" onPress={handleSubmit}>
         Avançar
       </ThemedButton>
       <ThemedButton size="lg" type="outline" onPress={handleClear}>
-        Limpar lista
+        Limpar
       </ThemedButton>
     </ParallaxScrollView>
   )

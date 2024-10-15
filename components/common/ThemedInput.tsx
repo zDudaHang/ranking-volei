@@ -37,5 +37,3 @@ export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
     )
   }
 )
-
-export default ThemedInput

@@ -101,7 +101,7 @@ export default function DefinirDuplasView() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Participantes restantes</ThemedText>
         {!hasParticipantesRestantes && (
-          <ThemedText type="default">Nenhum participante sobrando</ThemedText>
+          <ThemedText type="secondary">Nenhum participante sobrando</ThemedText>
         )}
         {participantesRestantes.map((participante, index) => (
           <ParticipanteView
@@ -115,7 +115,12 @@ export default function DefinirDuplasView() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Duplas definidas</ThemedText>
         {duplas.map((dupla, index) => (
-          <DuplaView dupla={dupla} index={index} remover={handleRemove} />
+          <DuplaView
+            key={`dupla-${index}`}
+            dupla={dupla}
+            index={index}
+            remover={handleRemove}
+          />
         ))}
       </ThemedView>
       <ThemedButton
@@ -132,7 +137,7 @@ export default function DefinirDuplasView() {
         onPress={handleClear}
         disabled={!hasDuplas}
       >
-        Limpar duplas
+        Limpar
       </ThemedButton>
     </ParallaxScrollView>
   )

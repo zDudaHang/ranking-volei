@@ -17,9 +17,8 @@ export default function PontuarDuplasView() {
   const refs = useRef<TextInput[]>([])
 
   const onSubmitEditing = (index: number) => {
-    console.log(index, refs)
     if (index !== refs.current.length - 1) {
-      refs.current[index].focus()
+      refs.current[index + 1].focus()
     }
   }
 
@@ -41,6 +40,7 @@ export default function PontuarDuplasView() {
         <ThemedText type="subtitle">Duplas</ThemedText>
         {duplasAtuais.map((dupla, index) => (
           <PontuarDupla
+            key={`dupla-${index}`}
             dupla={dupla}
             index={index}
             ref={(element) => addRef(element, index)}

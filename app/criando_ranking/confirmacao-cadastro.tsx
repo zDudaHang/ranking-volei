@@ -47,7 +47,11 @@ export default function ConfirmacaoCadastroRankingView() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Participantes</ThemedText>
         {participantes.map((participante, index) => (
-          <ParticipanteView participante={participante} index={index} />
+          <ParticipanteView
+            key={`participante-${index}`}
+            participante={participante}
+            index={index}
+          />
         ))}
       </ThemedView>
       <ThemedButton size="lg" color="success" onPress={handleSubmit}>
