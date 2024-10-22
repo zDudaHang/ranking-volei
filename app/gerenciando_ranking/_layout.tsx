@@ -1,6 +1,7 @@
 import { DuplasContext } from "@/context/DuplasContext"
 import { RankingContext } from "@/context/RankingContext"
 import { Dupla } from "@/model/duplas"
+import { gerarDuplasPossiveis } from "@/util/duplas-possiveis"
 import { Redirect, Stack } from "expo-router"
 import { useContext, useState } from "react"
 import "react-native-reanimated"
@@ -10,14 +11,15 @@ export default function CriandoRankingRootLayout() {
 
   const [duplasAtuais, setDuplasAtuais] = useState<Dupla[]>([])
   const [historicoDuplas, setHistoricoDuplas] = useState<Dupla[]>([])
+  const [duplasPossiveis, setDuplasPossiveis] = useState<Dupla[]>(
+    gerarDuplasPossiveis(ranking?.participantes)
+  )
 
   const definirDuplasAtuais = (duplas: Dupla[]) => setDuplasAtuais(duplas)
 
   const adicionarDuplasHistorico = (duplas: Dupla[]) => {
     setHistoricoDuplas([...historicoDuplas, ...duplas])
   }
-
-  console.log(historicoDuplas)
 
   if (!ranking) {
     return <Redirect href="/criando_ranking/adicionar-turma" />
@@ -32,13 +34,14 @@ export default function CriandoRankingRootLayout() {
       value={{
         duplasAtuais,
         historicoDuplas,
+        duplasPossiveis,
         definirDuplasAtuais,
         adicionarDuplasHistorico,
       }}
     >
       <Stack
         screenOptions={{
-          title: `Ranking - Turma de ${diaSemana} \às ${horario}`,
+          title: `Ranking - ${diaSemana} \às ${horario}`,
         }}
       >
         <Stack.Screen name="definir-duplas" />

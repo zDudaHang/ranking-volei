@@ -8,7 +8,12 @@ import { DuplasContext } from "@/context/DuplasContext"
 import { RankingContext } from "@/context/RankingContext"
 import { Dupla } from "@/model/duplas"
 import { Participante } from "@/model/ranking"
+import {
+  hasDuplaInParticipantesRestantes,
+  isNotDuplaProfessores,
+} from "@/util/duplas-possiveis"
 import { router } from "expo-router"
+import { sample } from "lodash"
 import React, { useContext, useState } from "react"
 import { StyleSheet } from "react-native"
 
@@ -19,7 +24,7 @@ export default function DefinirDuplasView() {
     return null
   }
 
-  const { definirDuplasAtuais } = useContext(DuplasContext)
+  const { definirDuplasAtuais, duplasPossiveis } = useContext(DuplasContext)
 
   const [primeiroIntegranteDupla, setPrimeiroIntegranteDupla] =
     useState<Participante>()
@@ -86,8 +91,31 @@ export default function DefinirDuplasView() {
     router.navigate("/gerenciando_ranking/pontuar-duplas")
   }
 
+  const handleClickSugerirDuplas = () => {
+    let participantes = participantesRestantes
+    const duplasSugeridas: Dupla[] = []
+
+    while (participantes.length > 0) {
+      const dupla = sample(duplasPossiveis)
+      if (
+        dupla &&
+        !isNotDuplaProfessores(dupla) &&
+        hasDuplaInParticipantesRestantes(participantes, dupla)
+      ) {
+        duplasSugeridas.push(dupla)
+        participantes = participantes.filter(
+          (participante) =>
+            participante !== dupla.primeiroParticipante &&
+            participante !== dupla.segundoParticipante
+        )
+      }
+    }
+
+    setParticipantesRestantes([])
+    setDuplas([...duplas, ...duplasSugeridas])
+  }
+
   const hasParticipantesRestantes = participantesRestantes.length > 0
-  const hasDuplas = duplas.length > 0
 
   return (
     <ParallaxScrollView>
@@ -112,6 +140,13 @@ export default function DefinirDuplasView() {
           />
         ))}
       </ThemedView>
+      <ThemedButton
+        icon={{ color: "white", name: "lightbulb" }}
+        onPress={handleClickSugerirDuplas}
+      >
+        Sugerir duplas
+      </ThemedButton>
+
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Duplas definidas</ThemedText>
         {duplas.map((dupla, index) => (
@@ -123,20 +158,10 @@ export default function DefinirDuplasView() {
           />
         ))}
       </ThemedView>
-      <ThemedButton
-        size="lg"
-        color="success"
-        onPress={handleSubmit}
-        disabled={hasParticipantesRestantes}
-      >
+      <ThemedButton size="lg" color="success" onPress={handleSubmit}>
         Confirmar
       </ThemedButton>
-      <ThemedButton
-        size="lg"
-        type="outline"
-        onPress={handleClear}
-        disabled={!hasDuplas}
-      >
+      <ThemedButton size="lg" type="outline" onPress={handleClear}>
         Limpar
       </ThemedButton>
     </ParallaxScrollView>
