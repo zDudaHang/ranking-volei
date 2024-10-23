@@ -1,5 +1,4 @@
 import { useThemeColor } from "@/hooks/useThemeColor"
-import { useTheme } from "@react-navigation/native"
 import { Button, ButtonProps } from "@rneui/base"
 
 interface ThemedButtonProps extends ButtonProps {

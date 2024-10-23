@@ -2,6 +2,7 @@ import ParallaxScrollView from "@/components/common/ParallaxScrollView"
 import { ThemedButton } from "@/components/common/ThemedButton"
 import { ThemedText } from "@/components/common/ThemedText"
 import { ThemedView } from "@/components/common/ThemedView"
+import { ConfirmacaoSugestaoDuplasDialog } from "@/components/dupla/ConfirmacaoSugestaoDuplasDialog"
 import { DuplaView } from "@/components/dupla/DuplaView"
 import { ParticipanteView } from "@/components/participante/ParticipanteView"
 import { DuplasContext } from "@/context/DuplasContext"
@@ -30,10 +31,10 @@ export default function DefinirDuplasView() {
     useState<Participante>()
 
   const [duplas, setDuplas] = useState<Dupla[]>([])
-
   const [participantesRestantes, setParticipantesRestantes] = useState<
     Participante[]
   >(ranking.participantes)
+  const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false)
 
   const adicionarSegundoIntegranteDupla = (participante: Participante) => {
     const novosParticipantesRestantes = participantesRestantes.filter(
@@ -91,7 +92,10 @@ export default function DefinirDuplasView() {
     router.navigate("/gerenciando_ranking/pontuar-duplas")
   }
 
-  const handleClickSugerirDuplas = () => {
+  const hasParticipantesRestantes = participantesRestantes.length > 0
+  const hasDuplas = duplas.length > 0
+
+  const sugerirDuplas = () => {
     let participantes = participantesRestantes
     const duplasSugeridas: Dupla[] = []
 
@@ -115,10 +119,30 @@ export default function DefinirDuplasView() {
     setDuplas([...duplas, ...duplasSugeridas])
   }
 
-  const hasParticipantesRestantes = participantesRestantes.length > 0
+  const handleClickSugerirDuplas = () => {
+    if (hasDuplas) {
+      setIsDialogVisible(true)
+    } else {
+      sugerirDuplas()
+      setIsDialogVisible(false)
+    }
+  }
+
+  const handleClickConfirmDialog = () => {
+    setDuplas([])
+    sugerirDuplas()
+  }
+
+  const handleClickCancelDialog = () => setIsDialogVisible(false)
 
   return (
     <ParallaxScrollView>
+      <ConfirmacaoSugestaoDuplasDialog
+        isVisible={isDialogVisible}
+        onBackdropPress={() => setIsDialogVisible(false)}
+        onConfirm={handleClickConfirmDialog}
+        onCancel={handleClickCancelDialog}
+      />
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Duplas</ThemedText>
         <ThemedText type="default">
