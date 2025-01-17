@@ -3,13 +3,11 @@ import "react-native-reanimated";
 
 export default function CriandoRankingRootLayout() {
   return (
-    <>
-      <Stack screenOptions={{ title: "Criando um ranking" }}>
-        <Stack.Screen name="adicionar-turma" />
-        <Stack.Screen name="adicionar-alunos" />
-        <Stack.Screen name="adicionar-professores" />
-        <Stack.Screen name="confirmacao-cadastro" />
-      </Stack>
-    </>
+    <Stack screenOptions={{ title: "Criando um ranking" }}>
+      <Stack.Screen name="adicionar-turma" />
+      <Stack.Screen name="adicionar-alunos" />
+      <Stack.Screen name="adicionar-professores" />
+      <Stack.Screen name="confirmacao-cadastro" />
+    </Stack>
   );
 }

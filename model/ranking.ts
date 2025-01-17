@@ -1,19 +1,11 @@
+import { Participante } from "./participante"
+
 export interface Ranking {
-  turma: Turma;
-  participantes: Participante[];
-}
-
-export enum TipoParticipante {
-  ALUNO,
-  PROFESSOR,
-}
-
-export interface Participante {
-  nome: string;
-  tipo: TipoParticipante;
+  turma: Turma
+  participantes: Participante[]
 }
 
 interface Turma {
-  diaSemana: string | null;
-  horario: string | null;
+  diaSemana: string | null
+  horario: string | null
 }

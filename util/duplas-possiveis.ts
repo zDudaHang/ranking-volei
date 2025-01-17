@@ -1,59 +1,48 @@
-import { Dupla } from "@/model/duplas"
-import { Participante, TipoParticipante } from "@/model/ranking"
-import { partition } from "lodash"
+import { Dupla } from "@/model/dupla";
+import { Participante } from "@/model/participante";
+import { partition } from "lodash";
 
 export function gerarDuplasPossiveis(
   participantes: Participante[] | undefined
 ): Dupla[] {
   if (!participantes || participantes.length === 0) {
-    return []
+    return [];
   }
 
-  const duplas: Dupla[] = []
+  const duplas: Dupla[] = [];
 
-  const [professores, alunos] = partition(participantes, (p) => p.tipo)
+  const [professores, alunos] = partition(participantes, (p) => p.getTipo());
 
   professores.forEach((professor) => {
-    const duplasComAlunos: Dupla[] = alunos.map((aluno) => ({
-      primeiroParticipante: professor,
-      segundoParticipante: aluno,
-    }))
-    duplas.push(...duplasComAlunos)
-  })
+    const duplasComAlunos: Dupla[] = alunos.map(
+      (aluno) => new Dupla(professor, aluno)
+    );
+    duplas.push(...duplasComAlunos);
+  });
 
   alunos.forEach((aluno, index, array) => {
-    const alunosRestantes = array.slice(index + 1)
-    const duplasComOutroAlunos: Dupla[] = alunosRestantes.map((outroAluno) => ({
-      primeiroParticipante: aluno,
-      segundoParticipante: outroAluno,
-    }))
-    duplas.push(...duplasComOutroAlunos)
-  })
+    const alunosRestantes = array.slice(index + 1);
+    const duplasComOutroAlunos: Dupla[] = alunosRestantes.map(
+      (outroAluno) => new Dupla(aluno, outroAluno)
+    );
+    duplas.push(...duplasComOutroAlunos);
+  });
 
-  return duplas
-}
-
-export function isNotDuplaProfessores(dupla: Dupla): boolean {
-  if (!dupla || !dupla.primeiroParticipante || !dupla.segundoParticipante) {
-    return false
-  }
-
-  return (
-    dupla.primeiroParticipante?.tipo !== TipoParticipante.PROFESSOR &&
-    dupla.segundoParticipante?.tipo !== TipoParticipante.PROFESSOR
-  )
+  return duplas;
 }
 
 export function hasDuplaInParticipantesRestantes(
   participantesRestantes: Participante[],
   dupla: Dupla
 ): boolean {
-  if (!dupla || !dupla.primeiroParticipante || !dupla.segundoParticipante) {
-    return false
+  if (!dupla) {
+    return false;
   }
 
+  const [primeiroParticipante, segundoParticipante] = dupla.getParticipantes();
+
   return (
-    participantesRestantes.includes(dupla.primeiroParticipante) &&
-    participantesRestantes.includes(dupla.segundoParticipante)
-  )
+    participantesRestantes.includes(primeiroParticipante) &&
+    participantesRestantes.includes(segundoParticipante)
+  );
 }

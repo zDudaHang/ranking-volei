@@ -1,17 +1,17 @@
-import { useThemeColor } from "@/hooks/useThemeColor"
-import { Participante, TipoParticipante } from "@/model/ranking"
-import { ListItem } from "@rneui/base"
-import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content"
-import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle"
-import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title"
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { Participante, TipoParticipante } from "@/model/participante";
+import { ListItem } from "@rneui/base";
+import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
+import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";
+import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
 
 interface ParticipanteViewProps {
-  lightColor?: string
-  darkColor?: string
-  participante: Participante
-  index: number
-  isSelected?: boolean
-  onPress?: (participante: Participante) => void
+  lightColor?: string;
+  darkColor?: string;
+  participante: Participante;
+  index: number;
+  isSelected?: boolean;
+  onPress?: (participante: Participante) => void;
 }
 
 export function ParticipanteView(props: ParticipanteViewProps) {
@@ -22,21 +22,25 @@ export function ParticipanteView(props: ParticipanteViewProps) {
     lightColor,
     darkColor,
     onPress,
-  } = props
+  } = props;
 
-  const handlePress = () => onPress?.(participante)
+  const handlePress = () => onPress?.(participante);
 
   const primary = useThemeColor(
     { light: lightColor, dark: darkColor },
     "primary"
-  )
+  );
 
-  const text = useThemeColor({ light: lightColor, dark: darkColor }, "text")
+  const text = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
   const placeholder = useThemeColor(
     { light: lightColor, dark: darkColor },
     "placeholder"
-  )
+  );
+
+  if (!participante) {
+    return null;
+  }
 
   return (
     <ListItem
@@ -49,16 +53,16 @@ export function ParticipanteView(props: ParticipanteViewProps) {
     >
       <ListItemContent>
         <ListItemTitle style={{ color: isSelected ? "#ffffff" : text }}>
-          {participante.nome}
+          {participante.getNome()}
         </ListItemTitle>
         <ListItemSubtitle
           style={{ color: isSelected ? "#AFC4C0" : placeholder }}
         >
-          {participante.tipo === TipoParticipante.ALUNO
+          {participante.getTipo() === TipoParticipante.ALUNO
             ? "Aluno(a)"
             : "Professor(a)"}
         </ListItemSubtitle>
       </ListItemContent>
     </ListItem>
-  )
+  );
 }

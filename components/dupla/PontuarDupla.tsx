@@ -1,35 +1,34 @@
-import { InputRef } from "@/model/common"
-import { Dupla } from "@/model/duplas"
-import { formatDupla } from "@/util/format"
-import { Fragment, forwardRef } from "react"
-import { ThemedInput } from "../common/ThemedInput"
-import { ThemedText } from "../common/ThemedText"
+import { InputRef } from "@/model/common";
+import { Fragment, forwardRef } from "react";
+import { ThemedInput } from "../common/ThemedInput";
+import { ThemedText } from "../common/ThemedText";
+import { Dupla } from "@/model/dupla";
 
 interface PontuarDuplaProps {
-  dupla: Dupla
-  index: number
-  pontuacao: string | undefined
-  onChangePontuacao: (index: number, pontuacao: string) => void
-  onSubmitEditing: (index: number) => void
+  dupla: Dupla;
+  index: number;
+  pontuacao: string | undefined;
+  onChangePontuacao: (index: number, pontuacao: string) => void;
+  onSubmitEditing: (index: number) => void;
 }
 
 export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
   (props, ref) => {
     const { dupla, index, pontuacao, onChangePontuacao, onSubmitEditing } =
-      props
+      props;
 
     if (!dupla) {
-      return null
+      return null;
     }
 
-    const handleSubmitPontuacao = () => onSubmitEditing(index)
+    const handleSubmitPontuacao = () => onSubmitEditing(index);
 
     const handleChangePontuacao = (pontuacao: string) =>
-      onChangePontuacao(index, pontuacao)
+      onChangePontuacao(index, pontuacao);
 
     return (
       <Fragment>
-        <ThemedText type="subtitle">{formatDupla(dupla)}</ThemedText>
+        <ThemedText type="subtitle">{dupla.toString()}</ThemedText>
         <ThemedInput
           ref={ref}
           label="Pontuação"
@@ -39,9 +38,8 @@ export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
           onChangeText={handleChangePontuacao}
           onSubmitEditing={handleSubmitPontuacao}
           returnKeyType="next"
-          blurOnSubmit={false}
         />
       </Fragment>
-    )
+    );
   }
-)
+);

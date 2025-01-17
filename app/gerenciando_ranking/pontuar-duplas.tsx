@@ -1,57 +1,57 @@
-import ParallaxScrollView from "@/components/common/ParallaxScrollView"
-import { ThemedButton } from "@/components/common/ThemedButton"
-import { ThemedText } from "@/components/common/ThemedText"
-import { ThemedView } from "@/components/common/ThemedView"
-import { PontuarDupla } from "@/components/dupla/PontuarDupla"
-import { DuplasContext } from "@/context/DuplasContext"
-import React, { useContext, useRef, useState } from "react"
-import { StyleSheet, TextInput } from "react-native"
+import ParallaxScrollView from "@/components/common/ParallaxScrollView";
+import { ThemedButton } from "@/components/common/ThemedButton";
+import { ThemedText } from "@/components/common/ThemedText";
+import { ThemedView } from "@/components/common/ThemedView";
+import { PontuarDupla } from "@/components/dupla/PontuarDupla";
+import { DuplasContext } from "@/context/DuplasContext";
+import { router } from "expo-router";
+import React, { useContext, useRef, useState } from "react";
+import { StyleSheet, TextInput } from "react-native";
 
 export default function PontuarDuplasView() {
-  const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext)
-  const [pontuacoes, setPontuacoes] = useState<string[]>([])
+  const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext);
+  const [pontuacoes, setPontuacoes] = useState<string[]>([]);
 
   if (!duplasAtuais || duplasAtuais?.length === 0) {
-    return null
+    return null;
   }
 
-  const refs = useRef<TextInput[]>([])
+  const refs = useRef<TextInput[]>([]);
 
   const onSubmitEditing = (index: number) => {
     if (index !== refs.current.length - 1) {
-      refs.current[index + 1].focus()
+      refs.current[index + 1].focus();
     }
-  }
+  };
 
   const addRef = (element: TextInput | null, index: number) => {
     if (element) {
-      refs.current[index] = element
+      refs.current[index] = element;
     }
-  }
+  };
 
   const handleChangePontuacao = (index: number, pontuacao: string) => {
-    pontuacoes[index] = pontuacao
-    setPontuacoes([...pontuacoes])
-  }
+    pontuacoes[index] = pontuacao;
+    setPontuacoes([...pontuacoes]);
+  };
 
   const handleSubmit = () => {
     const duplasComPontuacao = duplasAtuais.map((dupla, index) => {
-      const pontuacao = pontuacoes[index]
+      const pontuacao = pontuacoes[index];
       if (pontuacao) {
-        dupla.pontuacao = Number(pontuacao)
-      } else {
-        dupla.pontuacao = 0
+        dupla.setPontuacao(Number(pontuacao));
       }
-      return dupla
-    })
-    adicionarDuplasHistorico(duplasComPontuacao)
-  }
+      return dupla;
+    });
+    // adicionarDuplasHistorico(duplasComPontuacao);
+    router.navigate("/gerenciando_ranking/definir-duplas");
+  };
 
   const handleClear = () => {
-    setPontuacoes([])
-    refs.current.forEach((ref) => ref.clear())
-    refs.current[0].focus()
-  }
+    setPontuacoes([]);
+    refs.current.forEach((ref) => ref.clear());
+    refs.current[0].focus();
+  };
 
   return (
     <ParallaxScrollView>
@@ -79,7 +79,7 @@ export default function PontuarDuplasView() {
         Limpar
       </ThemedButton>
     </ParallaxScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-})
+});

@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { Participante, Ranking, TipoParticipante } from "@/model/ranking";
+import { Ranking } from "@/model/ranking";
 import { RankingContext } from "@/context/RankingContext";
 import { Text } from "react-native";
+import { Participante, TipoParticipante } from "@/model/participante";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,10 +33,9 @@ export default function RootLayout() {
   const adicionarAlunos = (alunos: string[]) => {
     const { participantes, ...rest } = ranking;
 
-    const novosParticipantes: Participante[] = alunos.map((nome) => ({
-      nome,
-      tipo: TipoParticipante.ALUNO,
-    }));
+    const novosParticipantes: Participante[] = alunos.map(
+      (nome) => new Participante(nome, TipoParticipante.ALUNO)
+    );
 
     setRanking({
       ...rest,
@@ -46,10 +46,9 @@ export default function RootLayout() {
   const adicionarProfessores = (professores: string[]) => {
     const { participantes, ...rest } = ranking;
 
-    const novosParticipantes: Participante[] = professores.map((nome) => ({
-      nome,
-      tipo: TipoParticipante.PROFESSOR,
-    }));
+    const novosParticipantes: Participante[] = professores.map(
+      (nome) => new Participante(nome, TipoParticipante.PROFESSOR)
+    );
 
     setRanking({
       ...rest,
