@@ -1,25 +1,25 @@
-import { useThemeColor } from "@/hooks/useThemeColor"
-import { Button, ListItem } from "@rneui/base"
-import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content"
-import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title"
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { Button, ListItem } from "@rneui/base";
+import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
+import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
 
 interface RemovableListItemProps {
-  lightColor?: string
-  darkColor?: string
-  index: number
-  text: string
-  onPress: (index: number) => void
+  light?: string;
+  dark?: string;
+  index: number;
+  text: string;
+  onPress: (index: number) => void;
 }
 
 export function RemovableListItem(props: RemovableListItemProps) {
-  const { index, text, lightColor, darkColor, onPress } = props
+  const { index, text, light, dark, onPress } = props;
 
-  const danger = useThemeColor({ light: lightColor, dark: darkColor }, "danger")
+  const danger = useThemeColor({ light, dark }, "danger");
 
   const handlePress = (index: number, reset: () => void) => {
-    onPress(index)
-    reset()
-  }
+    onPress(index);
+    reset();
+  };
 
   return (
     <ListItem.Swipeable
@@ -45,5 +45,5 @@ export function RemovableListItem(props: RemovableListItemProps) {
       </ListItemContent>
       <ListItem.Chevron />
     </ListItem.Swipeable>
-  )
+  );
 }

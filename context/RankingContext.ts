@@ -5,7 +5,7 @@ interface RankingContext {
   ranking: Ranking | null;
   adicionarAlunos: (alunos: string[]) => void;
   adicionarProfessores: (professores: string[]) => void;
-  adicionarTurma: (horario: string, diaSemana: string) => void;
+  adicionarTurma: (horario: Date, dia: Date) => void;
 }
 
 export const RankingContext = createContext<RankingContext>({

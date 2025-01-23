@@ -1,18 +1,15 @@
-import { useThemeColor } from "@/hooks/useThemeColor"
-import { Button, ButtonProps } from "@rneui/base"
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { Button, ButtonProps } from "@rneui/base";
 
 interface ThemedButtonProps extends ButtonProps {
-  lightColor?: string
-  darkColor?: string
+  light?: string;
+  dark?: string;
 }
 
 export function ThemedButton(props: ThemedButtonProps) {
-  const { lightColor, darkColor } = props
-  const isOutline = props.type === "outline"
-  const primary = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "primary"
-  )
+  const { light, dark } = props;
+  const isOutline = props.type === "outline";
+  const primary = useThemeColor({ light, dark }, "primary");
 
   return (
     <Button
@@ -21,5 +18,5 @@ export function ThemedButton(props: ThemedButtonProps) {
       buttonStyle={isOutline && { borderColor: primary, borderWidth: 1 }}
       titleStyle={isOutline && { color: primary }}
     />
-  )
+  );
 }

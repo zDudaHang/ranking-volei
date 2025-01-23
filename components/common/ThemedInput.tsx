@@ -1,39 +1,38 @@
-import { useThemeColor } from "@/hooks/useThemeColor"
-import { InputRef } from "@/model/common"
-import { Input, InputProps } from "@rneui/base"
-import { forwardRef } from "react"
-import { TextInputProps } from "react-native"
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { InputRef } from "@/model/common";
+import { Input, InputProps } from "@rneui/base";
+import { forwardRef } from "react";
+import { StyleProp, StyleSheet, TextInputProps, TextStyle } from "react-native";
 
 interface ThemedInputProps extends TextInputProps, InputProps {
-  lightColor?: string
-  darkColor?: string
+  light?: string;
+  dark?: string;
 }
 
 export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
   (props, ref) => {
-    const { lightColor, darkColor, ...rest } = props
+    const { light, dark, style, ...rest } = props;
 
-    const text = useThemeColor({ light: lightColor, dark: darkColor }, "text")
+    const text = useThemeColor({ light, dark }, "text");
 
-    const placeholder = useThemeColor(
-      { light: lightColor, dark: darkColor },
-      "placeholder"
-    )
+    const placeholder = useThemeColor({ light, dark }, "placeholder");
 
-    const danger = useThemeColor(
-      { light: lightColor, dark: darkColor },
-      "danger"
-    )
+    const danger = useThemeColor({ light, dark }, "danger");
+
+    const inputStyle: StyleProp<TextStyle> = StyleSheet.compose(style, {
+      marginTop: 5,
+    });
 
     return (
       <Input
         {...rest}
+        style={inputStyle}
         ref={ref}
         placeholderTextColor={placeholder}
         labelStyle={{ color: text }}
         errorStyle={{ color: danger }}
         containerStyle={{ paddingLeft: 0 }}
       />
-    )
+    );
   }
-)
+);

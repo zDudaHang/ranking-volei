@@ -6,8 +6,8 @@ import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
 
 interface ParticipanteViewProps {
-  lightColor?: string;
-  darkColor?: string;
+  light?: string;
+  dark?: string;
   participante: Participante;
   index: number;
   isSelected?: boolean;
@@ -19,24 +19,18 @@ export function ParticipanteView(props: ParticipanteViewProps) {
     index,
     participante,
     isSelected = false,
-    lightColor,
-    darkColor,
+    light,
+    dark,
     onPress,
   } = props;
 
   const handlePress = () => onPress?.(participante);
 
-  const primary = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "primary"
-  );
+  const primary = useThemeColor({ light, dark }, "primary");
 
-  const text = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+  const text = useThemeColor({ light, dark }, "text");
 
-  const placeholder = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "placeholder"
-  );
+  const placeholder = useThemeColor({ light, dark }, "placeholder");
 
   if (!participante) {
     return null;

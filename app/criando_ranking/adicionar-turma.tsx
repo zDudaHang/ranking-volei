@@ -1,54 +1,37 @@
-import ParallaxScrollView from "@/components/common/ParallaxScrollView"
-import { ThemedButton } from "@/components/common/ThemedButton"
-import { ThemedInput } from "@/components/common/ThemedInput"
-import { ThemedText } from "@/components/common/ThemedText"
-import { ThemedView } from "@/components/common/ThemedView"
-import { RankingContext } from "@/context/RankingContext"
-import { InputRef } from "@/model/common"
-import { RankingFormModel, validate } from "@/validator/criar-ranking/validator"
-import { Validation } from "@/validator/model"
+import ParallaxScrollView from "@/components/common/ParallaxScrollView";
+import { ThemedButton } from "@/components/common/ThemedButton";
+import { ThemedText } from "@/components/common/ThemedText";
+import { ThemedView } from "@/components/common/ThemedView";
+import { RankingContext } from "@/context/RankingContext";
+import { InputRef } from "@/model/common";
 
-import { router } from "expo-router"
-import { useContext, useRef, useState } from "react"
-import { StyleSheet } from "react-native"
+import { router } from "expo-router";
+import React, { useContext, useRef, useState } from "react";
+import { StyleSheet } from "react-native";
+import { DiaSemanaPicker } from "@/components/picker/DiaPicker";
+import { HorarioPicker } from "@/components/picker/HorarioPicker";
 
 export default function AdicionarTurmaView() {
-  const [diaSemana, setDiaSemana] = useState<string>()
-  const [horario, setHorario] = useState<string>()
+  const hoje = new Date();
 
-  const [validation, setValidation] = useState<Validation<RankingFormModel>>()
-  const clearValidation = () => setValidation(undefined)
+  const [horarioSelecionado, setHorarioSelecionado] = useState<Date>(hoje);
+  const [diaSelecionado, setDiaSelecionado] = useState<Date>(hoje);
 
-  const diaSemanaRef = useRef<InputRef>(null)
-  const horarioRef = useRef<InputRef>(null)
+  const diaSemanaRef = useRef<InputRef>(null);
+  const horarioRef = useRef<InputRef>(null);
 
-  const { adicionarTurma } = useContext(RankingContext)
-
-  const handleChangeDiaSemana = (diaSemana: string) => setDiaSemana(diaSemana)
-  const handleSubmitDiaSemana = () => horarioRef.current?.focus()
-
-  const handleChangeHorario = (horario: string) => setHorario(horario)
+  const { adicionarTurma } = useContext(RankingContext);
 
   const handleSubmit = () => {
-    const validation = validate({ diaSemana, horario })
-
-    if (!validation.isValid()) {
-      setValidation(validation)
-    } else {
-      if (horario && diaSemana) {
-        clearValidation()
-        adicionarTurma(horario, diaSemana)
-        router.navigate("/criando_ranking/adicionar-alunos")
-      }
-    }
-  }
+    adicionarTurma(horarioSelecionado, diaSelecionado);
+    router.navigate("/criando_ranking/adicionar-alunos");
+  };
 
   const handleClear = () => {
-    diaSemanaRef.current?.clear()
-    horarioRef.current?.clear()
-    diaSemanaRef.current?.focus()
-    clearValidation()
-  }
+    diaSemanaRef.current?.clear();
+    horarioRef.current?.clear();
+    diaSemanaRef.current?.focus();
+  };
 
   return (
     <ParallaxScrollView>
@@ -59,28 +42,15 @@ export default function AdicionarTurmaView() {
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedInput
-          ref={diaSemanaRef}
-          label="Qual o dia da semana da turma?"
-          keyboardType="default"
-          placeholder="Exemplo: Segunda"
-          value={diaSemana}
-          onChangeText={handleChangeDiaSemana}
-          returnKeyType="next"
-          onSubmitEditing={handleSubmitDiaSemana}
-          errorMessage={validation?.errors?.diaSemana}
+        <DiaSemanaPicker
+          diaSelecionado={diaSelecionado}
+          setDiaSelecionado={setDiaSelecionado}
         />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedInput
-          ref={horarioRef}
-          label="Qual o horário da turma?"
-          keyboardType="numeric"
-          placeholder="Exemplo: 20"
-          value={horario}
-          onChangeText={handleChangeHorario}
-          returnKeyType="done"
-          errorMessage={validation?.errors?.horario}
+        <HorarioPicker
+          horarioSelecionado={horarioSelecionado}
+          setHorarioSelecionado={setHorarioSelecionado}
         />
       </ThemedView>
       <ThemedButton size="lg" onPress={handleSubmit}>
@@ -95,7 +65,7 @@ export default function AdicionarTurmaView() {
         Limpar
       </ThemedButton>
     </ParallaxScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -108,4 +78,4 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-})
+});

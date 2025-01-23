@@ -1,46 +1,43 @@
-import { useThemeColor } from "@/hooks/useThemeColor"
-import { Input } from "@rneui/base"
-import { useRef, useState } from "react"
-import { TextInput } from "react-native"
-import { RemovableListItem } from "../common/RemovableListItem"
-import { ThemedInput } from "../common/ThemedInput"
-import { ThemedText } from "../common/ThemedText"
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { Input } from "@rneui/base";
+import { useRef, useState } from "react";
+import { TextInput } from "react-native";
+import { RemovableListItem } from "../common/RemovableListItem";
+import { ThemedInput } from "../common/ThemedInput";
+import { ThemedText } from "../common/ThemedText";
 
 interface AdicionarCommonProps {
-  lightColor?: string
-  darkColor?: string
+  light?: string;
+  dark?: string;
 
-  data: string[]
-  isAlunos: boolean
+  data: string[];
+  isAlunos: boolean;
 
-  adicionar: (nome: string) => void
-  remover: (index: number) => void
+  adicionar: (nome: string) => void;
+  remover: (index: number) => void;
 }
 
 export function AdicionarCommon(props: AdicionarCommonProps) {
-  const { data, isAlunos, lightColor, darkColor, adicionar, remover } = props
+  const { data, isAlunos, light, dark, adicionar, remover } = props;
 
-  const [nome, setNome] = useState<string | undefined>()
+  const [nome, setNome] = useState<string | undefined>();
 
-  const nomeRef = useRef<Input & TextInput>(null)
+  const nomeRef = useRef<Input & TextInput>(null);
 
-  const primary = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "primary"
-  )
+  const primary = useThemeColor({ light, dark }, "primary");
 
   const handleChangeNome = (nome: string) => {
-    setNome(nome)
-  }
+    setNome(nome);
+  };
 
   const handleAdicionar = () => {
     if (nome) {
-      adicionar(nome)
-      nomeRef.current?.clear()
+      adicionar(nome);
+      nomeRef.current?.clear();
     }
-  }
+  };
 
-  const hasParticipantes = data.length > 0
+  const hasParticipantes = data.length > 0;
 
   return (
     <>
@@ -80,5 +77,5 @@ export function AdicionarCommon(props: AdicionarCommonProps) {
         />
       ))}
     </>
-  )
+  );
 }

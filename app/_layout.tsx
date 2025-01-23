@@ -27,7 +27,7 @@ export default function RootLayout() {
 
   const [ranking, setRanking] = useState<Ranking>({
     participantes: [],
-    turma: { horario: null, diaSemana: null },
+    turma: { horario: null, dia: null },
   });
 
   const adicionarAlunos = (alunos: string[]) => {
@@ -56,9 +56,9 @@ export default function RootLayout() {
     });
   };
 
-  const adicionarTurma = (horario: string, diaSemana: string) => {
+  const adicionarTurma = (horario: Date, dia: Date) => {
     setRanking({
-      turma: { diaSemana, horario },
+      turma: { dia, horario },
       participantes: ranking.participantes,
     });
   };
