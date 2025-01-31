@@ -20,15 +20,29 @@ export function gerarDuplasPossiveis(
     duplas.push(...duplasComAlunos);
   });
 
-  alunos.forEach((aluno, index, array) => {
-    const alunosRestantes = array.slice(index + 1);
-    const duplasComOutroAlunos: Dupla[] = alunosRestantes.map(
-      (outroAluno) => new Dupla(aluno, outroAluno)
-    );
-    duplas.push(...duplasComOutroAlunos);
-  });
+  const duplasEntreProfessores = gerarDuplasComOutrosParticipantes(professores);
+  duplas.push(...duplasEntreProfessores);
+
+  const duplasEntreAlunos = gerarDuplasComOutrosParticipantes(alunos);
+  duplas.push(...duplasEntreAlunos);
 
   return duplas;
+}
+
+function gerarDuplasComOutrosParticipantes(
+  participantes: Participante[]
+): Dupla[] {
+  const duplasComOutrosIntegrantes: Dupla[] = [];
+
+  participantes.forEach((participante, index, array) => {
+    const outrosParticipantes = array.slice(index + 1);
+    const duplas = outrosParticipantes.map(
+      (outroParticipante) => new Dupla(participante, outroParticipante)
+    );
+    duplasComOutrosIntegrantes.push(...duplas);
+  });
+
+  return duplasComOutrosIntegrantes;
 }
 
 export function hasDuplaInParticipantesRestantes(

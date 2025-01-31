@@ -18,10 +18,6 @@ import { StyleSheet } from "react-native";
 export default function DefinirDuplasView() {
   const { ranking } = useContext(RankingContext);
 
-  if (!ranking) {
-    return null;
-  }
-
   const { definirDuplasAtuais, duplasPossiveis } = useContext(DuplasContext);
 
   const [primeiroIntegranteDupla, setPrimeiroIntegranteDupla] =
@@ -30,8 +26,12 @@ export default function DefinirDuplasView() {
   const [duplas, setDuplas] = useState<Dupla[]>([]);
   const [participantesRestantes, setParticipantesRestantes] = useState<
     Participante[]
-  >(ranking.participantes);
+  >(ranking?.participantes ?? []);
   const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
+
+  if (!ranking) {
+    return null;
+  }
 
   const adicionarSegundoIntegranteDupla = (participante: Participante) => {
     if (primeiroIntegranteDupla) {
@@ -90,21 +90,23 @@ export default function DefinirDuplasView() {
   const hasDuplas = duplas.length > 0;
 
   const sugerirDuplas = () => {
-    let participantes = ranking.participantes;
+    let participantesRestantes = ranking.participantes;
+    let duplasRestantes = duplasPossiveis;
+
     const duplasSugeridas: Dupla[] = [];
 
-    while (participantes.length > 0) {
-      const dupla = sample(duplasPossiveis);
+    while (participantesRestantes.length > 0) {
+      const dupla = sample(duplasRestantes);
       if (
         dupla &&
-        !dupla.isDoisProfessores() &&
-        hasDuplaInParticipantesRestantes(participantes, dupla)
+        hasDuplaInParticipantesRestantes(participantesRestantes, dupla)
       ) {
         duplasSugeridas.push(dupla);
-        participantes = participantes.filter(
-          (participante) =>
-            participante !== dupla.primeiroParticipante &&
-            participante !== dupla.segundoParticipante
+        participantesRestantes = participantesRestantes.filter(
+          (p) => !dupla.contains(p)
+        );
+        duplasRestantes = duplasRestantes.filter(
+          (d) => !d.containsPeloMenosUmParticipante(dupla)
         );
       }
     }

@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { ThemedButton } from "../common/ThemedButton";
 import { ThemedInput } from "../common/ThemedInput";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { asHourAndMinutes } from "@/util/date-format";
 
 interface HorarioPickerProps {
   light?: string;
@@ -14,8 +15,6 @@ interface HorarioPickerProps {
   horarioSelecionado: Date;
   setHorarioSelecionado: (horario: Date) => void;
 }
-
-const HOUR_PATTERN = "HH:mm";
 
 export function HorarioPicker(props: HorarioPickerProps) {
   const { horarioSelecionado, setHorarioSelecionado, light, dark } = props;
@@ -41,7 +40,7 @@ export function HorarioPicker(props: HorarioPickerProps) {
           color: primary,
           onPress: () => setShow(true),
         }}
-        value={format(horarioSelecionado, HOUR_PATTERN)}
+        value={asHourAndMinutes(horarioSelecionado)}
         editable={false}
       />
       {show && (

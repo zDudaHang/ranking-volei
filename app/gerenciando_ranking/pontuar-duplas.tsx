@@ -12,11 +12,11 @@ export default function PontuarDuplasView() {
   const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext);
   const [pontuacoes, setPontuacoes] = useState<string[]>([]);
 
+  const refs = useRef<TextInput[]>([]);
+
   if (!duplasAtuais || duplasAtuais?.length === 0) {
     return null;
   }
-
-  const refs = useRef<TextInput[]>([]);
 
   const onSubmitEditing = (index: number) => {
     if (index !== refs.current.length - 1) {
@@ -43,7 +43,7 @@ export default function PontuarDuplasView() {
       }
       return dupla;
     });
-    // adicionarDuplasHistorico(duplasComPontuacao);
+    adicionarDuplasHistorico(duplasComPontuacao);
     router.navigate("/gerenciando_ranking/definir-duplas");
   };
 

@@ -28,6 +28,10 @@ export class Participante {
     return this.tipo;
   }
 
+  public toString(): string {
+    return this.nome;
+  }
+
   public equals(other: Participante | undefined): boolean {
     return !!other && this.nome === other.nome && this.tipo === other.tipo;
   }

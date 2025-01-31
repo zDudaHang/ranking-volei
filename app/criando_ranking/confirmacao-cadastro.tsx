@@ -1,33 +1,39 @@
-import ParallaxScrollView from "@/components/common/ParallaxScrollView"
-import { ThemedButton } from "@/components/common/ThemedButton"
-import { ThemedText } from "@/components/common/ThemedText"
-import { ThemedView } from "@/components/common/ThemedView"
-import { ParticipanteView } from "@/components/participante/ParticipanteView"
-import { RankingContext } from "@/context/RankingContext"
-import { useStorage } from "@/hooks/useStorage"
-import { Ranking } from "@/model/ranking"
-import { Redirect, router } from "expo-router"
-import { useContext } from "react"
-import { StyleSheet } from "react-native"
+import ParallaxScrollView from "@/components/common/ParallaxScrollView";
+import { ThemedButton } from "@/components/common/ThemedButton";
+import { ThemedText } from "@/components/common/ThemedText";
+import { ThemedView } from "@/components/common/ThemedView";
+import { ParticipanteView } from "@/components/participante/ParticipanteView";
+import { RankingContext } from "@/context/RankingContext";
+import { useStorage } from "@/hooks/useStorage";
+import { Ranking } from "@/model/ranking";
+import { asWeekDay, asHourAndMinutes } from "@/util/date-format";
+import { format } from "date-fns";
+import { Redirect, router } from "expo-router";
+import { useContext } from "react";
+import { StyleSheet } from "react-native";
 
 export default function ConfirmacaoCadastroRankingView() {
-  const { ranking } = useContext(RankingContext)
+  const { ranking } = useContext(RankingContext);
 
   const onCompleteStore = () =>
-    router.navigate("/gerenciando_ranking/definir-duplas")
+    router.navigate("/gerenciando_ranking/definir-duplas");
 
-  const { store, loading } = useStorage<Ranking>({ onCompleteStore })
+  const { store, loading } = useStorage<Ranking>({ onCompleteStore });
 
   if (!ranking) {
-    return <Redirect href="/criando_ranking/adicionar-turma" />
+    return <Redirect href="/criando_ranking/adicionar-turma" />;
   }
 
   const {
-    turma: { diaSemana, horario },
+    turma: { dia, horario },
     participantes,
-  } = ranking
+  } = ranking;
 
-  const handleSubmit = async () => store(ranking, "Ranking")
+  const handleSubmit = async () => store(ranking, "Ranking");
+
+  if (!dia || !horario) {
+    return null;
+  }
 
   return (
     <ParallaxScrollView>
@@ -40,7 +46,7 @@ export default function ConfirmacaoCadastroRankingView() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Turma</ThemedText>
         <ThemedText type="default">
-          {diaSemana} às {horario}
+          {asWeekDay(dia)} às {asHourAndMinutes(horario)}
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
@@ -62,7 +68,7 @@ export default function ConfirmacaoCadastroRankingView() {
         Confirmar e Salvar
       </ThemedButton>
     </ParallaxScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -75,4 +81,4 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-})
+});

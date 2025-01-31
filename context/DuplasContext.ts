@@ -1,12 +1,12 @@
-import { Dupla } from "@/model/duplas"
-import { createContext } from "react"
+import { Dupla } from "@/model/dupla";
+import { createContext } from "react";
 
 interface DuplasContext {
-  duplasAtuais: Dupla[]
-  historicoDuplas: Dupla[]
-  duplasPossiveis: Dupla[]
-  definirDuplasAtuais: (duplas: Dupla[]) => void
-  adicionarDuplasHistorico: (duplas: Dupla[]) => void
+  duplasAtuais: Dupla[];
+  historicoDuplas: Dupla[];
+  duplasPossiveis: Dupla[];
+  definirDuplasAtuais: (duplas: Dupla[]) => void;
+  adicionarDuplasHistorico: (duplas: Dupla[]) => void;
 }
 
 export const DuplasContext = createContext<DuplasContext>({
@@ -15,4 +15,4 @@ export const DuplasContext = createContext<DuplasContext>({
   duplasPossiveis: [],
   definirDuplasAtuais: () => null,
   adicionarDuplasHistorico: () => null,
-})
+});

@@ -41,10 +41,18 @@ export class Dupla {
     return `${this.primeiroParticipante?.getNome()} e ${this.segundoParticipante?.getNome()}`;
   }
 
-  public isDoisProfessores(): boolean {
+  public contains(participante: Participante): boolean {
     return (
-      this.primeiroParticipante.getTipo() === TipoParticipante.PROFESSOR &&
-      this.segundoParticipante.getTipo() === TipoParticipante.PROFESSOR
+      this.primeiroParticipante.equals(participante) ||
+      this.segundoParticipante.equals(participante)
+    );
+  }
+
+  public containsPeloMenosUmParticipante(outraDupla: Dupla): boolean {
+    const [primeiroParticipante, segundoParticipante] =
+      outraDupla.getParticipantes();
+    return (
+      this.contains(primeiroParticipante) || this.contains(segundoParticipante)
     );
   }
 }

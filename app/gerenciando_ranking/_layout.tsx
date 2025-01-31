@@ -1,6 +1,7 @@
 import { DuplasContext } from "@/context/DuplasContext";
 import { RankingContext } from "@/context/RankingContext";
 import { Dupla } from "@/model/dupla";
+import { asHourAndMinutes, asWeekDay } from "@/util/date-format";
 import { gerarDuplasPossiveis } from "@/util/duplas-possiveis";
 
 import { Redirect, Stack } from "expo-router";
@@ -21,9 +22,9 @@ export default function CriandoRankingRootLayout() {
     const novasDuplasPossiveis = duplasPossiveis.filter(
       (dupla) => !duplasJahUtilizadas.includes(dupla)
     );
+    setDuplasAtuais([]);
     setHistoricoDuplas([...historicoDuplas, ...duplasJahUtilizadas]);
     setDuplasPossiveis(novasDuplasPossiveis);
-    setDuplasAtuais([]);
   };
 
   if (!ranking) {
@@ -31,11 +32,12 @@ export default function CriandoRankingRootLayout() {
   }
 
   const {
-    turma: { diaSemana, horario },
+    turma: { dia, horario },
   } = ranking;
 
-  console.log("historicoDuplas: ", historicoDuplas);
-  console.log("duplasAtuais: ", duplasAtuais);
+  if (!dia || !horario) {
+    return null;
+  }
 
   return (
     <DuplasContext.Provider
@@ -49,7 +51,7 @@ export default function CriandoRankingRootLayout() {
     >
       <Stack
         screenOptions={{
-          title: `Ranking - ${diaSemana} \às ${horario}`,
+          title: `Ranking - ${asWeekDay(dia)} \às ${asHourAndMinutes(horario)}`,
         }}
       >
         <Stack.Screen name="definir-duplas" />

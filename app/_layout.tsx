@@ -12,7 +12,6 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ranking } from "@/model/ranking";
 import { RankingContext } from "@/context/RankingContext";
-import { Text } from "react-native";
 import { Participante, TipoParticipante } from "@/model/participante";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
