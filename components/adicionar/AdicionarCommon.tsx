@@ -5,11 +5,9 @@ import { TextInput } from "react-native";
 import { RemovableListItem } from "../common/RemovableListItem";
 import { ThemedInput } from "../common/ThemedInput";
 import { ThemedText } from "../common/ThemedText";
+import { ThemedComponent } from "@/model/common";
 
-interface AdicionarCommonProps {
-  light?: string;
-  dark?: string;
-
+interface AdicionarCommonProps extends ThemedComponent {
   data: string[];
   isAlunos: boolean;
 

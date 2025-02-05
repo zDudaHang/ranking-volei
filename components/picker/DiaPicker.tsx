@@ -4,11 +4,9 @@ import DateTimePicker, {
 } from "@react-native-community/datetimepicker";
 import { ThemedInput } from "../common/ThemedInput";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedComponent } from "@/model/common";
 
-interface DiaSemanaPickerProps {
-  light?: string;
-  dark?: string;
-
+interface DiaSemanaPickerProps extends ThemedComponent {
   diaSelecionado: Date;
   setDiaSelecionado: (dia: Date) => void;
 }

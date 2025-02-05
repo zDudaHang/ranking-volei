@@ -1,10 +1,8 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedComponent } from "@/model/common";
 import { Button, ButtonProps } from "@rneui/base";
 
-interface ThemedButtonProps extends ButtonProps {
-  light?: string;
-  dark?: string;
-}
+interface ThemedButtonProps extends ButtonProps, ThemedComponent {}
 
 export function ThemedButton(props: ThemedButtonProps) {
   const { light, dark } = props;

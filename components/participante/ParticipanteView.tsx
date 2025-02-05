@@ -1,13 +1,12 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedComponent } from "@/model/common";
 import { Participante, TipoParticipante } from "@/model/participante";
 import { ListItem } from "@rneui/base";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
 
-interface ParticipanteViewProps {
-  light?: string;
-  dark?: string;
+interface ParticipanteViewProps extends ThemedComponent {
   participante: Participante;
   index: number;
   isSelected?: boolean;

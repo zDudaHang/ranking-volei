@@ -4,14 +4,13 @@ import { DialogActions } from "@rneui/base/dist/Dialog/Dialog.Actions";
 import { DialogButton } from "@rneui/base/dist/Dialog/Dialog.Button";
 import { DialogTitle } from "@rneui/base/dist/Dialog/Dialog.Title";
 import { ThemedText } from "../common/ThemedText";
+import { ThemedComponent } from "@/model/common";
 
-interface ConfirmacaoSugestaoDuplasDialogProps {
+interface ConfirmacaoSugestaoDuplasDialogProps extends ThemedComponent {
   isVisible: boolean;
   onBackdropPress: () => void;
   onConfirm: () => void;
   onCancel: () => void;
-  light?: string;
-  dark?: string;
 }
 
 export function ConfirmacaoSugestaoDuplasDialog(

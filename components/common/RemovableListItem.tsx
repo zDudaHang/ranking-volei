@@ -1,11 +1,10 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedComponent } from "@/model/common";
 import { Button, ListItem } from "@rneui/base";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
 
-interface RemovableListItemProps {
-  light?: string;
-  dark?: string;
+interface RemovableListItemProps extends ThemedComponent {
   index: number;
   text: string;
   onPress: (index: number) => void;

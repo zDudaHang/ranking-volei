@@ -1,13 +1,13 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { InputRef } from "@/model/common";
+import { InputRef, ThemedComponent } from "@/model/common";
 import { Input, InputProps } from "@rneui/base";
 import { forwardRef } from "react";
 import { StyleProp, StyleSheet, TextInputProps, TextStyle } from "react-native";
 
-interface ThemedInputProps extends TextInputProps, InputProps {
-  light?: string;
-  dark?: string;
-}
+interface ThemedInputProps
+  extends TextInputProps,
+    InputProps,
+    ThemedComponent {}
 
 export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
   (props, ref) => {

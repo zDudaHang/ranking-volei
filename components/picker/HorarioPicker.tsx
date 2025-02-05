@@ -2,16 +2,12 @@ import React, { useState } from "react";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import { format } from "date-fns";
-import { ThemedButton } from "../common/ThemedButton";
 import { ThemedInput } from "../common/ThemedInput";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { asHourAndMinutes } from "@/util/date-format";
+import { ThemedComponent } from "@/model/common";
 
-interface HorarioPickerProps {
-  light?: string;
-  dark?: string;
-
+interface HorarioPickerProps extends ThemedComponent {
   horarioSelecionado: Date;
   setHorarioSelecionado: (horario: Date) => void;
 }
