@@ -1,4 +1,6 @@
 import { AdicionarProfessores } from "@/components/adicionar/AdicionarProfessores";
+import { AvancarButton } from "@/components/common/AvancarButton";
+import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
@@ -44,12 +46,8 @@ export default function AdicionarProfessoresView() {
           removerProfessor={removerProfessor}
         />
       </ThemedView>
-      <ThemedButton size="lg" color="success" onPress={handleSubmit}>
-        Avançar
-      </ThemedButton>
-      <ThemedButton size="lg" type="outline" onPress={handleClear}>
-        Limpar
-      </ThemedButton>
+      <AvancarButton onPress={handleSubmit} />
+      <LimparButton onPress={handleClear} />
     </ParallaxScrollView>
   );
 }

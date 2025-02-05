@@ -51,7 +51,7 @@ export default function CriandoRankingRootLayout() {
     >
       <Stack
         screenOptions={{
-          title: `Ranking - ${asWeekDay(dia)} \às ${asHourAndMinutes(horario)}`,
+          headerShown: false,
         }}
       >
         <Stack.Screen name="definir-duplas" />

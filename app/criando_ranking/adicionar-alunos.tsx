@@ -1,12 +1,13 @@
 import { AdicionarAlunos } from "@/components/adicionar/AdicionarAlunos";
+import { AvancarButton } from "@/components/common/AvancarButton";
+import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
-import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function AdicionarAlunosView() {
   const [alunos, setAlunos] = useState<string[]>([]);
@@ -44,12 +45,8 @@ export default function AdicionarAlunosView() {
           removerAluno={removerAluno}
         />
       </ThemedView>
-      <ThemedButton size="lg" color="success" onPress={handleSubmit}>
-        Avançar
-      </ThemedButton>
-      <ThemedButton size="lg" type="outline" onPress={handleClear}>
-        Limpar
-      </ThemedButton>
+      <AvancarButton onPress={handleSubmit} />
+      <LimparButton onPress={handleClear} />
     </ParallaxScrollView>
   );
 }

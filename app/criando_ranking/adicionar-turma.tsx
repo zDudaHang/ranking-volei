@@ -10,6 +10,8 @@ import React, { useContext, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { DiaPicker } from "@/components/picker/DiaPicker";
 import { HorarioPicker } from "@/components/picker/HorarioPicker";
+import { AvancarButton } from "@/components/common/AvancarButton";
+import { LimparButton } from "@/components/common/LimparButton";
 
 export default function AdicionarTurmaView() {
   const hoje = new Date();
@@ -55,17 +57,8 @@ export default function AdicionarTurmaView() {
           setHorarioSelecionado={setHorarioSelecionado}
         />
       </ThemedView>
-      <ThemedButton size="lg" onPress={handleSubmit}>
-        Avançar
-      </ThemedButton>
-      <ThemedButton
-        size="lg"
-        type="outline"
-        color="secondary"
-        onPress={handleClear}
-      >
-        Limpar
-      </ThemedButton>
+      <AvancarButton onPress={handleSubmit} />
+      <LimparButton onPress={handleClear} />
     </ParallaxScrollView>
   );
 }

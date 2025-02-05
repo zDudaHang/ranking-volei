@@ -31,7 +31,7 @@ export function RemovableListItem(props: RemovableListItemProps) {
           title="Remover"
           color={danger}
           onPress={() => handlePress(index, reset)}
-          icon={{ name: "delete", color: "white" }}
+          icon={{ name: "delete", color: "white", size: 32 }}
           buttonStyle={{
             minHeight: "100%",
             borderRadius: 8,

@@ -1,3 +1,4 @@
+import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
@@ -186,9 +187,7 @@ export default function DefinirDuplasView() {
       <ThemedButton size="lg" color="success" onPress={handleSubmit}>
         Confirmar
       </ThemedButton>
-      <ThemedButton size="lg" type="outline" onPress={handleClear}>
-        Limpar
-      </ThemedButton>
+      <LimparButton onPress={handleClear} />
     </ParallaxScrollView>
   );
 }
