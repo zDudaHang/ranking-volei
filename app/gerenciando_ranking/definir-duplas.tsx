@@ -130,6 +130,8 @@ export default function DefinirDuplasView() {
 
   const handleClickCancelDialog = () => setIsDialogVisible(false);
 
+  const hasDuplasDefinidas = duplas.length > 0;
+
   return (
     <ParallaxScrollView>
       <ConfirmacaoSugestaoDuplasDialog
@@ -140,8 +142,9 @@ export default function DefinirDuplasView() {
       />
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Duplas</ThemedText>
-        <ThemedText type="default">
-          Defina as duplas da primeira rodada
+        <ThemedText type="secondary">
+          Defina as duplas selecionando os participantes ou clicando em 'Sugerir
+          duplas'
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
@@ -168,6 +171,9 @@ export default function DefinirDuplasView() {
 
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Duplas definidas</ThemedText>
+        {!hasDuplasDefinidas && (
+          <ThemedText type="secondary">Nenhuma dupla definida</ThemedText>
+        )}
         {duplas.map((dupla, index) => (
           <DuplaView
             key={`dupla-${index}`}

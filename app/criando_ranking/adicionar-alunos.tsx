@@ -1,39 +1,39 @@
-import { AdicionarAlunos } from "@/components/adicionar/AdicionarAlunos"
-import ParallaxScrollView from "@/components/common/ParallaxScrollView"
-import { ThemedButton } from "@/components/common/ThemedButton"
-import { ThemedText } from "@/components/common/ThemedText"
-import { ThemedView } from "@/components/common/ThemedView"
-import { RankingContext } from "@/context/RankingContext"
-import { router } from "expo-router"
-import { useContext, useState } from "react"
-import { StyleSheet } from "react-native"
+import { AdicionarAlunos } from "@/components/adicionar/AdicionarAlunos";
+import ParallaxScrollView from "@/components/common/ParallaxScrollView";
+import { ThemedButton } from "@/components/common/ThemedButton";
+import { ThemedText } from "@/components/common/ThemedText";
+import { ThemedView } from "@/components/common/ThemedView";
+import { RankingContext } from "@/context/RankingContext";
+import { router } from "expo-router";
+import { useContext, useState } from "react";
+import { StyleSheet } from "react-native";
 
 export default function AdicionarAlunosView() {
-  const [alunos, setAlunos] = useState<string[]>([])
+  const [alunos, setAlunos] = useState<string[]>([]);
 
-  const { adicionarAlunos } = useContext(RankingContext)
+  const { adicionarAlunos } = useContext(RankingContext);
 
   const adicionarAluno = (nome: string) => {
-    setAlunos([...alunos, nome])
-  }
+    setAlunos([...alunos, nome]);
+  };
 
   const removerAluno = (index: number) => {
-    alunos.splice(index, 1)
-    setAlunos([...alunos])
-  }
+    alunos.splice(index, 1);
+    setAlunos([...alunos]);
+  };
 
-  const handleClear = () => setAlunos([])
+  const handleClear = () => setAlunos([]);
 
   const handleSubmit = () => {
-    adicionarAlunos(alunos)
-    router.navigate("/criando_ranking/adicionar-professores")
-  }
+    adicionarAlunos(alunos);
+    router.navigate("/criando_ranking/adicionar-professores");
+  };
 
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Alunos</ThemedText>
-        <ThemedText type="default">
+        <ThemedText type="secondary">
           Adicione os alunos que vão participar
         </ThemedText>
       </ThemedView>
@@ -51,7 +51,7 @@ export default function AdicionarAlunosView() {
         Limpar
       </ThemedButton>
     </ParallaxScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-})
+});

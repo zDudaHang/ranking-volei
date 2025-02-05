@@ -8,7 +8,7 @@ import { InputRef } from "@/model/common";
 import { router } from "expo-router";
 import React, { useContext, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
-import { DiaSemanaPicker } from "@/components/picker/DiaPicker";
+import { DiaPicker } from "@/components/picker/DiaPicker";
 import { HorarioPicker } from "@/components/picker/HorarioPicker";
 
 export default function AdicionarTurmaView() {
@@ -42,13 +42,15 @@ export default function AdicionarTurmaView() {
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <DiaSemanaPicker
+        <DiaPicker
+          label="Dia"
           diaSelecionado={diaSelecionado}
           setDiaSelecionado={setDiaSelecionado}
         />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <HorarioPicker
+          label="Horário"
           horarioSelecionado={horarioSelecionado}
           setHorarioSelecionado={setHorarioSelecionado}
         />

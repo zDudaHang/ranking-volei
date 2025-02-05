@@ -7,12 +7,13 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedComponent } from "@/model/common";
 
 interface DiaSemanaPickerProps extends ThemedComponent {
+  label: string;
   diaSelecionado: Date;
   setDiaSelecionado: (dia: Date) => void;
 }
 
-export function DiaSemanaPicker(props: DiaSemanaPickerProps) {
-  const { diaSelecionado, setDiaSelecionado, light, dark } = props;
+export function DiaPicker(props: DiaSemanaPickerProps) {
+  const { label, diaSelecionado, setDiaSelecionado, light, dark } = props;
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -28,7 +29,7 @@ export function DiaSemanaPicker(props: DiaSemanaPickerProps) {
   return (
     <>
       <ThemedInput
-        label="Qual dia que a turma tem a aula?"
+        label={label}
         rightIcon={{
           name: "edit",
           size: 32,

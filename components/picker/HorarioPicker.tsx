@@ -8,12 +8,14 @@ import { asHourAndMinutes } from "@/util/date-format";
 import { ThemedComponent } from "@/model/common";
 
 interface HorarioPickerProps extends ThemedComponent {
+  label: string;
   horarioSelecionado: Date;
   setHorarioSelecionado: (horario: Date) => void;
 }
 
 export function HorarioPicker(props: HorarioPickerProps) {
-  const { horarioSelecionado, setHorarioSelecionado, light, dark } = props;
+  const { label, horarioSelecionado, setHorarioSelecionado, light, dark } =
+    props;
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -29,7 +31,7 @@ export function HorarioPicker(props: HorarioPickerProps) {
   return (
     <>
       <ThemedInput
-        label="E qual o horário?"
+        label={label}
         rightIcon={{
           name: "edit",
           size: 32,

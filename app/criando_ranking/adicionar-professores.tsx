@@ -1,39 +1,39 @@
-import { AdicionarProfessores } from "@/components/adicionar/AdicionarProfessores"
-import ParallaxScrollView from "@/components/common/ParallaxScrollView"
-import { ThemedButton } from "@/components/common/ThemedButton"
-import { ThemedText } from "@/components/common/ThemedText"
-import { ThemedView } from "@/components/common/ThemedView"
-import { RankingContext } from "@/context/RankingContext"
-import { router } from "expo-router"
-import { useContext, useState } from "react"
-import { StyleSheet } from "react-native"
+import { AdicionarProfessores } from "@/components/adicionar/AdicionarProfessores";
+import ParallaxScrollView from "@/components/common/ParallaxScrollView";
+import { ThemedButton } from "@/components/common/ThemedButton";
+import { ThemedText } from "@/components/common/ThemedText";
+import { ThemedView } from "@/components/common/ThemedView";
+import { RankingContext } from "@/context/RankingContext";
+import { router } from "expo-router";
+import { useContext, useState } from "react";
+import { StyleSheet } from "react-native";
 
 export default function AdicionarProfessoresView() {
-  const [professores, setProfessores] = useState<string[]>([])
+  const [professores, setProfessores] = useState<string[]>([]);
 
-  const { ranking, adicionarProfessores } = useContext(RankingContext)
+  const { ranking, adicionarProfessores } = useContext(RankingContext);
 
   const adicionarProfessor = (nome: string) => {
-    setProfessores([...professores, nome])
-  }
+    setProfessores([...professores, nome]);
+  };
 
   const removerProfessor = (index: number) => {
-    professores.splice(index, 1)
-    setProfessores([...professores])
-  }
+    professores.splice(index, 1);
+    setProfessores([...professores]);
+  };
 
-  const handleClear = () => setProfessores([])
+  const handleClear = () => setProfessores([]);
 
   const handleSubmit = () => {
-    adicionarProfessores(professores)
-    router.navigate("/criando_ranking/confirmacao-cadastro")
-  }
+    adicionarProfessores(professores);
+    router.navigate("/criando_ranking/confirmacao-cadastro");
+  };
 
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Professores</ThemedText>
-        <ThemedText type="default">
+        <ThemedText type="secondary">
           Adicione os professores que vão participar
         </ThemedText>
       </ThemedView>
@@ -51,7 +51,7 @@ export default function AdicionarProfessoresView() {
         Limpar
       </ThemedButton>
     </ParallaxScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-})
+});

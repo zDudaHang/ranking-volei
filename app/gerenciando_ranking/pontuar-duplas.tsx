@@ -57,7 +57,9 @@ export default function PontuarDuplasView() {
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Pontuação</ThemedText>
-        <ThemedText type="default">Defina a pontuação de cada dupla</ThemedText>
+        <ThemedText type="secondary">
+          Defina a pontuação de cada dupla
+        </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         {duplasAtuais.map((dupla, index) => (
