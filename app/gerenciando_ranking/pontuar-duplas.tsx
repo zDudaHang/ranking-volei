@@ -37,7 +37,7 @@ export default function PontuarDuplasView() {
     setPontuacoes([...pontuacoes]);
   };
 
-  const handleSubmit = () => {
+  const salvarPontuacoes = () => {
     const duplasComPontuacao = duplasAtuais.map((dupla, index) => {
       const pontuacao = pontuacoes[index];
       if (pontuacao) {
@@ -46,6 +46,10 @@ export default function PontuarDuplasView() {
       return dupla;
     });
     adicionarDuplasHistorico(duplasComPontuacao);
+  };
+
+  const handleSubmit = () => {
+    salvarPontuacoes();
     router.navigate("/gerenciando_ranking/definir-duplas");
   };
 
@@ -53,6 +57,11 @@ export default function PontuarDuplasView() {
     setPontuacoes([]);
     refs.current.forEach((ref) => ref.clear());
     refs.current[0].focus();
+  };
+
+  const handleFinalizar = () => {
+    salvarPontuacoes();
+    router.navigate("/gerenciando_ranking/finalizar-ranking");
   };
 
   return (
@@ -77,6 +86,15 @@ export default function PontuarDuplasView() {
         ))}
       </ThemedView>
       <AvancarButton onPress={handleSubmit} />
+      <ThemedButton
+        size="lg"
+        color="success"
+        onPress={handleFinalizar}
+        iconRight
+        icon={{ color: "white", name: "done-all" }}
+      >
+        Finalizar
+      </ThemedButton>
       <LimparButton onPress={handleClear} />
     </ParallaxScrollView>
   );

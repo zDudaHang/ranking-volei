@@ -1,7 +1,6 @@
 import { DuplasContext } from "@/context/DuplasContext";
 import { RankingContext } from "@/context/RankingContext";
 import { Dupla } from "@/model/dupla";
-import { asHourAndMinutes, asWeekDay } from "@/util/date-format";
 import { gerarDuplasPossiveis } from "@/util/duplas-possiveis";
 
 import { Redirect, Stack } from "expo-router";
@@ -24,7 +23,13 @@ export default function CriandoRankingRootLayout() {
     );
     setDuplasAtuais([]);
     setHistoricoDuplas([...historicoDuplas, ...duplasJahUtilizadas]);
-    setDuplasPossiveis(novasDuplasPossiveis);
+
+    // TODO (DUDA): Pensar em um jeito mais inteligente para ver que não sobrou duplas suficientes
+    if (novasDuplasPossiveis.length === 0) {
+      setDuplasPossiveis(gerarDuplasPossiveis(ranking?.participantes));
+    } else {
+      setDuplasPossiveis(novasDuplasPossiveis);
+    }
   };
 
   if (!ranking) {
@@ -56,6 +61,7 @@ export default function CriandoRankingRootLayout() {
       >
         <Stack.Screen name="definir-duplas" />
         <Stack.Screen name="pontuar-duplas" />
+        <Stack.Screen name="finalizar-ranking" />
       </Stack>
     </DuplasContext.Provider>
   );
