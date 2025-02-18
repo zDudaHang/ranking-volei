@@ -12,7 +12,7 @@ export default function CriandoRankingRootLayout() {
   const [duplasAtuais, setDuplasAtuais] = useState<Dupla[]>([]);
   const [historicoDuplas, setHistoricoDuplas] = useState<Dupla[]>([]);
   const [duplasPossiveis, setDuplasPossiveis] = useState<Dupla[]>(
-    gerarDuplasPossiveis(ranking?.participantes)
+    gerarDuplasPossiveis(ranking?.getParticipantes())
   );
 
   const definirDuplasAtuais = (duplas: Dupla[]) => setDuplasAtuais(duplas);
@@ -24,21 +24,22 @@ export default function CriandoRankingRootLayout() {
     setDuplasAtuais([]);
     setHistoricoDuplas([...historicoDuplas, ...duplasJahUtilizadas]);
 
-    // TODO (DUDA): Pensar em um jeito mais inteligente para ver que não sobrou duplas suficientes
-    if (novasDuplasPossiveis.length === 0) {
-      setDuplasPossiveis(gerarDuplasPossiveis(ranking?.participantes));
+    const tamanhoTurma = ranking?.getParticipantes().length ?? 0;
+    const quantidadeDuplasNecessarias = tamanhoTurma / 2;
+    if (novasDuplasPossiveis.length < quantidadeDuplasNecessarias) {
+      setDuplasPossiveis(gerarDuplasPossiveis(ranking?.getParticipantes()));
     } else {
       setDuplasPossiveis(novasDuplasPossiveis);
     }
+
+    ranking?.calcularPontuacoes(duplasJahUtilizadas);
   };
 
   if (!ranking) {
     return <Redirect href="/criando_ranking/adicionar-turma" />;
   }
 
-  const {
-    turma: { dia, horario },
-  } = ranking;
+  const { dia, horario } = ranking.getTurma();
 
   if (!dia || !horario) {
     return null;

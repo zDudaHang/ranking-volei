@@ -24,42 +24,27 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  const [ranking, setRanking] = useState<Ranking>({
-    participantes: [],
-    turma: { horario: null, dia: null },
-  });
+  const [ranking] = useState<Ranking>(
+    new Ranking({ horario: null, dia: null }, [])
+  );
 
   const adicionarAlunos = (alunos: string[]) => {
-    const { participantes, ...rest } = ranking;
-
     const novosParticipantes: Participante[] = alunos.map(
       (nome) => new Participante(nome, TipoParticipante.ALUNO)
     );
 
-    setRanking({
-      ...rest,
-      participantes: [...participantes, ...novosParticipantes],
-    });
+    ranking.adicionarParticipantes(novosParticipantes);
   };
 
   const adicionarProfessores = (professores: string[]) => {
-    const { participantes, ...rest } = ranking;
-
     const novosParticipantes: Participante[] = professores.map(
       (nome) => new Participante(nome, TipoParticipante.PROFESSOR)
     );
-
-    setRanking({
-      ...rest,
-      participantes: [...participantes, ...novosParticipantes],
-    });
+    ranking.adicionarParticipantes(novosParticipantes);
   };
 
   const adicionarTurma = (horario: Date, dia: Date) => {
-    setRanking({
-      turma: { dia, horario },
-      participantes: ranking.participantes,
-    });
+    ranking.setTurma({ dia, horario });
   };
 
   useEffect(() => {

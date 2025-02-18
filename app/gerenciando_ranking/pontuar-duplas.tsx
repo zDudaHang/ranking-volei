@@ -11,7 +11,8 @@ import React, { useContext, useRef, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 
 export default function PontuarDuplasView() {
-  const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext);
+  const { duplasAtuais, historicoDuplas, adicionarDuplasHistorico } =
+    useContext(DuplasContext);
   const [pontuacoes, setPontuacoes] = useState<string[]>([]);
 
   const refs = useRef<TextInput[]>([]);

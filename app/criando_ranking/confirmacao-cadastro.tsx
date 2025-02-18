@@ -4,10 +4,8 @@ import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { ParticipanteView } from "@/components/participante/ParticipanteView";
 import { RankingContext } from "@/context/RankingContext";
-import { useStorage } from "@/hooks/useStorage";
-import { Ranking } from "@/model/ranking";
+import { useRankingStorage } from "@/hooks/useRankingStorage";
 import { asWeekDay, asHourAndMinutes } from "@/util/date-format";
-import { format } from "date-fns";
 import { Redirect, router } from "expo-router";
 import { useContext } from "react";
 import { StyleSheet } from "react-native";
@@ -18,18 +16,16 @@ export default function ConfirmacaoCadastroRankingView() {
   const onCompleteStore = () =>
     router.navigate("/gerenciando_ranking/definir-duplas");
 
-  const { store, loading } = useStorage<Ranking>({ onCompleteStore });
+  const { store, loading } = useRankingStorage({ onCompleteStore });
 
   if (!ranking) {
     return <Redirect href="/criando_ranking/adicionar-turma" />;
   }
 
-  const {
-    turma: { dia, horario },
-    participantes,
-  } = ranking;
+  const { dia, horario } = ranking.getTurma();
+  const participantes = ranking.getParticipantes();
 
-  const handleSubmit = async () => store(ranking, "Ranking");
+  const handleSubmit = () => store(ranking);
 
   if (!dia || !horario) {
     return null;

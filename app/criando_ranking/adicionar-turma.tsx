@@ -1,5 +1,4 @@
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
-import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
@@ -39,13 +38,14 @@ export default function AdicionarTurmaView() {
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Turma</ThemedText>
-        <ThemedText type="default">
+        <ThemedText type="secondary">
           Preencha as informações sobre a turma
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <DiaPicker
           label="Dia"
+          maxDate={hoje}
           diaSelecionado={diaSelecionado}
           setDiaSelecionado={setDiaSelecionado}
         />

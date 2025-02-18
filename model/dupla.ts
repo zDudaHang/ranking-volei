@@ -37,6 +37,10 @@ export class Dupla {
     return [this.primeiroParticipante, this.segundoParticipante];
   }
 
+  public getPontuacao(): number {
+    return this.pontuacao;
+  }
+
   public toString(): string {
     return `${this.primeiroParticipante?.getNome()} e ${this.segundoParticipante?.getNome()}`;
   }

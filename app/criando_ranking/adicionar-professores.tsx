@@ -2,7 +2,6 @@ import { AdicionarProfessores } from "@/components/adicionar/AdicionarProfessore
 import { AvancarButton } from "@/components/common/AvancarButton";
 import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
-import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";

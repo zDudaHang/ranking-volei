@@ -9,11 +9,13 @@ import { ThemedComponent } from "@/model/common";
 interface DiaSemanaPickerProps extends ThemedComponent {
   label: string;
   diaSelecionado: Date;
+  maxDate?: Date;
   setDiaSelecionado: (dia: Date) => void;
 }
 
 export function DiaPicker(props: DiaSemanaPickerProps) {
-  const { label, diaSelecionado, setDiaSelecionado, light, dark } = props;
+  const { label, diaSelecionado, maxDate, setDiaSelecionado, light, dark } =
+    props;
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -44,6 +46,7 @@ export function DiaPicker(props: DiaSemanaPickerProps) {
           testID="dateTimePicker"
           value={diaSelecionado}
           mode="date"
+          maximumDate={maxDate}
           onChange={handleChange}
         />
       )}

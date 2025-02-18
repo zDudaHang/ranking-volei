@@ -46,7 +46,7 @@ export function HorarioPicker(props: HorarioPickerProps) {
           testID="dateTimePicker"
           value={horarioSelecionado}
           mode="time"
-          is24Hour={true}
+          is24Hour
           onChange={handleChange}
         />
       )}

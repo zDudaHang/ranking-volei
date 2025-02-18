@@ -27,7 +27,7 @@ export default function DefinirDuplasView() {
   const [duplas, setDuplas] = useState<Dupla[]>([]);
   const [participantesRestantes, setParticipantesRestantes] = useState<
     Participante[]
-  >(ranking?.participantes ?? []);
+  >(ranking?.getParticipantes() ?? []);
   const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
 
   if (!ranking) {
@@ -79,7 +79,7 @@ export default function DefinirDuplasView() {
 
   const handleClear = () => {
     setDuplas([]);
-    setParticipantesRestantes(ranking.participantes);
+    setParticipantesRestantes(ranking.getParticipantes());
   };
 
   const handleSubmit = () => {
@@ -91,7 +91,7 @@ export default function DefinirDuplasView() {
   const hasDuplas = duplas.length > 0;
 
   const sugerirDuplas = () => {
-    let participantesRestantes = ranking.participantes;
+    let participantesRestantes = ranking.getParticipantes();
     let duplasRestantes = duplasPossiveis;
 
     const duplasSugeridas: Dupla[] = [];

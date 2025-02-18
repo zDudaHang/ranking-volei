@@ -7,7 +7,7 @@ import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function AdicionarAlunosView() {
   const [alunos, setAlunos] = useState<string[]>([]);
