@@ -5,6 +5,7 @@ import { ThemedView } from "@/components/common/ThemedView";
 import { Historico } from "@/components/historico/Historico";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
 import { Ranking } from "@/model/ranking";
+import { asDdMmYyyyWithWeekDay } from "@/util/date-format";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
@@ -33,7 +34,7 @@ export default function VerHistoricoView() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Histórico</ThemedText>
         <ThemedText type="secondary">
-          Todos os rankings realizados no dia {hoje.toLocaleDateString()}
+          Todos os rankings realizados no dia {asDdMmYyyyWithWeekDay(hoje)}
         </ThemedText>
       </ThemedView>
 
@@ -46,11 +47,28 @@ export default function VerHistoricoView() {
           </ThemedText>
         )}
 
+        <ThemedText type="subtitle">Rankings</ThemedText>
         {hasHistorico &&
           historico.map((ranking, index) => (
             <Historico key={index} ranking={ranking} />
           ))}
       </ThemedView>
+      <ThemedButton
+        size="lg"
+        color="primary"
+        onPress={console.log}
+        icon="share"
+      >
+        Compartilhar selecionados
+      </ThemedButton>
+      <ThemedButton
+        size="lg"
+        color="danger"
+        onPress={console.log}
+        icon="delete"
+      >
+        Remover selecionados
+      </ThemedButton>
     </ParallaxScrollView>
   );
 }

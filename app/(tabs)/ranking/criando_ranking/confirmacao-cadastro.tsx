@@ -56,12 +56,12 @@ export default function ConfirmacaoCadastroRankingView() {
         ))}
       </ThemedView>
       <ThemedButton
+        icon="done-all"
         size="lg"
-        color="success"
         onPress={handleSubmit}
         loading={loading}
       >
-        Confirmar e Salvar
+        Confirmar
       </ThemedButton>
     </ParallaxScrollView>
   );

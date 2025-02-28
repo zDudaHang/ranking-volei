@@ -87,13 +87,7 @@ export default function PontuarDuplasView() {
         ))}
       </ThemedView>
       <AvancarButton onPress={handleSubmit} />
-      <ThemedButton
-        size="lg"
-        color="success"
-        onPress={handleFinalizar}
-        iconRight
-        icon={{ color: "white", name: "done-all" }}
-      >
+      <ThemedButton size="lg" onPress={handleFinalizar} icon="done-all">
         Finalizar
       </ThemedButton>
       <LimparButton onPress={handleClear} />

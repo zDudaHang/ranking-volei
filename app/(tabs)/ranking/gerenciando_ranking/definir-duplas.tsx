@@ -163,10 +163,7 @@ export default function DefinirDuplasView() {
           />
         ))}
       </ThemedView>
-      <ThemedButton
-        icon={{ color: "white", name: "lightbulb" }}
-        onPress={handleClickSugerirDuplas}
-      >
+      <ThemedButton icon="lightbulb" onPress={handleClickSugerirDuplas}>
         Sugerir duplas
       </ThemedButton>
 
@@ -184,7 +181,7 @@ export default function DefinirDuplasView() {
           />
         ))}
       </ThemedView>
-      <ThemedButton size="lg" color="success" onPress={handleSubmit}>
+      <ThemedButton icon="done" size="lg" onPress={handleSubmit}>
         Confirmar
       </ThemedButton>
       <LimparButton onPress={handleClear} />

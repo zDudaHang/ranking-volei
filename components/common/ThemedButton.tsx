@@ -1,20 +1,31 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedComponent } from "@/model/common";
-import { Button, ButtonProps } from "@rneui/base";
+import { Button, ButtonProps, IconNode } from "@rneui/base";
 
-interface ThemedButtonProps extends ButtonProps, ThemedComponent {}
+interface ThemedButtonProps
+  extends Omit<ButtonProps, "color" | "icon">,
+    ThemedComponent {
+  color?: "primary" | "danger";
+  icon?: string;
+}
 
 export function ThemedButton(props: ThemedButtonProps) {
-  const { light, dark } = props;
-  const isOutline = props.type === "outline";
-  const primary = useThemeColor({ light, dark }, "primary");
+  const { type = "solid", light, dark, color = "primary", icon } = props;
+  const isOutline = type === "outline";
+  const isSolid = type === "solid";
+
+  const themeColor = useThemeColor({ light, dark }, color);
+  const hasIcon = !!icon;
+  const iconColor = hasIcon && isSolid ? "white" : themeColor;
 
   return (
     <Button
       {...props}
-      color={primary}
-      buttonStyle={isOutline && { borderColor: primary, borderWidth: 1 }}
-      titleStyle={isOutline && { color: primary }}
+      color={themeColor}
+      buttonStyle={isOutline && { borderColor: themeColor, borderWidth: 1 }}
+      titleStyle={isOutline && { color: themeColor }}
+      icon={{ name: icon, color: iconColor, size: 24 }}
+      iconRight
     />
   );
 }

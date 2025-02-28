@@ -43,13 +43,8 @@ export default function FinalizarRankingView() {
           />
         ))}
       </ThemedView>
-      <ThemedButton
-        size="lg"
-        color="success"
-        loading={loading}
-        onPress={handleSubmit}
-      >
-        Finalizar e salvar
+      <ThemedButton size="lg" loading={loading} onPress={handleSubmit}>
+        Finalizar
       </ThemedButton>
     </ParallaxScrollView>
   );
