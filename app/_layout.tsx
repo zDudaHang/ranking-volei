@@ -24,7 +24,7 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  const [ranking] = useState<Ranking>(
+  const [rankingAtual, setRankingAtual] = useState<Ranking>(
     new Ranking({ horario: null, dia: null }, [])
   );
 
@@ -33,19 +33,22 @@ export default function RootLayout() {
       (nome) => new Participante(nome, TipoParticipante.ALUNO)
     );
 
-    ranking.adicionarParticipantes(novosParticipantes);
+    rankingAtual.adicionarParticipantes(novosParticipantes);
   };
 
   const adicionarProfessores = (professores: string[]) => {
     const novosParticipantes: Participante[] = professores.map(
       (nome) => new Participante(nome, TipoParticipante.PROFESSOR)
     );
-    ranking.adicionarParticipantes(novosParticipantes);
+    rankingAtual.adicionarParticipantes(novosParticipantes);
   };
 
   const adicionarTurma = (horario: Date, dia: Date) => {
-    ranking.setTurma({ dia, horario });
+    rankingAtual.setTurma({ dia, horario });
   };
+
+  const clear = () =>
+    setRankingAtual(new Ranking({ horario: null, dia: null }, []));
 
   useEffect(() => {
     if (loaded) {
@@ -61,10 +64,11 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <RankingContext.Provider
         value={{
-          ranking,
+          ranking: rankingAtual,
           adicionarAlunos,
           adicionarProfessores,
           adicionarTurma,
+          clear,
         }}
       >
         <Stack

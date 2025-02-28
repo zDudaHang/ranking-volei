@@ -10,9 +10,12 @@ import { useContext } from "react";
 import { StyleSheet } from "react-native";
 
 export default function FinalizarRankingView() {
-  const { ranking } = useContext(RankingContext);
+  const { ranking, clear } = useContext(RankingContext);
 
-  const onCompleteStore = () => router.navigate("/historico/ver_historico");
+  const onCompleteStore = () => {
+    clear();
+    router.navigate("/ranking/criando_ranking/adicionar-turma");
+  };
 
   const { loading, store } = useHistoricoRankingStorage({ onCompleteStore });
 

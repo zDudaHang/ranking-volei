@@ -6,6 +6,7 @@ interface RankingContext {
   adicionarAlunos: (alunos: string[]) => void;
   adicionarProfessores: (professores: string[]) => void;
   adicionarTurma: (horario: Date, dia: Date) => void;
+  clear: () => void;
 }
 
 export const RankingContext = createContext<RankingContext>({
@@ -13,4 +14,5 @@ export const RankingContext = createContext<RankingContext>({
   adicionarAlunos: () => null,
   adicionarProfessores: () => null,
   adicionarTurma: () => null,
+  clear: () => null,
 });

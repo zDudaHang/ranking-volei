@@ -34,7 +34,10 @@ export default function VerHistoricoView() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Histórico</ThemedText>
         <ThemedText type="secondary">
-          Todos os rankings realizados no dia {asDdMmYyyyWithWeekDay(hoje)}
+          Todos os rankings realizados no dia{" "}
+          <ThemedText type="defaultSemiBold">
+            {asDdMmYyyyWithWeekDay(hoje)}
+          </ThemedText>
         </ThemedText>
       </ThemedView>
 
