@@ -27,7 +27,7 @@ export default function AdicionarAlunosView() {
 
   const handleSubmit = () => {
     adicionarAlunos(alunos);
-    router.navigate("/criando_ranking/adicionar-professores");
+    router.navigate("/ranking/criando_ranking/adicionar-professores");
   };
 
   return (

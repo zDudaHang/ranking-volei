@@ -8,10 +8,10 @@ export class Participante {
   private tipo: TipoParticipante;
   private pontuacao: number;
 
-  public constructor(nome: string, tipo: TipoParticipante) {
+  public constructor(nome: string, tipo: TipoParticipante, pontuacao?: number) {
     this.nome = nome;
     this.tipo = tipo;
-    this.pontuacao = 0;
+    this.pontuacao = pontuacao ?? 0;
   }
 
   public setNome(nome: string): void {

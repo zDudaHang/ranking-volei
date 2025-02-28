@@ -12,7 +12,7 @@ import { StyleSheet } from "react-native";
 export default function FinalizarRankingView() {
   const { ranking } = useContext(RankingContext);
 
-  const onCompleteStore = () => router.navigate("/historico/ver-historico");
+  const onCompleteStore = () => router.navigate("/historico/ver_historico");
 
   const { loading, store } = useHistoricoRankingStorage({ onCompleteStore });
 
@@ -40,7 +40,6 @@ export default function FinalizarRankingView() {
             participante={participante}
             index={index}
             mostrarPontuacao
-            isMaiorPontuacao={index === 0}
           />
         ))}
       </ThemedView>

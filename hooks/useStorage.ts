@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { plainToInstance } from "class-transformer";
 import { useState } from "react";
 
 const APP_KEY = "@RankingVolei:";
@@ -7,7 +8,8 @@ export interface UseStorageReturnValue<T> {
   loading: boolean;
   store: (value: T, key: string) => void;
   update: (newValue: T, key: string) => void;
-  get: (key: string) => Promise<T | null>;
+  get: (key: string) => Promise<any | null>;
+  clear: () => void;
 }
 
 export interface UseStorageProps {
@@ -22,7 +24,8 @@ export function useStorage<T>(
 
   const store = (value: T, key: string) => {
     setLoading(true);
-    AsyncStorage.setItem(APP_KEY + key, JSON.stringify(value))
+    const json = JSON.stringify(value);
+    AsyncStorage.setItem(APP_KEY + key, json)
       .catch(console.error)
       .then(() => {
         setLoading(false);
@@ -30,10 +33,10 @@ export function useStorage<T>(
       });
   };
 
-  const get = async (key: string): Promise<T | null> => {
+  const get = async (key: string): Promise<any | null> => {
     const value = await AsyncStorage.getItem(APP_KEY + key);
     if (value) {
-      return JSON.parse(value) as T;
+      return JSON.parse(value);
     }
 
     return null;
@@ -49,5 +52,14 @@ export function useStorage<T>(
       });
   };
 
-  return { store, get, loading, update };
+  const clear = () => {
+    setLoading(true);
+    AsyncStorage.clear()
+      .catch(console.error)
+      .then(() => {
+        setLoading(false);
+      });
+  };
+
+  return { store, get, loading, update, clear };
 }

@@ -14,12 +14,12 @@ export default function ConfirmacaoCadastroRankingView() {
   const { ranking } = useContext(RankingContext);
 
   const onCompleteStore = () =>
-    router.navigate("/gerenciando_ranking/definir-duplas");
+    router.navigate("/ranking/gerenciando_ranking/definir-duplas");
 
   const { store, loading } = useRankingStorage({ onCompleteStore });
 
   if (!ranking) {
-    return <Redirect href="/criando_ranking/adicionar-turma" />;
+    return <Redirect href="/ranking/criando_ranking/adicionar-turma" />;
   }
 
   const { dia, horario } = ranking.getTurma();

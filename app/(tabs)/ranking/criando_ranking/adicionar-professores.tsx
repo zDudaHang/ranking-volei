@@ -27,7 +27,7 @@ export default function AdicionarProfessoresView() {
 
   const handleSubmit = () => {
     adicionarProfessores(professores);
-    router.navigate("/criando_ranking/confirmacao-cadastro");
+    router.navigate("/ranking/criando_ranking/confirmacao-cadastro");
   };
 
   return (

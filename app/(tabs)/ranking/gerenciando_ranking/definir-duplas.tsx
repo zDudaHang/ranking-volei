@@ -84,7 +84,7 @@ export default function DefinirDuplasView() {
 
   const handleSubmit = () => {
     definirDuplasAtuais(duplas);
-    router.navigate("/gerenciando_ranking/pontuar-duplas");
+    router.navigate("/ranking/gerenciando_ranking/pontuar-duplas");
   };
 
   const hasParticipantesRestantes = participantesRestantes.length > 0;

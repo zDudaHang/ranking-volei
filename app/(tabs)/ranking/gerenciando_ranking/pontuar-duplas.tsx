@@ -51,7 +51,7 @@ export default function PontuarDuplasView() {
 
   const handleSubmit = () => {
     salvarPontuacoes();
-    router.navigate("/gerenciando_ranking/definir-duplas");
+    router.navigate("/ranking/gerenciando_ranking/definir-duplas");
   };
 
   const handleClear = () => {
@@ -62,7 +62,7 @@ export default function PontuarDuplasView() {
 
   const handleFinalizar = () => {
     salvarPontuacoes();
-    router.navigate("/gerenciando_ranking/finalizar-ranking");
+    router.navigate("/ranking/gerenciando_ranking/finalizar-ranking");
   };
 
   return (

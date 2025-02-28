@@ -7,7 +7,7 @@ export default function HistoricoRootLayout() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="ver-historico" />
+      <Stack.Screen name="ver_historico" />
     </Stack>
   );
 }

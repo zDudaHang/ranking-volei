@@ -5,6 +5,7 @@ import {
   UseStorageReturnValue,
   useStorage,
 } from "./useStorage";
+import { plainToInstance } from "class-transformer";
 
 const HISTORICO_KEY_SUFFIX = "HISTORY-";
 
@@ -17,6 +18,7 @@ interface UseHistoricoRankingStorageReturnValue
   extends Pick<UseStorageReturnValue<Ranking[]>, "loading"> {
   store: (ranking: Ranking) => void;
   get: (dia: Date) => Promise<Ranking[] | null>;
+  clear: () => void;
 }
 
 interface UseHistoricoRankingStorageProps extends UseStorageProps {}
@@ -24,7 +26,7 @@ interface UseHistoricoRankingStorageProps extends UseStorageProps {}
 export function useHistoricoRankingStorage(
   props?: UseHistoricoRankingStorageProps
 ): UseHistoricoRankingStorageReturnValue {
-  const { loading, get, store } = useStorage<Ranking[]>(props);
+  const { loading, get, store, clear } = useStorage<Ranking[]>(props);
 
   const storeRanking = (ranking: Ranking) => {
     const dia = ranking.getTurma().dia;
@@ -34,30 +36,32 @@ export function useHistoricoRankingStorage(
       get(key)
         .catch(console.error)
         .then((historicoAtual) => {
-          console.log("Histórico atual: ", historicoAtual);
           if (historicoAtual) {
-            console.log("Já existe um histórico");
-            historicoAtual.push(ranking);
-            store(historicoAtual, key);
+            const historico: Ranking[] = [...historicoAtual];
+            historico.push(ranking);
+            store(historico, key);
           } else {
-            console.log("Não existe um histórico");
             const historico: Ranking[] = [];
             historico.push(ranking);
-            console.log(historico);
             store(historico, key);
           }
         });
     }
   };
 
-  const getRanking = (dia: Date) => {
+  const getRanking = async (dia: Date): Promise<Ranking[] | null> => {
     const key = generateKey(dia);
-    return get(key);
+    const historico = await get(key);
+    if (historico) {
+      return plainToInstance(Ranking, historico);
+    }
+    return null;
   };
 
   return {
     loading,
     get: getRanking,
     store: storeRanking,
+    clear,
   };
 }

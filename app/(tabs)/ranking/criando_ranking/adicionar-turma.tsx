@@ -25,7 +25,7 @@ export default function AdicionarTurmaView() {
 
   const handleSubmit = () => {
     adicionarTurma(horarioSelecionado, diaSelecionado);
-    router.navigate("/criando_ranking/adicionar-alunos");
+    router.navigate("/ranking/criando_ranking/adicionar-alunos");
   };
 
   const handleClear = () => {

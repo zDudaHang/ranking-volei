@@ -1,5 +1,7 @@
+import { Expose, Type } from "class-transformer";
 import { Dupla } from "./dupla";
 import { Participante } from "./participante";
+import "reflect-metadata";
 
 export interface Turma {
   dia: Date | null;
@@ -8,6 +10,8 @@ export interface Turma {
 
 export class Ranking {
   private turma: Turma;
+
+  @Type(() => Participante)
   private participantes: Participante[];
 
   public constructor(turma: Turma, participantes: Participante[]) {
@@ -15,10 +19,12 @@ export class Ranking {
     this.participantes = participantes;
   }
 
+  @Expose()
   public getParticipantes(): Participante[] {
     return this.participantes;
   }
 
+  @Expose()
   public getTurma(): Turma {
     return this.turma;
   }
@@ -27,8 +33,14 @@ export class Ranking {
     this.participantes.push(...novosParticipantes);
   }
 
+  @Expose()
   public setTurma(turma: Turma): void {
     this.turma = turma;
+  }
+
+  @Expose()
+  public setParticipantes(participantes: Participante[]): void {
+    this.participantes = participantes;
   }
 
   public calcularPontuacoes(duplas: Dupla[]): void {

@@ -74,6 +74,7 @@ export default function RootLayout() {
         >
           <Stack.Screen name="index" />
           <Stack.Screen name="+not-found" />
+          <Stack.Screen name="(tabs)" />
         </Stack>
       </RankingContext.Provider>
     </ThemeProvider>

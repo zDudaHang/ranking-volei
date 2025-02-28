@@ -12,7 +12,6 @@ interface ParticipanteViewProps extends ThemedComponent {
   index: number;
   isSelected?: boolean;
   mostrarPontuacao?: boolean;
-  isMaiorPontuacao?: boolean;
   onPress?: (participante: Participante) => void;
 }
 
@@ -22,7 +21,6 @@ export function ParticipanteView(props: ParticipanteViewProps) {
     participante,
     isSelected = false,
     mostrarPontuacao = false,
-    isMaiorPontuacao = false,
     light,
     dark,
     onPress,
