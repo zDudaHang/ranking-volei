@@ -47,7 +47,7 @@ export default function RootLayout() {
     rankingAtual.setTurma({ dia, horario });
   };
 
-  const clear = () =>
+  const limparRankingAtual = () =>
     setRankingAtual(new Ranking({ horario: null, dia: null }, []));
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function RootLayout() {
           adicionarAlunos,
           adicionarProfessores,
           adicionarTurma,
-          clear,
+          limparRankingAtual,
         }}
       >
         <Stack

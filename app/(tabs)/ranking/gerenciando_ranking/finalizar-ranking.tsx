@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { StyleSheet } from "react-native";
 
 export default function FinalizarRankingView() {
-  const { ranking, clear } = useContext(RankingContext);
+  const { ranking, limparRankingAtual: clear } = useContext(RankingContext);
 
   const onCompleteStore = () => {
     clear();

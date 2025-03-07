@@ -29,7 +29,18 @@ export class Ranking {
     return this.turma;
   }
 
-  public adicionarParticipantes(novosParticipantes: Participante[]): void {
+  private hasParticipante(participante: Participante): boolean {
+    return (
+      this.participantes.findIndex((participanteAtual) =>
+        participante.equals(participanteAtual)
+      ) !== -1
+    );
+  }
+
+  public adicionarParticipantes(participantes: Participante[]): void {
+    const novosParticipantes = participantes.filter(
+      (p) => !this.hasParticipante(p)
+    );
     this.participantes.push(...novosParticipantes);
   }
 

@@ -5,12 +5,20 @@ import { Button, ButtonProps, IconNode } from "@rneui/base";
 interface ThemedButtonProps
   extends Omit<ButtonProps, "color" | "icon">,
     ThemedComponent {
-  color?: "primary" | "danger";
+  color?: "primary" | "danger" | "secondary";
   icon?: string;
 }
 
 export function ThemedButton(props: ThemedButtonProps) {
-  const { type = "solid", light, dark, color = "primary", icon } = props;
+  const {
+    type = "solid",
+    light,
+    dark,
+    color = "primary",
+    icon,
+    iconRight = true,
+  } = props;
+
   const isOutline = type === "outline";
   const isSolid = type === "solid";
 
@@ -23,9 +31,9 @@ export function ThemedButton(props: ThemedButtonProps) {
       {...props}
       color={themeColor}
       buttonStyle={isOutline && { borderColor: themeColor, borderWidth: 1 }}
-      titleStyle={isOutline && { color: themeColor }}
+      titleStyle={!isSolid && { color: themeColor }}
       icon={{ name: icon, color: iconColor, size: 24 }}
-      iconRight
+      iconRight={iconRight}
     />
   );
 }

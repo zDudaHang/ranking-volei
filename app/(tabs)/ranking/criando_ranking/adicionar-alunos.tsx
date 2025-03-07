@@ -11,7 +11,6 @@ import { StyleSheet } from "react-native";
 
 export default function AdicionarAlunosView() {
   const [alunos, setAlunos] = useState<string[]>([]);
-
   const { adicionarAlunos } = useContext(RankingContext);
 
   const adicionarAluno = (nome: string) => {

@@ -55,4 +55,12 @@ export class Participante {
       return -1;
     }
   }
+
+  public isAluno(): boolean {
+    return this.tipo === TipoParticipante.ALUNO;
+  }
+
+  public isProfessor(): boolean {
+    return this.tipo === TipoParticipante.PROFESSOR;
+  }
 }

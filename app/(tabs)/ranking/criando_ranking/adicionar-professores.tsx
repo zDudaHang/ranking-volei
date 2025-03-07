@@ -12,7 +12,7 @@ import { StyleSheet } from "react-native";
 export default function AdicionarProfessoresView() {
   const [professores, setProfessores] = useState<string[]>([]);
 
-  const { ranking, adicionarProfessores } = useContext(RankingContext);
+  const { adicionarProfessores } = useContext(RankingContext);
 
   const adicionarProfessor = (nome: string) => {
     setProfessores([...professores, nome]);

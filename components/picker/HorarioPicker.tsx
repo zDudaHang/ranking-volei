@@ -43,7 +43,6 @@ export function HorarioPicker(props: HorarioPickerProps) {
       />
       {show && (
         <DateTimePicker
-          testID="dateTimePicker"
           value={horarioSelecionado}
           mode="time"
           is24Hour

@@ -43,7 +43,6 @@ export function DiaPicker(props: DiaSemanaPickerProps) {
       />
       {show && (
         <DateTimePicker
-          testID="dateTimePicker"
           value={diaSelecionado}
           mode="date"
           maximumDate={maxDate}
