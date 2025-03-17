@@ -5,9 +5,9 @@ import { ThemedView } from "@/components/common/ThemedView";
 import { Historico } from "@/components/historico/Historico";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
 import { Ranking } from "@/model/ranking";
-import { asDdMmYyyyWithWeekDay } from "@/util/date-format";
+import { asDdMmYyyyWithWeekDay, asHourAndMinutes } from "@/util/date-format";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Alert, Share, StyleSheet } from "react-native";
 
 export default function VerHistoricoView() {
   const { get } = useHistoricoRankingStorage();
@@ -41,6 +41,42 @@ export default function VerHistoricoView() {
   }, []);
 
   const hasHistorico = !loading && !!historico && historico.length > 0;
+
+  const handleShare = async () => {
+    let message: string = `Ranking(s) do dia ${asDdMmYyyyWithWeekDay(
+      hoje
+    )}\n\n`;
+
+    indicesSelecionados.forEach((indice) => {
+      const ranking = historico[indice];
+      const horario = ranking.getTurma().horario;
+      if (horario) {
+        message = message.concat(`Turma das ${asHourAndMinutes(horario)}\n`);
+      }
+
+      const participantes = ranking.getParticipantes();
+      participantes.forEach(
+        (participante) =>
+          (message = message.concat(participante.toString(), "\n"))
+      );
+
+      message = message.concat("\n");
+    });
+
+    try {
+      const result = await Share.share({ message });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+        } else {
+          Alert.alert("Sucesso!");
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
 
   return (
     <ParallaxScrollView>
@@ -78,7 +114,7 @@ export default function VerHistoricoView() {
       <ThemedButton
         size="lg"
         color="primary"
-        onPress={console.log}
+        onPress={handleShare}
         icon="share"
       >
         Compartilhar selecionados

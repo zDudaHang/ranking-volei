@@ -39,7 +39,7 @@ export class Participante {
   }
 
   public toString(): string {
-    return this.nome;
+    return `${this.nome} : ${this.pontuacao}`;
   }
 
   public equals(other: Participante | undefined): boolean {
