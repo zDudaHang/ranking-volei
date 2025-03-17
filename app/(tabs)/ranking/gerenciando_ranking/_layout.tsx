@@ -36,7 +36,7 @@ export default function CriandoRankingRootLayout() {
   };
 
   if (!ranking) {
-    return <Redirect href="/criando_ranking/adicionar-turma" />;
+    return <Redirect href="/(tabs)/ranking/criando_ranking/adicionar-turma" />;
   }
 
   const { dia, horario } = ranking.getTurma();
@@ -55,11 +55,7 @@ export default function CriandoRankingRootLayout() {
         adicionarDuplasHistorico,
       }}
     >
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+      <Stack screenOptions={{ headerTitle: "Gerenciando o ranking" }}>
         <Stack.Screen name="definir-duplas" />
         <Stack.Screen name="pontuar-duplas" />
         <Stack.Screen name="finalizar-ranking" />

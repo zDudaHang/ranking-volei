@@ -14,6 +14,19 @@ export default function VerHistoricoView() {
 
   const [historico, setHistorico] = useState<Ranking[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [indicesSelecionados, setIndicesSelecionados] = useState<number[]>([]);
+
+  const handlePress = (indiceSelecionado: number) => {
+    if (indicesSelecionados.includes(indiceSelecionado)) {
+      const indicesSelecionadosSemIndiceSelecionado =
+        indicesSelecionados.filter((indice) => indice !== indiceSelecionado);
+      setIndicesSelecionados(indicesSelecionadosSemIndiceSelecionado);
+    } else {
+      setIndicesSelecionados([...indicesSelecionados, indiceSelecionado]);
+    }
+  };
+
+  const isSelected = (index: number) => indicesSelecionados.includes(index);
 
   const hoje = new Date();
 
@@ -44,16 +57,22 @@ export default function VerHistoricoView() {
       <ThemedView style={styles.stepContainer}>
         {loading && <ThemedText>Carregando...</ThemedText>}
 
+        <ThemedText type="subtitle">Rankings</ThemedText>
         {!hasHistorico && (
           <ThemedText type="secondary">
             Nenhum ranking salvo no momento
           </ThemedText>
         )}
 
-        <ThemedText type="subtitle">Rankings</ThemedText>
         {hasHistorico &&
           historico.map((ranking, index) => (
-            <Historico key={index} ranking={ranking} />
+            <Historico
+              key={index}
+              ranking={ranking}
+              index={index}
+              isSelected={isSelected(index)}
+              onPress={handlePress}
+            />
           ))}
       </ThemedView>
       <ThemedButton
