@@ -17,7 +17,7 @@ export const Colors = {
     placeholder: "#696979",
     primary: "#02786D",
     danger: "#D01E29",
-    secondary: "#11181C",
+    secondary: "#737373",
   },
   dark: {
     text: "#ECEDEE",

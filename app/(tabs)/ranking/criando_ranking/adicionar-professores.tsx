@@ -31,23 +31,35 @@ export default function AdicionarProfessoresView() {
   };
 
   return (
-    <ParallaxScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Professores</ThemedText>
-        <ThemedText type="secondary">
-          Adicione os professores que vão participar
-        </ThemedText>
+    <>
+      <ParallaxScrollView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Professores</ThemedText>
+          <ThemedText type="secondary">
+            Adicione os professores que vão participar
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <AdicionarProfessores
+            professores={professores}
+            adicionarProfessor={adicionarProfessor}
+            removerProfessor={removerProfessor}
+          />
+        </ThemedView>
+      </ParallaxScrollView>
+      <ThemedView
+        style={{
+          flexDirection: "column",
+          alignSelf: "center",
+          gap: 8,
+          width: "90%",
+          padding: 12,
+        }}
+      >
+        <LimparButton onPress={handleClear} />
+        <AvancarButton onPress={handleSubmit} />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <AdicionarProfessores
-          professores={professores}
-          adicionarProfessor={adicionarProfessor}
-          removerProfessor={removerProfessor}
-        />
-      </ThemedView>
-      <AvancarButton onPress={handleSubmit} />
-      <LimparButton onPress={handleClear} />
-    </ParallaxScrollView>
+    </>
   );
 }
 

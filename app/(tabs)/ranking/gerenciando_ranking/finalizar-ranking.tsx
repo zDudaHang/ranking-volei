@@ -28,28 +28,40 @@ export default function FinalizarRankingView() {
   const handleSubmit = () => store(ranking);
 
   return (
-    <ParallaxScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Finalização</ThemedText>
-        <ThemedText type="secondary">
-          As pontuações de cada participantes se encontram logo abaixo.
-        </ThemedText>
+    <>
+      <ParallaxScrollView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Finalização</ThemedText>
+          <ThemedText type="secondary">
+            As pontuações de cada participantes se encontram logo abaixo.
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">Participantes</ThemedText>
+          {participantesOrdenadosPontuacaoDesc.map((participante, index) => (
+            <ParticipanteView
+              key={`participante-${index}`}
+              participante={participante}
+              index={index}
+              mostrarPontuacao
+            />
+          ))}
+        </ThemedView>
+      </ParallaxScrollView>
+      <ThemedView
+        style={{
+          flexDirection: "column",
+          alignSelf: "center",
+          gap: 8,
+          width: "90%",
+          padding: 12,
+        }}
+      >
+        <ThemedButton size="lg" loading={loading} onPress={handleSubmit}>
+          Finalizar
+        </ThemedButton>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Participantes</ThemedText>
-        {participantesOrdenadosPontuacaoDesc.map((participante, index) => (
-          <ParticipanteView
-            key={`participante-${index}`}
-            participante={participante}
-            index={index}
-            mostrarPontuacao
-          />
-        ))}
-      </ThemedView>
-      <ThemedButton size="lg" loading={loading} onPress={handleSubmit}>
-        Finalizar
-      </ThemedButton>
-    </ParallaxScrollView>
+    </>
   );
 }
 

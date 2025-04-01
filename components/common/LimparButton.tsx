@@ -8,7 +8,13 @@ export function LimparButton(props: LimparButtonProps) {
   const { onPress } = props;
 
   return (
-    <ThemedButton size="lg" type="outline" onPress={onPress} icon="clear">
+    <ThemedButton
+      type="outline"
+      size="lg"
+      onPress={onPress}
+      icon="clear"
+      color="secondary"
+    >
       Limpar
     </ThemedButton>
   );

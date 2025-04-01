@@ -65,14 +65,6 @@ export default function VerHistoricoView() {
 
     try {
       const result = await Share.share({ message });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-        } else {
-          Alert.alert("Sucesso!");
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
     } catch (error: any) {
       Alert.alert(error.message);
     }
@@ -94,7 +86,11 @@ export default function VerHistoricoView() {
         {loading && <ThemedText>Carregando...</ThemedText>}
 
         <ThemedText type="subtitle">Rankings</ThemedText>
-        {!hasHistorico && (
+        {hasHistorico ? (
+          <ThemedText type="secondary">
+            Selecione os rankings que deseja compartilhar ou remover.
+          </ThemedText>
+        ) : (
           <ThemedText type="secondary">
             Nenhum ranking salvo no momento
           </ThemedText>
@@ -112,6 +108,7 @@ export default function VerHistoricoView() {
           ))}
       </ThemedView>
       <ThemedButton
+        type="outline"
         size="lg"
         color="primary"
         onPress={handleShare}
@@ -120,6 +117,7 @@ export default function VerHistoricoView() {
         Compartilhar selecionados
       </ThemedButton>
       <ThemedButton
+        type="outline"
         size="lg"
         color="danger"
         onPress={console.log}

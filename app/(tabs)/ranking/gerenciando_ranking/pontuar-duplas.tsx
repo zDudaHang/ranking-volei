@@ -66,32 +66,46 @@ export default function PontuarDuplasView() {
   };
 
   return (
-    <ParallaxScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Pontuação</ThemedText>
-        <ThemedText type="secondary">
-          Defina a pontuação de cada dupla
-        </ThemedText>
+    <>
+      <ParallaxScrollView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Pontuação</ThemedText>
+          <ThemedText type="secondary">
+            Defina a pontuação de cada dupla
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          {duplasAtuais.map((dupla, index) => (
+            <PontuarDupla
+              key={`dupla-${index}`}
+              ref={(element) => addRef(element, index)}
+              dupla={dupla}
+              index={index}
+              pontuacao={pontuacoes[index]}
+              onSubmitEditing={onSubmitEditing}
+              onChangePontuacao={handleChangePontuacao}
+            />
+          ))}
+        </ThemedView>
+      </ParallaxScrollView>
+      <ThemedView
+        style={{
+          flexDirection: "column",
+          alignSelf: "center",
+          gap: 8,
+          width: "90%",
+          padding: 12,
+        }}
+      >
+        <LimparButton onPress={handleClear} />
+        <ThemedButton size="lg" onPress={handleFinalizar} icon="group">
+          Escolher novas duplas
+        </ThemedButton>
+        <ThemedButton size="lg" onPress={handleFinalizar} icon="done-all">
+          Finalizar
+        </ThemedButton>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        {duplasAtuais.map((dupla, index) => (
-          <PontuarDupla
-            key={`dupla-${index}`}
-            ref={(element) => addRef(element, index)}
-            dupla={dupla}
-            index={index}
-            pontuacao={pontuacoes[index]}
-            onSubmitEditing={onSubmitEditing}
-            onChangePontuacao={handleChangePontuacao}
-          />
-        ))}
-      </ThemedView>
-      <AvancarButton onPress={handleSubmit} />
-      <ThemedButton size="lg" onPress={handleFinalizar} icon="done-all">
-        Finalizar
-      </ThemedButton>
-      <LimparButton onPress={handleClear} />
-    </ParallaxScrollView>
+    </>
   );
 }
 

@@ -32,38 +32,50 @@ export default function ConfirmacaoCadastroRankingView() {
   }
 
   return (
-    <ParallaxScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Confirmação</ThemedText>
-        <ThemedText type="secondary">
-          Verifique se tudo está certo antes de criar o ranking
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Turma</ThemedText>
-        <ThemedText type="default">
-          {asWeekDay(dia)} às {asHourAndMinutes(horario)}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Participantes</ThemedText>
-        {participantes.map((participante, index) => (
-          <ParticipanteView
-            key={`participante-${index}`}
-            participante={participante}
-            index={index}
-          />
-        ))}
-      </ThemedView>
-      <ThemedButton
-        icon="done-all"
-        size="lg"
-        onPress={handleSubmit}
-        loading={loading}
+    <>
+      <ParallaxScrollView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Confirmação</ThemedText>
+          <ThemedText type="secondary">
+            Verifique se tudo está certo antes de criar o ranking
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">Turma</ThemedText>
+          <ThemedText type="default">
+            {asWeekDay(dia)} às {asHourAndMinutes(horario)}
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">Participantes</ThemedText>
+          {participantes.map((participante, index) => (
+            <ParticipanteView
+              key={`participante-${index}`}
+              participante={participante}
+              index={index}
+            />
+          ))}
+        </ThemedView>
+      </ParallaxScrollView>
+      <ThemedView
+        style={{
+          flexDirection: "column",
+          alignSelf: "center",
+          gap: 8,
+          width: "90%",
+          padding: 12,
+        }}
       >
-        Confirmar
-      </ThemedButton>
-    </ParallaxScrollView>
+        <ThemedButton
+          icon="done-all"
+          size="lg"
+          onPress={handleSubmit}
+          loading={loading}
+        >
+          Confirmar
+        </ThemedButton>
+      </ThemedView>
+    </>
   );
 }
 

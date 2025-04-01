@@ -1,3 +1,4 @@
+import { AvancarButton } from "@/components/common/AvancarButton";
 import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
@@ -134,58 +135,70 @@ export default function DefinirDuplasView() {
   const hasDuplasDefinidas = duplas.length > 0;
 
   return (
-    <ParallaxScrollView>
-      <ConfirmacaoSugestaoDuplasDialog
-        isVisible={isDialogVisible}
-        onBackdropPress={() => setIsDialogVisible(false)}
-        onConfirm={handleClickConfirmDialog}
-        onCancel={handleClickCancelDialog}
-      />
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Duplas</ThemedText>
-        <ThemedText type="secondary">
-          Defina as duplas selecionando os participantes ou clicando em 'Sugerir
-          duplas'
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Participantes restantes</ThemedText>
-        {!hasParticipantesRestantes && (
-          <ThemedText type="secondary">Nenhum participante sobrando</ThemedText>
-        )}
-        {participantesRestantes.map((participante, index) => (
-          <ParticipanteView
-            key={`participante-${index}`}
-            participante={participante}
-            index={index}
-            onPress={onPress}
-            isSelected={isSelected(participante)}
-          />
-        ))}
-      </ThemedView>
-      <ThemedButton icon="lightbulb" onPress={handleClickSugerirDuplas}>
-        Sugerir duplas
-      </ThemedButton>
+    <>
+      <ParallaxScrollView>
+        <ConfirmacaoSugestaoDuplasDialog
+          isVisible={isDialogVisible}
+          onBackdropPress={() => setIsDialogVisible(false)}
+          onConfirm={handleClickConfirmDialog}
+          onCancel={handleClickCancelDialog}
+        />
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Duplas</ThemedText>
+          <ThemedText type="secondary">
+            Defina as duplas selecionando os participantes ou clicando em
+            'Sugerir duplas'
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">Participantes restantes</ThemedText>
+          {!hasParticipantesRestantes && (
+            <ThemedText type="secondary">
+              Nenhum participante sobrando
+            </ThemedText>
+          )}
+          {participantesRestantes.map((participante, index) => (
+            <ParticipanteView
+              key={`participante-${index}`}
+              participante={participante}
+              index={index}
+              onPress={onPress}
+              isSelected={isSelected(participante)}
+            />
+          ))}
+        </ThemedView>
+        <ThemedButton icon="lightbulb" onPress={handleClickSugerirDuplas}>
+          Sugerir duplas
+        </ThemedButton>
 
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Duplas definidas</ThemedText>
-        {!hasDuplasDefinidas && (
-          <ThemedText type="secondary">Nenhuma dupla definida</ThemedText>
-        )}
-        {duplas.map((dupla, index) => (
-          <DuplaView
-            key={`dupla-${index}`}
-            dupla={dupla}
-            index={index}
-            remover={handleRemove}
-          />
-        ))}
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">Duplas definidas</ThemedText>
+          {!hasDuplasDefinidas && (
+            <ThemedText type="secondary">Nenhuma dupla definida</ThemedText>
+          )}
+          {duplas.map((dupla, index) => (
+            <DuplaView
+              key={`dupla-${index}`}
+              dupla={dupla}
+              index={index}
+              remover={handleRemove}
+            />
+          ))}
+        </ThemedView>
+      </ParallaxScrollView>
+      <ThemedView
+        style={{
+          flexDirection: "column",
+          alignSelf: "center",
+          gap: 8,
+          width: "90%",
+          padding: 12,
+        }}
+      >
+        <LimparButton onPress={handleClear} />
+        <AvancarButton onPress={handleSubmit} />
       </ThemedView>
-      <ThemedButton icon="done" size="lg" onPress={handleSubmit}>
-        Confirmar
-      </ThemedButton>
-      <LimparButton onPress={handleClear} />
-    </ParallaxScrollView>
+    </>
   );
 }
 
