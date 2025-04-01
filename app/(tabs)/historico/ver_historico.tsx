@@ -71,61 +71,68 @@ export default function VerHistoricoView() {
   };
 
   return (
-    <ParallaxScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Histórico</ThemedText>
-        <ThemedText type="secondary">
-          Todos os rankings realizados no dia{" "}
-          <ThemedText type="defaultSemiBold">
-            {asDdMmYyyyWithWeekDay(hoje)}
-          </ThemedText>
-        </ThemedText>
-      </ThemedView>
-
-      <ThemedView style={styles.stepContainer}>
-        {loading && <ThemedText>Carregando...</ThemedText>}
-
-        <ThemedText type="subtitle">Rankings</ThemedText>
-        {hasHistorico ? (
+    <>
+      <ParallaxScrollView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Histórico</ThemedText>
           <ThemedText type="secondary">
-            Selecione os rankings que deseja compartilhar ou remover.
+            Todos os rankings realizados no dia{" "}
+            <ThemedText type="defaultSemiBold">
+              {asDdMmYyyyWithWeekDay(hoje)}
+            </ThemedText>
           </ThemedText>
-        ) : (
-          <ThemedText type="secondary">
-            Nenhum ranking salvo no momento
-          </ThemedText>
-        )}
+        </ThemedView>
 
-        {hasHistorico &&
-          historico.map((ranking, index) => (
-            <Historico
-              key={index}
-              ranking={ranking}
-              index={index}
-              isSelected={isSelected(index)}
-              onPress={handlePress}
-            />
-          ))}
+        <ThemedView style={styles.stepContainer}>
+          {loading && <ThemedText>Carregando...</ThemedText>}
+          <ThemedText type="subtitle">Rankings</ThemedText>
+          {!hasHistorico && (
+            <ThemedText type="secondary">
+              Nenhum ranking salvo no momento
+            </ThemedText>
+          )}
+
+          {hasHistorico &&
+            historico.map((ranking, index) => (
+              <Historico
+                key={index}
+                ranking={ranking}
+                index={index}
+                isSelected={isSelected(index)}
+                onPress={handlePress}
+              />
+            ))}
+        </ThemedView>
+      </ParallaxScrollView>
+      <ThemedView
+        style={{
+          flexDirection: "column",
+          alignSelf: "center",
+          justifyContent: "center",
+          gap: 8,
+          width: "90%",
+          padding: 12,
+        }}
+      >
+        <ThemedButton
+          size="lg"
+          color="danger"
+          onPress={console.log}
+          icon="delete"
+          type="outline"
+        >
+          Remover selecionados
+        </ThemedButton>
+        <ThemedButton
+          size="lg"
+          color="primary"
+          onPress={handleShare}
+          icon="share"
+        >
+          Compartilhar selecionados
+        </ThemedButton>
       </ThemedView>
-      <ThemedButton
-        type="outline"
-        size="lg"
-        color="primary"
-        onPress={handleShare}
-        icon="share"
-      >
-        Compartilhar selecionados
-      </ThemedButton>
-      <ThemedButton
-        type="outline"
-        size="lg"
-        color="danger"
-        onPress={console.log}
-        icon="delete"
-      >
-        Remover selecionados
-      </ThemedButton>
-    </ParallaxScrollView>
+    </>
   );
 }
 

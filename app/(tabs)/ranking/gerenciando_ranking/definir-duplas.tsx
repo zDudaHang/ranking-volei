@@ -12,6 +12,7 @@ import { RankingContext } from "@/context/RankingContext";
 import { Dupla } from "@/model/dupla";
 import { Participante } from "@/model/participante";
 import { hasDuplaInParticipantesRestantes } from "@/util/duplas-possiveis";
+import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { sample } from "lodash";
 import React, { useContext, useState } from "react";
@@ -146,12 +147,26 @@ export default function DefinirDuplasView() {
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title">Duplas</ThemedText>
           <ThemedText type="secondary">
-            Defina as duplas selecionando os participantes ou clicando em
-            'Sugerir duplas'
+            Defina as duplas selecionando os participantes ou clicando no botão
+            abaixo para sugerir duplas.
           </ThemedText>
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
-          <ThemedText type="subtitle">Participantes restantes</ThemedText>
+          <ThemedView
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <ThemedText type="subtitle">Participantes restantes</ThemedText>
+            <ThemedButton
+              type="outline"
+              size="sm"
+              icon="shuffle"
+              onPress={handleClickSugerirDuplas}
+            />
+          </ThemedView>
           {!hasParticipantesRestantes && (
             <ThemedText type="secondary">
               Nenhum participante sobrando
@@ -167,9 +182,6 @@ export default function DefinirDuplasView() {
             />
           ))}
         </ThemedView>
-        <ThemedButton icon="lightbulb" onPress={handleClickSugerirDuplas}>
-          Sugerir duplas
-        </ThemedButton>
 
         <ThemedView style={styles.stepContainer}>
           <ThemedText type="subtitle">Duplas definidas</ThemedText>
