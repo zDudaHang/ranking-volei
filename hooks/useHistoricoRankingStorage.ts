@@ -6,6 +6,7 @@ import {
   useStorage,
 } from "./useStorage";
 import { plainToInstance } from "class-transformer";
+import { remove } from "lodash";
 
 const HISTORICO_KEY_SUFFIX = "HISTORY-";
 
@@ -18,7 +19,7 @@ interface UseHistoricoRankingStorageReturnValue
   extends Pick<UseStorageReturnValue<Ranking[]>, "loading"> {
   store: (ranking: Ranking) => void;
   get: (dia: Date) => Promise<Ranking[] | null>;
-  clear: () => void;
+  remove: (dia: Date, indexes: number[]) => void;
 }
 
 interface UseHistoricoRankingStorageProps extends UseStorageProps {}
@@ -26,7 +27,7 @@ interface UseHistoricoRankingStorageProps extends UseStorageProps {}
 export function useHistoricoRankingStorage(
   props?: UseHistoricoRankingStorageProps
 ): UseHistoricoRankingStorageReturnValue {
-  const { loading, get, store, clear } = useStorage<Ranking[]>(props);
+  const { loading, get, store } = useStorage<Ranking[]>(props);
 
   const storeRanking = (ranking: Ranking) => {
     const dia = ranking.getTurma().dia;
@@ -58,10 +59,23 @@ export function useHistoricoRankingStorage(
     return null;
   };
 
+  const removeRankings = async (dia: Date, indexes: number[]) => {
+    const historico = await getRanking(dia);
+    if (historico) {
+      const newHistorico = historico.filter(
+        (_, index) => !indexes.includes(index)
+      );
+      console.log("historico antigo: ", historico.length);
+      console.log("historico novo: ", newHistorico.length);
+      const key = generateKey(dia);
+      store(newHistorico, key);
+    }
+  };
+
   return {
     loading,
     get: getRanking,
     store: storeRanking,
-    clear,
+    remove: removeRankings,
   };
 }

@@ -34,11 +34,15 @@ export function useStorage<T>(
   };
 
   const get = async (key: string): Promise<any | null> => {
+    setLoading(true);
     const value = await AsyncStorage.getItem(APP_KEY + key);
+    await timeout(1000);
     if (value) {
-      return JSON.parse(value);
+      const parsed = JSON.parse(value);
+      setLoading(false);
+      return parsed;
     }
-
+    setLoading(false);
     return null;
   };
 
@@ -62,4 +66,8 @@ export function useStorage<T>(
   };
 
   return { store, get, loading, update, clear };
+}
+
+function timeout(delay: number) {
+  return new Promise((res) => setTimeout(res, delay));
 }
