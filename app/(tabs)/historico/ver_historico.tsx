@@ -9,9 +9,10 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedComponent } from "@/model/common";
 import { Ranking } from "@/model/ranking";
 import { asDdMmYyyyWithWeekDay, asHourAndMinutes } from "@/util/date-format";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { CheckBox, Divider } from "@rneui/base";
-import { useEffect, useState } from "react";
+import { range } from "lodash";
+import { useState } from "react";
 import { Alert, Share, StyleSheet } from "react-native";
 
 interface VerHistoricoViewProps extends ThemedComponent {}
@@ -87,6 +88,17 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
   };
 
   const isHistoricoEmpty = historico.length === 0;
+  const isTodosSelecionados =
+    !isHistoricoEmpty && historico.length === indicesSelecionados.length;
+
+  const handleSelectAll = () => {
+    if (isTodosSelecionados) {
+      setIndicesSelecionados([]);
+    } else {
+      setIndicesSelecionados(range(0, historico.length));
+    }
+  };
+
   const hasHistorico = !loading && !isHistoricoEmpty;
 
   return (
@@ -109,15 +121,23 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-evenly",
             gap: 32,
             backgroundColor: primary,
             marginBottom: -16,
+            padding: 8,
           }}
         >
-          <ThemedButton size="lg" icon="checklist">
-            Marcar todos
-          </ThemedButton>
+          <MaterialCommunityIcons
+            color="white"
+            onPress={handleSelectAll}
+            name={
+              isTodosSelecionados
+                ? "checkbox-multiple-blank"
+                : "checkbox-multiple-marked"
+            }
+            size={32}
+          />
           <MaterialIcons
             color="white"
             onPress={handleShare}
