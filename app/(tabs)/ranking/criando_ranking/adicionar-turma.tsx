@@ -49,7 +49,7 @@ export default function AdicionarTurmaView() {
               label="Dia"
               maxDate={hoje}
               diaSelecionado={diaSelecionado}
-              setDiaSelecionado={setDiaSelecionado}
+              onChange={setDiaSelecionado}
             />
           </ThemedView>
           <ThemedView style={styles.stepContainer}>

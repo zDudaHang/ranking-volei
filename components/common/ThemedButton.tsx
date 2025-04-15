@@ -32,7 +32,7 @@ export function ThemedButton(props: ThemedButtonProps) {
       color={themeColor}
       buttonStyle={isOutline && { borderColor: themeColor, borderWidth: 1 }}
       titleStyle={!isSolid && { color: themeColor }}
-      icon={{ name: icon, color: iconColor, size: 24 }}
+      icon={{ name: icon, color: iconColor, size: 32 }}
       iconRight={iconRight}
     />
   );

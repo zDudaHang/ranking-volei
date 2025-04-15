@@ -10,12 +10,11 @@ interface DiaSemanaPickerProps extends ThemedComponent {
   label: string;
   diaSelecionado: Date;
   maxDate?: Date;
-  setDiaSelecionado: (dia: Date) => void;
+  onChange: (dia: Date) => void;
 }
 
 export function DiaPicker(props: DiaSemanaPickerProps) {
-  const { label, diaSelecionado, maxDate, setDiaSelecionado, light, dark } =
-    props;
+  const { label, diaSelecionado, maxDate, onChange, light, dark } = props;
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -23,7 +22,7 @@ export function DiaPicker(props: DiaSemanaPickerProps) {
 
   const handleChange = (_event: DateTimePickerEvent, date?: Date) => {
     if (date) {
-      setDiaSelecionado(date);
+      onChange(date);
       setShow(false);
     }
   };

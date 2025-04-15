@@ -6,6 +6,7 @@ import { RemovableListItem } from "../common/RemovableListItem";
 import { ThemedInput } from "../common/ThemedInput";
 import { ThemedText } from "../common/ThemedText";
 import { ThemedComponent } from "@/model/common";
+import { ThemedButton } from "../common/ThemedButton";
 
 interface AdicionarCommonProps extends ThemedComponent {
   data: string[];
@@ -48,12 +49,6 @@ export function AdicionarCommon(props: AdicionarCommonProps) {
         onSubmitEditing={handleAdicionar}
         returnKeyType="next"
         blurOnSubmit={false}
-        rightIcon={{
-          name: "add-box",
-          color: primary,
-          size: 32,
-          onPress: handleAdicionar,
-        }}
       />
 
       <ThemedText type="subtitle">

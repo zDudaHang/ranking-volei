@@ -5,18 +5,32 @@ import { ThemedView } from "@/components/common/ThemedView";
 import { Historico } from "@/components/historico/Historico";
 import { DiaPicker } from "@/components/picker/DiaPicker";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedComponent } from "@/model/common";
 import { Ranking } from "@/model/ranking";
 import { asDdMmYyyyWithWeekDay, asHourAndMinutes } from "@/util/date-format";
+import { MaterialIcons } from "@expo/vector-icons";
+import { CheckBox, Divider } from "@rneui/base";
 import { useEffect, useState } from "react";
 import { Alert, Share, StyleSheet } from "react-native";
 
-export default function VerHistoricoView() {
+interface VerHistoricoViewProps extends ThemedComponent {}
+
+export default function VerHistoricoView(props: VerHistoricoViewProps) {
+  const { light, dark } = props;
   const hoje = new Date();
 
   const { get, remove, loading } = useHistoricoRankingStorage();
   const [historico, setHistorico] = useState<Ranking[]>([]);
   const [diaSelecionado, setDiaSelecionado] = useState<Date>(hoje);
   const [indicesSelecionados, setIndicesSelecionados] = useState<number[]>([]);
+
+  const primary = useThemeColor({ light, dark }, "primary");
+
+  const handleDiaChange = (dia: Date) => {
+    setDiaSelecionado(dia);
+    handleBuscar();
+  };
 
   const handleCheckboxPress = (indiceSelecionado: number) => {
     if (indicesSelecionados.includes(indiceSelecionado)) {
@@ -58,7 +72,9 @@ export default function VerHistoricoView() {
     }
   };
 
-  const handleRemove = () => remove(diaSelecionado, indicesSelecionados);
+  const handleRemove = () => {
+    remove(diaSelecionado, indicesSelecionados);
+  };
 
   const handleBuscar = () => {
     get(diaSelecionado).then((historicoAtual) => {
@@ -70,7 +86,8 @@ export default function VerHistoricoView() {
     });
   };
 
-  const hasHistorico = historico.length > 0;
+  const isHistoricoEmpty = historico.length === 0;
+  const hasHistorico = !loading && !isHistoricoEmpty;
 
   return (
     <>
@@ -78,32 +95,43 @@ export default function VerHistoricoView() {
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title">Histórico</ThemedText>
         </ThemedView>
-        <ThemedView style={styles.stepContainer}>
+        <ThemedView>
           <DiaPicker
             label="Buscar por rankins realizados no dia"
             maxDate={hoje}
             diaSelecionado={diaSelecionado}
-            setDiaSelecionado={setDiaSelecionado}
+            onChange={handleDiaChange}
           />
-          <ThemedButton
-            icon="search"
-            size="lg"
-            onPress={handleBuscar}
-            loading={loading}
-          >
-            Buscar
-          </ThemedButton>
         </ThemedView>
-
-        <ThemedView style={styles.stepContainer}>
-          <ThemedText type="subtitle">Rankings encontrados</ThemedText>
-          {loading && <ThemedText type="secondary">Carregando...</ThemedText>}
-          {!loading && !hasHistorico && (
-            <ThemedText type="secondary">
-              Nenhum ranking salvo no momento
-            </ThemedText>
-          )}
-
+        <ThemedText type="subtitle">Rankings encontrados</ThemedText>
+        {loading && <ThemedText type="secondary">Carregando...</ThemedText>}
+        <ThemedView
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 32,
+            backgroundColor: primary,
+            marginBottom: -16,
+          }}
+        >
+          <ThemedButton size="lg" icon="checklist">
+            Marcar todos
+          </ThemedButton>
+          <MaterialIcons
+            color="white"
+            onPress={handleShare}
+            name="share"
+            size={32}
+          />
+          <MaterialIcons
+            color="white"
+            onPress={handleRemove}
+            name="delete"
+            size={32}
+          />
+        </ThemedView>
+        <ThemedView>
           {hasHistorico &&
             historico.map((ranking, index) => (
               <Historico
@@ -116,34 +144,6 @@ export default function VerHistoricoView() {
             ))}
         </ThemedView>
       </ParallaxScrollView>
-      <ThemedView
-        style={{
-          flexDirection: "column",
-          alignSelf: "center",
-          justifyContent: "center",
-          gap: 8,
-          width: "90%",
-          padding: 12,
-        }}
-      >
-        <ThemedButton
-          size="lg"
-          color="danger"
-          onPress={handleRemove}
-          icon="delete"
-          type="outline"
-        >
-          Remover selecionados
-        </ThemedButton>
-        <ThemedButton
-          size="lg"
-          color="primary"
-          onPress={handleShare}
-          icon="share"
-        >
-          Compartilhar selecionados
-        </ThemedButton>
-      </ThemedView>
     </>
   );
 }
@@ -153,9 +153,5 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
   },
 });

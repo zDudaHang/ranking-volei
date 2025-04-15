@@ -5,11 +5,12 @@ import { Button, CheckBox, ListItem } from "@rneui/base";
 import { useState } from "react";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { ThemedComponent } from "@/model/common";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Dialog } from "@rneui/themed";
 import { ListItemCheckBox } from "@rneui/base/dist/ListItem/ListItem.CheckBox";
+import { ThemedButton } from "../common/ThemedButton";
 
 interface HistoricoProps extends ThemedComponent {
   ranking: Ranking;
@@ -22,6 +23,7 @@ export function Historico(props: HistoricoProps) {
   const { ranking, index, isSelected, onPress, light, dark } = props;
 
   const primary = useThemeColor({ light, dark }, "primary");
+  const secondary = useThemeColor({ light, dark }, "secondary");
   const text = useThemeColor({ light, dark }, "text");
 
   const [open, setOpen] = useState<boolean>(false);
@@ -41,7 +43,8 @@ export function Historico(props: HistoricoProps) {
       <ListItem
         containerStyle={{
           backgroundColor: "#ffffff",
-          borderRadius: 8,
+          borderWidth: 1,
+          borderColor: primary,
         }}
         onPress={handlePress}
       >
@@ -64,9 +67,9 @@ export function Historico(props: HistoricoProps) {
             {asHourAndMinutes(horario)}
           </ListItemTitle>
         </ListItemContent>
-        <MaterialIcons
+        <MaterialCommunityIcons
           size={32}
-          name="groups"
+          name="podium"
           color={primary}
           onPress={handleIconPress}
         />
