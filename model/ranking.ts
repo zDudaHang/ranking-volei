@@ -2,6 +2,7 @@ import { Expose, Type } from "class-transformer";
 import { Dupla } from "./dupla";
 import { Participante } from "./participante";
 import "reflect-metadata";
+import uuid from "react-native-uuid";
 
 export interface Turma {
   dia: Date | null;
@@ -10,6 +11,7 @@ export interface Turma {
 
 export class Ranking {
   private turma: Turma;
+  private uuid: string;
 
   @Type(() => Participante)
   private participantes: Participante[];
@@ -17,6 +19,7 @@ export class Ranking {
   public constructor(turma: Turma, participantes: Participante[]) {
     this.turma = turma;
     this.participantes = participantes;
+    this.uuid = uuid.v4();
   }
 
   @Expose()
@@ -27,6 +30,11 @@ export class Ranking {
   @Expose()
   public getTurma(): Turma {
     return this.turma;
+  }
+
+  @Expose()
+  public getUuid(): string {
+    return this.uuid;
   }
 
   private hasParticipante(participante: Participante): boolean {
@@ -52,6 +60,11 @@ export class Ranking {
   @Expose()
   public setParticipantes(participantes: Participante[]): void {
     this.participantes = participantes;
+  }
+
+  @Expose()
+  public setUuid(uuid: string): void {
+    this.uuid = uuid;
   }
 
   public calcularPontuacoes(duplas: Dupla[]): void {

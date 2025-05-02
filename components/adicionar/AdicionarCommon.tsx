@@ -63,7 +63,7 @@ export function AdicionarCommon(props: AdicionarCommonProps) {
 
       {data.map((nome, index) => (
         <RemovableListItem
-          key={index}
+          key={`removable-${index}`}
           text={nome}
           index={index}
           onPress={remover}
