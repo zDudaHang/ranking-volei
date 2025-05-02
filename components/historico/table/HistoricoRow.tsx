@@ -15,7 +15,7 @@ interface HistoricoRowProps extends ThemedComponent {
   ranking: Ranking;
   index: number;
   isSelected: boolean;
-  onPress: (index: number) => void;
+  onPress: (uuid: string) => void;
 }
 
 export function HistoricoRow(props: HistoricoRowProps) {
@@ -29,7 +29,7 @@ export function HistoricoRow(props: HistoricoRowProps) {
   const { horario } = ranking.getTurma();
   const participantes = ranking.getParticipantes();
 
-  const handlePress = () => onPress(index);
+  const handlePress = () => onPress(ranking.getUuid());
   const handleIconPress = () => setOpen(true);
 
   if (!horario) {

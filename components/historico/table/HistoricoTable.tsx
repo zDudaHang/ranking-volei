@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/common/ThemedText";
 interface HistoricoTableProps
   extends Omit<HistoricoHeaderProps, "light" | "dark"> {
   loading: boolean;
-  isSelected(index: number): boolean;
+  isSelected(uuid: string): boolean;
 }
 
 export function HistoricoTable(props: HistoricoTableProps) {
@@ -13,26 +13,25 @@ export function HistoricoTable(props: HistoricoTableProps) {
     loading,
     diaSelecionado,
     historico,
-    indicesSelecionados,
-    setHistorico,
-    setIndicesSelecionados,
+    uuidsSelecionados,
+    setUuidsSelecionados,
     isSelected,
   } = props;
 
-  const handleCheckboxPress = (indiceSelecionado: number) => {
-    if (indicesSelecionados.includes(indiceSelecionado)) {
-      const indicesSelecionadosSemIndiceSelecionado =
-        indicesSelecionados.filter((indice) => indice !== indiceSelecionado);
-      setIndicesSelecionados(indicesSelecionadosSemIndiceSelecionado);
+  const handleCheckboxPress = (uuidSelecionado: string) => {
+    if (uuidsSelecionados.includes(uuidSelecionado)) {
+      const novosUuidsSelecionados = uuidsSelecionados.filter(
+        (indice) => indice !== uuidSelecionado
+      );
+      setUuidsSelecionados(novosUuidsSelecionados);
     } else {
-      setIndicesSelecionados([...indicesSelecionados, indiceSelecionado]);
+      setUuidsSelecionados([...uuidsSelecionados, uuidSelecionado]);
     }
   };
 
   const isHistoricoEmpty = historico && historico.length === 0;
   const hasHistorico = !loading && !isHistoricoEmpty;
 
-  if (historico === null) return null;
   if (loading) return <ThemedText type="secondary">Carregando...</ThemedText>;
   if (!loading && isHistoricoEmpty)
     return (
@@ -44,9 +43,8 @@ export function HistoricoTable(props: HistoricoTableProps) {
       <HistoricoHeader
         diaSelecionado={diaSelecionado}
         historico={historico}
-        indicesSelecionados={indicesSelecionados}
-        setHistorico={setHistorico}
-        setIndicesSelecionados={setIndicesSelecionados}
+        uuidsSelecionados={uuidsSelecionados}
+        setUuidsSelecionados={setUuidsSelecionados}
       />
       {hasHistorico &&
         historico?.map((ranking, index) => (
@@ -54,7 +52,7 @@ export function HistoricoTable(props: HistoricoTableProps) {
             key={index}
             ranking={ranking}
             index={index}
-            isSelected={isSelected(index)}
+            isSelected={isSelected(ranking.getUuid())}
             onPress={handleCheckboxPress}
           />
         ))}

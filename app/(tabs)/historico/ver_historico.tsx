@@ -6,6 +6,7 @@ import { HistoricoTable } from "@/components/historico/table/HistoricoTable";
 import { DiaPicker } from "@/components/picker/DiaPicker";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
 import { Ranking } from "@/model/ranking";
+import { compareAsc } from "date-fns";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 
@@ -17,8 +18,8 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
   const { get, loading } = useHistoricoRankingStorage();
   const [historico, setHistorico] = useState<Ranking[] | null>(null);
   const [diaSelecionado, setDiaSelecionado] = useState<Date>(hoje);
-  const [indicesSelecionados, setIndicesSelecionados] = useState<number[]>([]);
-  const isSelected = (index: number) => indicesSelecionados.includes(index);
+  const [uuidsSelecionados, setUuidsSelecionados] = useState<string[]>([]);
+  const isSelected = (uuid: string) => uuidsSelecionados.includes(uuid);
 
   const handleBuscar = () => {
     get(diaSelecionado).then((historicoAtual) => {
@@ -34,6 +35,17 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
     if (historico) setHistorico(null);
     setDiaSelecionado(dia);
   }
+
+  const historicoOrdenadoPorHorario = historico?.sort(
+    (rankingA: Ranking, rankingB: Ranking) => {
+      const horarioA = rankingA.getTurma().horario;
+      const horarioB = rankingB.getTurma().horario;
+      if (horarioA && horarioB) {
+        return compareAsc(horarioA, horarioB);
+      }
+      return 0;
+    }
+  );
 
   return (
     <>
@@ -57,17 +69,16 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
             Buscar
           </ThemedButton>
         </ThemedView>
-        {historico !== null && (
+        {historicoOrdenadoPorHorario !== undefined && (
           <>
             <ThemedText type="subtitle">Rankings encontrados</ThemedText>
             <HistoricoTable
               diaSelecionado={diaSelecionado}
-              historico={historico}
-              indicesSelecionados={indicesSelecionados}
+              historico={historicoOrdenadoPorHorario}
+              uuidsSelecionados={uuidsSelecionados}
               isSelected={isSelected}
               loading={loading}
-              setHistorico={setHistorico}
-              setIndicesSelecionados={setIndicesSelecionados}
+              setUuidsSelecionados={setUuidsSelecionados}
             />
           </>
         )}

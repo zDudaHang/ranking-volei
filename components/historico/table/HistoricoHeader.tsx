@@ -11,18 +11,16 @@ import { Share, Alert } from "react-native";
 export interface HistoricoHeaderProps extends ThemedComponent {
   historico: Ranking[];
   diaSelecionado: Date;
-  indicesSelecionados: number[];
-  setIndicesSelecionados: (novosIndicesSelecionados: number[]) => void;
-  setHistorico: (novoHistorico: Ranking[]) => void;
+  uuidsSelecionados: string[];
+  setUuidsSelecionados: (novosUuidsSelecionados: string[]) => void;
 }
 
 export function HistoricoHeader(props: HistoricoHeaderProps) {
   const {
     diaSelecionado,
-    indicesSelecionados,
+    uuidsSelecionados,
     historico,
-    setIndicesSelecionados,
-    setHistorico,
+    setUuidsSelecionados,
     light,
     dark,
   } = props;
@@ -31,13 +29,14 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
   const { get, remove } = useHistoricoRankingStorage();
 
   const isTodosSelecionados =
-    historico.length > 0 && historico.length === indicesSelecionados.length;
+    historico.length > 0 && historico.length === uuidsSelecionados.length;
 
   const handleSelectAll = () => {
     if (isTodosSelecionados) {
-      setIndicesSelecionados([]);
+      setUuidsSelecionados([]);
     } else {
-      setIndicesSelecionados(range(0, historico.length));
+      const todosUuids = historico.map((ranking) => ranking.getUuid());
+      setUuidsSelecionados(todosUuids);
     }
   };
 
@@ -46,20 +45,23 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
       diaSelecionado
     )}\n\n`;
 
-    indicesSelecionados.forEach((indice) => {
-      const ranking = historico[indice];
-      const horario = ranking.getTurma().horario;
-      if (horario) {
-        message = message.concat(`Turma das ${asHourAndMinutes(horario)}\n`);
+    uuidsSelecionados.forEach((uuid) => {
+      const ranking = historico.find((r) => r.getUuid() === uuid);
+
+      if (ranking) {
+        const horario = ranking.getTurma().horario;
+        if (horario) {
+          message = message.concat(`Turma das ${asHourAndMinutes(horario)}\n`);
+        }
+
+        const participantes = ranking.getParticipantes();
+        participantes.forEach(
+          (participante) =>
+            (message = message.concat(participante.toString(), "\n"))
+        );
+
+        message = message.concat("\n");
       }
-
-      const participantes = ranking.getParticipantes();
-      participantes.forEach(
-        (participante) =>
-          (message = message.concat(participante.toString(), "\n"))
-      );
-
-      message = message.concat("\n");
     });
 
     try {
@@ -70,7 +72,7 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
   };
 
   const handleRemove = () => {
-    remove(diaSelecionado, indicesSelecionados);
+    remove(diaSelecionado, uuidsSelecionados);
   };
 
   return (

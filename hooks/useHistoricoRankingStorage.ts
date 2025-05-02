@@ -19,7 +19,7 @@ interface UseHistoricoRankingStorageReturnValue
   extends Pick<UseStorageReturnValue<Ranking[]>, "loading"> {
   store: (ranking: Ranking) => void;
   get: (dia: Date) => Promise<Ranking[] | null>;
-  remove: (dia: Date, indexes: number[]) => void;
+  remove: (dia: Date, uuids: string[]) => void;
 }
 
 interface UseHistoricoRankingStorageProps extends UseStorageProps {}
@@ -59,11 +59,11 @@ export function useHistoricoRankingStorage(
     return null;
   };
 
-  const removeRankings = async (dia: Date, indexes: number[]) => {
+  const removeRankings = async (dia: Date, uuids: string[]) => {
     const historico = await getRanking(dia);
     if (historico) {
       const newHistorico = historico.filter(
-        (_, index) => !indexes.includes(index)
+        (ranking) => !uuids.includes(ranking.getUuid())
       );
       console.log("historico antigo: ", historico.length);
       console.log("historico novo: ", newHistorico.length);
