@@ -13,6 +13,7 @@ export interface HistoricoHeaderProps extends ThemedComponent {
   diaSelecionado: Date;
   uuidsSelecionados: string[];
   setUuidsSelecionados: (novosUuidsSelecionados: string[]) => void;
+  onRemove: (historico: Ranking[] | null) => void;
 }
 
 export function HistoricoHeader(props: HistoricoHeaderProps) {
@@ -21,6 +22,7 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
     uuidsSelecionados,
     historico,
     setUuidsSelecionados,
+    onRemove,
     light,
     dark,
   } = props;
@@ -71,8 +73,11 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
     }
   };
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
     remove(diaSelecionado, uuidsSelecionados);
+
+    const novoHistorico = await get(diaSelecionado);
+    onRemove(novoHistorico);
   };
 
   return (

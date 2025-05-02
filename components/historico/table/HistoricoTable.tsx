@@ -15,6 +15,7 @@ export function HistoricoTable(props: HistoricoTableProps) {
     historico,
     uuidsSelecionados,
     setUuidsSelecionados,
+    onRemove,
     isSelected,
   } = props;
 
@@ -45,6 +46,7 @@ export function HistoricoTable(props: HistoricoTableProps) {
         historico={historico}
         uuidsSelecionados={uuidsSelecionados}
         setUuidsSelecionados={setUuidsSelecionados}
+        onRemove={onRemove}
       />
       {hasHistorico &&
         historico?.map((ranking, index) => (

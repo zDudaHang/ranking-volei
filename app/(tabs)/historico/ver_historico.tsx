@@ -55,7 +55,7 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
           <DiaPicker
-            label="Buscar por rankins realizados no dia"
+            label="Buscar por rankings realizados no dia"
             maxDate={hoje}
             diaSelecionado={diaSelecionado}
             onChange={handleChangeDiaSelecionado}
@@ -79,6 +79,7 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
               isSelected={isSelected}
               loading={loading}
               setUuidsSelecionados={setUuidsSelecionados}
+              onRemove={setHistorico}
             />
           </>
         )}
