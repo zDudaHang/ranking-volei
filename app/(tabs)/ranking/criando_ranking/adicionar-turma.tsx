@@ -82,11 +82,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     gap: 8,
-    // backgroundColor: "blue",
   },
   stepContainer: {
     gap: 8,
     marginBottom: 8,
-    // backgroundColor: "pink",
   },
 });

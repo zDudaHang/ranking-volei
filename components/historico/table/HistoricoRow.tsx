@@ -1,29 +1,27 @@
 import { Ranking } from "@/model/ranking";
-import { ThemedText } from "../common/ThemedText";
-import { asHourAndMinutes, asWeekDay } from "@/util/date-format";
-import { Button, CheckBox, ListItem } from "@rneui/base";
+import { ThemedText } from "../../common/ThemedText";
+import { asHourAndMinutes } from "@/util/date-format";
+import { ListItem } from "@rneui/base";
 import { useState } from "react";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ThemedComponent } from "@/model/common";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Dialog } from "@rneui/themed";
 import { ListItemCheckBox } from "@rneui/base/dist/ListItem/ListItem.CheckBox";
-import { ThemedButton } from "../common/ThemedButton";
 
-interface HistoricoProps extends ThemedComponent {
+interface HistoricoRowProps extends ThemedComponent {
   ranking: Ranking;
   index: number;
   isSelected: boolean;
   onPress: (index: number) => void;
 }
 
-export function Historico(props: HistoricoProps) {
+export function HistoricoRow(props: HistoricoRowProps) {
   const { ranking, index, isSelected, onPress, light, dark } = props;
 
   const primary = useThemeColor({ light, dark }, "primary");
-  const secondary = useThemeColor({ light, dark }, "secondary");
   const text = useThemeColor({ light, dark }, "text");
 
   const [open, setOpen] = useState<boolean>(false);
