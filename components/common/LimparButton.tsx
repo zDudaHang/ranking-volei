@@ -12,7 +12,7 @@ export function LimparButton(props: LimparButtonProps) {
       type="outline"
       size="lg"
       onPress={onPress}
-      icon="clear"
+      icon={{ name: "clear" }}
       color="secondary"
     >
       Limpar

@@ -67,7 +67,7 @@ export default function ConfirmacaoCadastroRankingView() {
         }}
       >
         <ThemedButton
-          icon="done-all"
+          icon={{ name: "done-all" }}
           size="lg"
           onPress={handleSubmit}
           loading={loading}

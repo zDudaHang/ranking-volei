@@ -7,6 +7,7 @@ import {
 } from "./useStorage";
 import { plainToInstance } from "class-transformer";
 import { remove } from "lodash";
+import { useState } from "react";
 
 const HISTORICO_KEY_SUFFIX = "HISTORY-";
 
@@ -19,7 +20,7 @@ interface UseHistoricoRankingStorageReturnValue
   extends Pick<UseStorageReturnValue<Ranking[]>, "loading"> {
   store: (ranking: Ranking) => void;
   get: (dia: Date) => Promise<Ranking[] | null>;
-  remove: (dia: Date, uuids: string[]) => void;
+  remove: (dia: Date, uuids: string[]) => Promise<Ranking[] | null>;
 }
 
 interface UseHistoricoRankingStorageProps extends UseStorageProps {}
@@ -27,9 +28,12 @@ interface UseHistoricoRankingStorageProps extends UseStorageProps {}
 export function useHistoricoRankingStorage(
   props?: UseHistoricoRankingStorageProps
 ): UseHistoricoRankingStorageReturnValue {
-  const { loading, get, store } = useStorage<Ranking[]>(props);
+  const { get, store } = useStorage<Ranking[]>(props);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const storeRanking = (ranking: Ranking) => {
+    setLoading(true);
     const dia = ranking.getTurma().dia;
 
     if (dia) {
@@ -48,28 +52,40 @@ export function useHistoricoRankingStorage(
           }
         });
     }
+
+    setLoading(false);
   };
 
   const getRanking = async (dia: Date): Promise<Ranking[] | null> => {
+    setLoading(true);
+
     const key = generateKey(dia);
     const historico = await get(key);
+
     if (historico) {
-      return plainToInstance(Ranking, historico);
+      const ranking = plainToInstance(Ranking, historico);
+      setLoading(false);
+      return ranking;
     }
+
+    setLoading(false);
     return null;
   };
 
   const removeRankings = async (dia: Date, uuids: string[]) => {
+    setLoading(true);
     const historico = await getRanking(dia);
+    let newHistorico = historico;
     if (historico) {
-      const newHistorico = historico.filter(
+      newHistorico = historico.filter(
         (ranking) => !uuids.includes(ranking.getUuid())
       );
-      console.log("historico antigo: ", historico.length);
-      console.log("historico novo: ", newHistorico.length);
       const key = generateKey(dia);
       store(newHistorico, key);
     }
+
+    setLoading(false);
+    return newHistorico;
   };
 
   return {

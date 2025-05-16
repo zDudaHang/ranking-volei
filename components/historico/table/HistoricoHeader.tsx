@@ -1,3 +1,4 @@
+import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedView } from "@/components/common/ThemedView";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -28,7 +29,7 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
   } = props;
 
   const primary = useThemeColor({ light, dark }, "primary");
-  const { get, remove } = useHistoricoRankingStorage();
+  const { get, remove, loading } = useHistoricoRankingStorage();
 
   const isTodosSelecionados =
     historico.length > 0 && historico.length === uuidsSelecionados.length;
@@ -74,10 +75,10 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
   };
 
   const handleRemove = async () => {
-    remove(diaSelecionado, uuidsSelecionados);
-
-    const novoHistorico = await get(diaSelecionado);
-    onRemove(novoHistorico);
+    const newHistorico = await remove(diaSelecionado, uuidsSelecionados);
+    if (newHistorico) {
+      onRemove([...newHistorico]);
+    } else onRemove(newHistorico);
   };
 
   return (
@@ -91,27 +92,22 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
         padding: 8,
       }}
     >
-      <MaterialCommunityIcons
-        color="white"
-        onPress={handleSelectAll}
-        name={
-          isTodosSelecionados
+      <ThemedButton
+        icon={{
+          name: isTodosSelecionados
             ? "checkbox-multiple-blank"
-            : "checkbox-multiple-marked"
-        }
-        size={32}
+            : "checkbox-multiple-marked",
+          type: "material-community",
+        }}
+        onPress={handleSelectAll}
+        size="sm"
       />
-      <MaterialIcons
-        color="white"
-        onPress={handleShare}
-        name="share"
-        size={32}
-      />
-      <MaterialIcons
-        color="white"
+      <ThemedButton icon={{ name: "share" }} onPress={handleShare} size="sm" />
+      <ThemedButton
+        icon={{ name: "delete" }}
         onPress={handleRemove}
-        name="delete"
-        size={32}
+        size="sm"
+        loading={loading}
       />
     </ThemedView>
   );

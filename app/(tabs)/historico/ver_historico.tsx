@@ -47,6 +47,11 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
     }
   );
 
+  const handleRemove = (ranking: Ranking[] | null) => {
+    console.log(ranking);
+    setHistorico(ranking);
+  };
+
   return (
     <>
       <ParallaxScrollView>
@@ -61,7 +66,7 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
             onChange={handleChangeDiaSelecionado}
           />
           <ThemedButton
-            icon="search"
+            icon={{ name: "search" }}
             size="lg"
             loading={loading}
             onPress={handleBuscar}
@@ -79,7 +84,7 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
               isSelected={isSelected}
               loading={loading}
               setUuidsSelecionados={setUuidsSelecionados}
-              onRemove={setHistorico}
+              onRemove={handleRemove}
             />
           </>
         )}

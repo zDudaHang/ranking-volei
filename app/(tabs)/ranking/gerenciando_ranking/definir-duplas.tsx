@@ -163,7 +163,7 @@ export default function DefinirDuplasView() {
             <ThemedButton
               type="outline"
               size="sm"
-              icon="shuffle"
+              icon={{ name: "shuffle" }}
               onPress={handleClickSugerirDuplas}
             />
           </ThemedView>

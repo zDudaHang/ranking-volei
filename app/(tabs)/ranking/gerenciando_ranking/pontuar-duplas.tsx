@@ -98,10 +98,18 @@ export default function PontuarDuplasView() {
         }}
       >
         <LimparButton onPress={handleClear} />
-        <ThemedButton size="lg" onPress={handleFinalizar} icon="group">
+        <ThemedButton
+          size="lg"
+          onPress={handleFinalizar}
+          icon={{ name: "group" }}
+        >
           Escolher novas duplas
         </ThemedButton>
-        <ThemedButton size="lg" onPress={handleFinalizar} icon="done-all">
+        <ThemedButton
+          size="lg"
+          onPress={handleFinalizar}
+          icon={{ name: "done-all" }}
+        >
           Finalizar
         </ThemedButton>
       </ThemedView>
