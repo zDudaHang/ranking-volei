@@ -40,6 +40,7 @@ export function HorarioPicker(props: HorarioPickerProps) {
         }}
         value={asHourAndMinutes(horarioSelecionado)}
         editable={false}
+        required
       />
       {show && (
         <DateTimePicker

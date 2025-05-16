@@ -39,6 +39,7 @@ export function DiaPicker(props: DiaSemanaPickerProps) {
         }}
         value={diaSelecionado.toLocaleDateString()}
         editable={false}
+        required
       />
       {show && (
         <DateTimePicker
