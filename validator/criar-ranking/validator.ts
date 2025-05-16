@@ -1,33 +1,37 @@
+import { Participante, TipoParticipante } from "@/model/participante";
 import { Validation } from "../model";
+
+export interface ParticipanteFormModel {
+  nome: string;
+  tipo: TipoParticipante;
+  pontuacao: number;
+}
 
 export interface RankingFormModel {
   diaSemana?: string;
   horario?: string;
+  participantes?: ParticipanteFormModel[];
 }
 
 export function validate(
-  formValues: RankingFormModel
+  formValues: RankingFormModel | null
 ): Validation<RankingFormModel> {
   const errors = new Validation<RankingFormModel>();
 
-  errors.setError("diaSemana", required(formValues.diaSemana));
-  errors.setError("horario", required(formValues.horario));
+  if (formValues?.participantes) {
+    if (formValues.participantes.length < 4) {
+      errors.setError(
+        "participantes",
+        "Deve possuir no mínimo 4 participantes"
+      );
+    }
+    if (formValues.participantes.length % 2 === 1) {
+      errors.setError(
+        "participantes",
+        "A quantidade de participantes deve ser um número par"
+      );
+    }
+  }
 
   return errors;
-}
-
-const PREENCHIMENTO_OBRIGATORIO = "Preenchimento obrigatório";
-
-function required(formValue: string | undefined): string | undefined {
-  if (formValue === null || formValue === undefined) {
-    return PREENCHIMENTO_OBRIGATORIO;
-  }
-
-  if (formValue.length === 0) {
-    return PREENCHIMENTO_OBRIGATORIO;
-  }
-
-  if (formValue.trim().length === 0) {
-    return PREENCHIMENTO_OBRIGATORIO;
-  }
 }

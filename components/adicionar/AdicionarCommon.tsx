@@ -6,9 +6,8 @@ import { RemovableListItem } from "../common/RemovableListItem";
 import { ThemedInput } from "../common/ThemedInput";
 import { ThemedText } from "../common/ThemedText";
 import { ThemedComponent } from "@/model/common";
-import { ThemedButton } from "../common/ThemedButton";
 
-interface AdicionarCommonProps extends ThemedComponent {
+interface AdicionarCommonProps {
   data: string[];
   isAlunos: boolean;
 
@@ -17,13 +16,11 @@ interface AdicionarCommonProps extends ThemedComponent {
 }
 
 export function AdicionarCommon(props: AdicionarCommonProps) {
-  const { data, isAlunos, light, dark, adicionar, remover } = props;
+  const { data, isAlunos, adicionar, remover } = props;
 
   const [nome, setNome] = useState<string | undefined>();
 
   const nomeRef = useRef<Input & TextInput>(null);
-
-  const primary = useThemeColor({ light, dark }, "primary");
 
   const handleChangeNome = (nome: string) => {
     setNome(nome);

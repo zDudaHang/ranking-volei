@@ -2,12 +2,19 @@ import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
+import { ErrorMessage } from "@/components/error/ErrorMessage";
 import { ParticipanteView } from "@/components/participante/ParticipanteView";
 import { RankingContext } from "@/context/RankingContext";
+import { convertToFormModel } from "@/converter/converter-ranking";
 import { useRankingStorage } from "@/hooks/useRankingStorage";
 import { asWeekDay, asHourAndMinutes } from "@/util/date-format";
+import {
+  RankingFormModel,
+  validate,
+} from "@/validator/criar-ranking/validator";
+import { Validation } from "@/validator/model";
 import { Redirect, router } from "expo-router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 
 export default function ConfirmacaoCadastroRankingView() {
@@ -18,6 +25,10 @@ export default function ConfirmacaoCadastroRankingView() {
 
   const { store, loading } = useRankingStorage({ onCompleteStore });
 
+  const [errors, setErrors] = useState<Validation<RankingFormModel> | null>(
+    null
+  );
+
   if (!ranking) {
     return <Redirect href="/ranking/criando_ranking/adicionar-turma" />;
   }
@@ -25,7 +36,14 @@ export default function ConfirmacaoCadastroRankingView() {
   const { dia, horario } = ranking.getTurma();
   const participantes = ranking.getParticipantes();
 
-  const handleSubmit = () => store(ranking);
+  const handleSubmit = () => {
+    const errors = validate(convertToFormModel(ranking));
+    if (errors.isValid()) {
+      store(ranking);
+    } else {
+      setErrors(errors);
+    }
+  };
 
   if (!dia || !horario) {
     return null;
@@ -48,6 +66,7 @@ export default function ConfirmacaoCadastroRankingView() {
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
           <ThemedText type="subtitle">Participantes</ThemedText>
+          {errors && <ErrorMessage errors={errors} name="participantes" />}
           {participantes.map((participante, index) => (
             <ParticipanteView
               key={`participante-${index}`}
