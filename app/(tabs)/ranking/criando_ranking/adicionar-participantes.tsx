@@ -30,6 +30,7 @@ export default function AdicionarAlunosView() {
   const handleClear = () => setParticipantes([]);
 
   const handleSubmit = () => {
+    console.log("[SUBMIT] ", participantes);
     adicionarParticipantes(participantes);
     router.navigate("/ranking/criando_ranking/confirmacao-cadastro");
   };
@@ -75,6 +76,5 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     gap: 8,
-    margin: 8,
   },
 });

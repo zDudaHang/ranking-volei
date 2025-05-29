@@ -88,7 +88,7 @@ export function AdicionarParticipanteForm(
         Adicionar
       </ThemedButton>
 
-      <ThemedText type="subtitle" style={{ marginTop: 8, marginBottom: 8 }}>
+      <ThemedText type="subtitle" style={{ marginTop: 16, marginBottom: 8 }}>
         Participantes adicionados ({participantes.length})
       </ThemedText>
 
