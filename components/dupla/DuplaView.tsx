@@ -1,5 +1,5 @@
 import { Dupla } from "@/model/dupla";
-import { ParticipanteRemovivel } from "../common/ParticipanteRemovivel";
+import { DuplaRemovivel } from "../removivel/DuplaRemovivel";
 
 interface DuplaViewProps {
   dupla: Dupla;
@@ -14,11 +14,5 @@ export function DuplaView(props: DuplaViewProps) {
     return null;
   }
 
-  return (
-    <ParticipanteRemovivel
-      index={index}
-      participante={dupla.toString()}
-      onPress={remover}
-    />
-  );
+  return <DuplaRemovivel index={index} dupla={dupla} onPress={remover} />;
 }

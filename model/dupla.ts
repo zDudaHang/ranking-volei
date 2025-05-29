@@ -41,8 +41,28 @@ export class Dupla {
     return this.pontuacao;
   }
 
-  public toString(): string {
+  public getNomes(): string {
     return `${this.primeiroParticipante?.getNome()} e ${this.segundoParticipante?.getNome()}`;
+  }
+
+  public getTiposParticipantes(): string {
+    const primeiroTipoParticipante = this.primeiroParticipante.getTipo();
+    const segundoTipoParticipante = this.segundoParticipante.getTipo();
+
+    const isPrimeiroParticipanteProfessor =
+      primeiroTipoParticipante === TipoParticipante.PROFESSOR;
+    const isSegundoParticipanteProfessor =
+      segundoTipoParticipante === TipoParticipante.PROFESSOR;
+
+    if (isPrimeiroParticipanteProfessor && isSegundoParticipanteProfessor) {
+      return "Professores";
+    } else if (isPrimeiroParticipanteProfessor) {
+      return "Professor(a) e Aluno(a)";
+    } else if (isSegundoParticipanteProfessor) {
+      return "Aluno(a) e Professor(a)";
+    } else {
+      return "Alunos";
+    }
   }
 
   public contains(participante: Participante): boolean {

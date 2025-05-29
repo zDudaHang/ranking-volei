@@ -1,7 +1,7 @@
 import { Input } from "@rneui/base";
 import { useRef, useState } from "react";
 import { TextInput } from "react-native";
-import { ParticipanteRemovivel } from "../common/ParticipanteRemovivel";
+import { ParticipanteRemovivel } from "../removivel/ParticipanteRemovivel";
 import { ThemedInput } from "../common/ThemedInput";
 import { ThemedText } from "../common/ThemedText";
 import { ThemedView } from "../common/ThemedView";

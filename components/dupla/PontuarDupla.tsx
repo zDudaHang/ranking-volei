@@ -28,7 +28,7 @@ export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
 
     return (
       <Fragment>
-        <ThemedText type="subtitle">{dupla.toString()}</ThemedText>
+        <ThemedText type="subtitle">{dupla.getNomes()}</ThemedText>
         <ThemedInput
           ref={ref}
           label="Pontuação"
