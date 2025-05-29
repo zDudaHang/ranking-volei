@@ -28,21 +28,6 @@ export default function RootLayout() {
     new Ranking({ horario: null, dia: null }, [])
   );
 
-  const adicionarAlunos = (alunos: string[]) => {
-    const novosParticipantes: Participante[] = alunos.map(
-      (nome) => new Participante(nome, TipoParticipante.ALUNO)
-    );
-
-    rankingAtual.adicionarParticipantes(novosParticipantes);
-  };
-
-  const adicionarProfessores = (professores: string[]) => {
-    const novosParticipantes: Participante[] = professores.map(
-      (nome) => new Participante(nome, TipoParticipante.PROFESSOR)
-    );
-    rankingAtual.adicionarParticipantes(novosParticipantes);
-  };
-
   const adicionarTurma = (horario: Date, dia: Date) => {
     rankingAtual.setTurma({ dia, horario });
   };
@@ -60,14 +45,17 @@ export default function RootLayout() {
     return null;
   }
 
+  const adicionarParticipantes = (participantes: Participante[]) => {
+    rankingAtual.setParticipantes(participantes);
+  };
+
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <RankingContext.Provider
         value={{
           ranking: rankingAtual,
-          adicionarAlunos,
-          adicionarProfessores,
           adicionarTurma,
+          adicionarParticipantes,
           limparRankingAtual,
         }}
       >

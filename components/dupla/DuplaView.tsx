@@ -1,5 +1,5 @@
 import { Dupla } from "@/model/dupla";
-import { RemovableListItem } from "../common/RemovableListItem";
+import { ParticipanteRemovivel } from "../common/ParticipanteRemovivel";
 
 interface DuplaViewProps {
   dupla: Dupla;
@@ -15,9 +15,9 @@ export function DuplaView(props: DuplaViewProps) {
   }
 
   return (
-    <RemovableListItem
+    <ParticipanteRemovivel
       index={index}
-      text={dupla.toString()}
+      participante={dupla.toString()}
       onPress={remover}
     />
   );

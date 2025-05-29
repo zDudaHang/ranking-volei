@@ -37,21 +37,6 @@ export class Ranking {
     return this.uuid;
   }
 
-  private hasParticipante(participante: Participante): boolean {
-    return (
-      this.participantes.findIndex((participanteAtual) =>
-        participante.equals(participanteAtual)
-      ) !== -1
-    );
-  }
-
-  public adicionarParticipantes(participantes: Participante[]): void {
-    const novosParticipantes = participantes.filter(
-      (p) => !this.hasParticipante(p)
-    );
-    this.participantes.push(...novosParticipantes);
-  }
-
   @Expose()
   public setTurma(turma: Turma): void {
     this.turma = turma;

@@ -1,48 +1,53 @@
-import { AdicionarAlunos } from "@/components/adicionar/AdicionarAlunos";
+import { AdicionarParticipanteForm } from "@/components/adicionar/AdicionarParticipanteForm";
 import { AvancarButton } from "@/components/common/AvancarButton";
 import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
+import { Participante, TipoParticipante } from "@/model/participante";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 
 export default function AdicionarAlunosView() {
-  const [alunos, setAlunos] = useState<string[]>([]);
-  const { adicionarAlunos } = useContext(RankingContext);
+  const [participantes, setParticipantes] = useState<Participante[]>([]);
+  const { adicionarParticipantes } = useContext(RankingContext);
 
-  const adicionarAluno = (nome: string) => {
-    setAlunos([...alunos, nome]);
+  const adicionarParticipante = (
+    nome: string,
+    tipoParticipante: TipoParticipante
+  ) => {
+    const novoParticipante = new Participante(nome, tipoParticipante);
+    setParticipantes([...participantes, novoParticipante]);
   };
 
   const removerAluno = (index: number) => {
-    alunos.splice(index, 1);
-    setAlunos([...alunos]);
+    participantes.splice(index, 1);
+    setParticipantes([...participantes]);
   };
 
-  const handleClear = () => setAlunos([]);
+  const handleClear = () => setParticipantes([]);
 
   const handleSubmit = () => {
-    adicionarAlunos(alunos);
-    router.navigate("/ranking/criando_ranking/adicionar-professores");
+    adicionarParticipantes(participantes);
+    router.navigate("/ranking/criando_ranking/confirmacao-cadastro");
   };
 
   return (
     <>
       <ParallaxScrollView>
         <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">Alunos</ThemedText>
+          <ThemedText type="title">Participantes</ThemedText>
           <ThemedText type="secondary">
-            Adicione os alunos que vão participar
+            Adicione os participantes do ranking
           </ThemedText>
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
-          <AdicionarAlunos
-            alunos={alunos}
-            adicionarAluno={adicionarAluno}
-            removerAluno={removerAluno}
+          <AdicionarParticipanteForm
+            participantes={participantes}
+            adicionar={adicionarParticipante}
+            remover={removerAluno}
           />
         </ThemedView>
       </ParallaxScrollView>

@@ -9,8 +9,7 @@ export default function CriandoRankingRootLayout() {
       }}
     >
       <Stack.Screen name="adicionar-turma" />
-      <Stack.Screen name="adicionar-alunos" />
-      <Stack.Screen name="adicionar-professores" />
+      <Stack.Screen name="adicionar-participantes" />
       <Stack.Screen name="confirmacao-cadastro" />
     </Stack>
   );

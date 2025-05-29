@@ -47,10 +47,7 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
     }
   );
 
-  const handleRemove = (ranking: Ranking[] | null) => {
-    console.log(ranking);
-    setHistorico(ranking);
-  };
+  const handleRemove = (ranking: Ranking[] | null) => setHistorico(ranking);
 
   return (
     <>

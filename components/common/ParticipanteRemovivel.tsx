@@ -1,19 +1,22 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedComponent } from "@/model/common";
+import { Participante, TipoParticipante } from "@/model/participante";
 import { Button, ListItem } from "@rneui/base";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
+import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
 
-interface RemovableListItemProps extends ThemedComponent {
+interface ParticipanteRemovivelProps extends ThemedComponent {
   index: number;
-  text: string;
+  participante: Participante;
   onPress: (index: number) => void;
 }
 
-export function RemovableListItem(props: RemovableListItemProps) {
-  const { index, text, light, dark, onPress } = props;
+export function ParticipanteRemovivel(props: ParticipanteRemovivelProps) {
+  const { index, participante, light, dark, onPress } = props;
 
   const danger = useThemeColor({ light, dark }, "danger");
+  const placeholder = useThemeColor({ light, dark }, "placeholder");
 
   const handlePress = (index: number, reset: () => void) => {
     onPress(index);
@@ -40,7 +43,19 @@ export function RemovableListItem(props: RemovableListItemProps) {
       )}
     >
       <ListItemContent>
-        <ListItemTitle>{text}</ListItemTitle>
+        <ListItemTitle>{participante.getNome()}</ListItemTitle>
+        <ListItemSubtitle
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            color: placeholder,
+          }}
+        >
+          {participante.getTipo() === TipoParticipante.ALUNO
+            ? "Aluno(a)"
+            : "Professor(a)"}
+        </ListItemSubtitle>
       </ListItemContent>
       <ListItem.Chevron />
     </ListItem.Swipeable>
