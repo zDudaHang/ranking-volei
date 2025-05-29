@@ -1,10 +1,5 @@
+import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 import { Participante } from "@/model/participante";
-import { Ranking } from "@/model/ranking";
-import { asDdMmYyyyWithWeekDay, asHourAndMinutes } from "@/util/date-format";
-import {
-  ParticipanteFormModel,
-  RankingFormModel,
-} from "@/validator/criar-ranking/validator";
 
 export function convertParticipanteFormModelToParticipante(
   participantes: ParticipanteFormModel[]

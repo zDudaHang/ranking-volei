@@ -1,17 +1,6 @@
-import { Participante, TipoParticipante } from "@/model/participante";
-import { ARRAY_ERROR, Validation } from "../model";
-
-export interface ParticipanteFormModel {
-  nome: string;
-  tipoParticipante: TipoParticipante;
-  pontuacao: number;
-}
-
-export interface RankingFormModel {
-  diaSemana?: string;
-  horario?: string;
-  participantes?: ParticipanteFormModel[];
-}
+import { Participante } from "@/model/participante";
+import { ARRAY_ERROR, Validation } from "./model";
+import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 
 export function validate(
   participantes: ParticipanteFormModel[] | null

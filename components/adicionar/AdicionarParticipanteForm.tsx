@@ -9,8 +9,8 @@ import { ThemedCheckbox } from "../common/ThemedCheckBox";
 import { Participante, TipoParticipante } from "@/model/participante";
 import { ThemedButton } from "../common/ThemedButton";
 import { ARRAY_ERROR, Validation } from "@/validator/model";
-import { ParticipanteFormModel } from "@/validator/criar-ranking/validator";
 import { ErrorMessage } from "../error/ErrorMessage";
+import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 
 interface AdicionarParticipanteFormProps {
   participantes: ParticipanteFormModel[];

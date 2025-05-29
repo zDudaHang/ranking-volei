@@ -1,7 +1,6 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedComponent } from "@/model/common";
 import { Dupla } from "@/model/dupla";
-import { Participante, TipoParticipante } from "@/model/participante";
 import { Button, ListItem } from "@rneui/base";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";

@@ -5,14 +5,12 @@ import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
-import { convertParticipanteFormModelToParticipante } from "@/converter/converter-ranking";
-import { Participante, TipoParticipante } from "@/model/participante";
-import {
-  ParticipanteFormModel,
-  RankingFormModel,
-  validate,
-} from "@/validator/criar-ranking/validator";
+import { convertParticipanteFormModelToParticipante } from "@/converter/converter-adicionarParticipante";
+import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
+import { TipoParticipante } from "@/model/participante";
+
 import { Validation } from "@/validator/model";
+import { validate } from "@/validator/validator-adicionarParticipantes";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
