@@ -1,6 +1,7 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedComponent } from "@/model/common";
 import { Participante, TipoParticipante } from "@/model/participante";
+import { ParticipanteFormModel } from "@/validator/criar-ranking/validator";
 import { Button, ListItem } from "@rneui/base";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";
@@ -8,7 +9,7 @@ import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
 
 interface ParticipanteRemovivelProps extends ThemedComponent {
   index: number;
-  participante: Participante;
+  participante: ParticipanteFormModel;
   onPress: (index: number) => void;
 }
 
@@ -43,7 +44,7 @@ export function ParticipanteRemovivel(props: ParticipanteRemovivelProps) {
       )}
     >
       <ListItemContent>
-        <ListItemTitle>{participante.getNome()}</ListItemTitle>
+        <ListItemTitle>{participante.nome}</ListItemTitle>
         <ListItemSubtitle
           style={{
             display: "flex",
@@ -52,7 +53,7 @@ export function ParticipanteRemovivel(props: ParticipanteRemovivelProps) {
             color: placeholder,
           }}
         >
-          {participante.getTipo() === TipoParticipante.ALUNO
+          {participante.tipoParticipante === TipoParticipante.ALUNO
             ? "Aluno(a)"
             : "Professor(a)"}
         </ListItemSubtitle>

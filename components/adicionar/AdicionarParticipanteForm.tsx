@@ -8,9 +8,13 @@ import { ThemedView } from "../common/ThemedView";
 import { ThemedCheckbox } from "../common/ThemedCheckBox";
 import { Participante, TipoParticipante } from "@/model/participante";
 import { ThemedButton } from "../common/ThemedButton";
+import { ARRAY_ERROR, Validation } from "@/validator/model";
+import { ParticipanteFormModel } from "@/validator/criar-ranking/validator";
+import { ErrorMessage } from "../error/ErrorMessage";
 
 interface AdicionarParticipanteFormProps {
-  participantes: Participante[];
+  participantes: ParticipanteFormModel[];
+  errors: Validation<ParticipanteFormModel[]> | null;
   adicionar: (nome: string, tipoParticipante: TipoParticipante) => void;
   remover: (index: number) => void;
 }
@@ -18,7 +22,7 @@ interface AdicionarParticipanteFormProps {
 export function AdicionarParticipanteForm(
   props: AdicionarParticipanteFormProps
 ) {
-  const { participantes, adicionar, remover } = props;
+  const { participantes, errors, adicionar, remover } = props;
 
   const [nome, setNome] = useState<string | undefined>();
   const [tipoParticipante, setTipoParticipante] = useState<TipoParticipante>(
@@ -91,6 +95,8 @@ export function AdicionarParticipanteForm(
       <ThemedText type="subtitle" style={{ marginTop: 16, marginBottom: 8 }}>
         Participantes adicionados ({participantes.length})
       </ThemedText>
+
+      {errors && <ErrorMessage errors={errors} name={ARRAY_ERROR} />}
 
       {!hasParticipantes && (
         <ThemedText type="secondary">Nenhum participante adicionado</ThemedText>

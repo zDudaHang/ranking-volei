@@ -5,20 +5,36 @@ import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
+import { convertParticipanteFormModelToParticipante } from "@/converter/converter-ranking";
 import { Participante, TipoParticipante } from "@/model/participante";
+import {
+  ParticipanteFormModel,
+  RankingFormModel,
+  validate,
+} from "@/validator/criar-ranking/validator";
+import { Validation } from "@/validator/model";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 
 export default function AdicionarAlunosView() {
-  const [participantes, setParticipantes] = useState<Participante[]>([]);
+  const [participantes, setParticipantes] = useState<ParticipanteFormModel[]>(
+    []
+  );
   const { adicionarParticipantes } = useContext(RankingContext);
+  const [errors, setErrors] = useState<Validation<
+    ParticipanteFormModel[]
+  > | null>(null);
 
   const adicionarParticipante = (
     nome: string,
     tipoParticipante: TipoParticipante
   ) => {
-    const novoParticipante = new Participante(nome, tipoParticipante);
+    const novoParticipante: ParticipanteFormModel = {
+      nome,
+      tipoParticipante,
+      pontuacao: 0,
+    };
     setParticipantes([...participantes, novoParticipante]);
   };
 
@@ -30,9 +46,15 @@ export default function AdicionarAlunosView() {
   const handleClear = () => setParticipantes([]);
 
   const handleSubmit = () => {
-    console.log("[SUBMIT] ", participantes);
-    adicionarParticipantes(participantes);
-    router.navigate("/ranking/criando_ranking/confirmacao-cadastro");
+    const errors = validate(participantes);
+    if (errors.isValid()) {
+      adicionarParticipantes(
+        convertParticipanteFormModelToParticipante(participantes)
+      );
+      router.navigate("/ranking/criando_ranking/confirmacao-cadastro");
+    } else {
+      setErrors(errors);
+    }
   };
 
   return (
@@ -47,6 +69,7 @@ export default function AdicionarAlunosView() {
         <ThemedView style={styles.stepContainer}>
           <AdicionarParticipanteForm
             participantes={participantes}
+            errors={errors}
             adicionar={adicionarParticipante}
             remover={removerAluno}
           />

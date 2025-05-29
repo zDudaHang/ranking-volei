@@ -1,4 +1,6 @@
-export type ErrorObject<FormModel> = Partial<{
+export const ARRAY_ERROR = "ARRAY_ERROR";
+
+export type ErrorObject<FormModel> = { [ARRAY_ERROR]?: string } & Partial<{
   [key in keyof FormModel]: string;
 }>;
 
@@ -11,9 +13,12 @@ export class Validation<FormModel> {
     this.errors = {};
   }
 
-  setError(key: keyof FormModel, errorMessage: string | undefined): void {
+  setError(
+    key: keyof FormModel | "ARRAY_ERROR",
+    errorMessage: string | undefined
+  ): void {
     if (errorMessage) {
-      this.errors[key] = errorMessage;
+      this.errors[ARRAY_ERROR] = errorMessage;
       this.valid = false;
     }
   }

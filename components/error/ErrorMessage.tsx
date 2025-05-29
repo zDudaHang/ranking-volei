@@ -7,7 +7,7 @@ import { Validation } from "@/validator/model";
 
 interface ErrorMessageProps<T> extends ThemedComponent {
   errors: Validation<T>;
-  name: keyof T;
+  name: keyof T | "ARRAY_ERROR";
 }
 
 export function ErrorMessage<T>(props: ErrorMessageProps<T>) {
@@ -22,27 +22,12 @@ export function ErrorMessage<T>(props: ErrorMessageProps<T>) {
   }
 
   return (
-    <ThemedView
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        flex: 1,
-        padding: 8,
-        gap: 8,
-        backgroundColor: "#f9d2d5",
-        borderWidth: 1,
-        borderColor: danger,
-      }}
+    <ThemedText
+      type="defaultSemiBold"
+      style={{ color: danger }}
+      textBreakStrategy="balanced"
     >
-      <MaterialIcons name="error" size={32} color={danger} />
-      <ThemedText
-        type="default"
-        style={{ color: danger }}
-        textBreakStrategy="balanced"
-      >
-        {message}
-      </ThemedText>
-    </ThemedView>
+      {message}
+    </ThemedText>
   );
 }

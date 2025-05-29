@@ -25,10 +25,6 @@ export default function ConfirmacaoCadastroRankingView() {
 
   const { store, loading } = useRankingStorage({ onCompleteStore });
 
-  const [errors, setErrors] = useState<Validation<RankingFormModel> | null>(
-    null
-  );
-
   if (!ranking) {
     return <Redirect href="/ranking/criando_ranking/adicionar-turma" />;
   }
@@ -37,12 +33,7 @@ export default function ConfirmacaoCadastroRankingView() {
   const participantes = ranking.getParticipantes();
 
   const handleSubmit = () => {
-    const errors = validate(convertToFormModel(ranking));
-    if (errors.isValid()) {
-      store(ranking);
-    } else {
-      setErrors(errors);
-    }
+    store(ranking);
   };
 
   if (!dia || !horario) {
@@ -66,7 +57,6 @@ export default function ConfirmacaoCadastroRankingView() {
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
           <ThemedText type="subtitle">Participantes</ThemedText>
-          {errors && <ErrorMessage errors={errors} name="participantes" />}
           {participantes.map((participante, index) => (
             <ParticipanteView
               key={`participante-${index}`}

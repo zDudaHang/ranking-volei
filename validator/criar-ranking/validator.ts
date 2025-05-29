@@ -1,9 +1,9 @@
 import { Participante, TipoParticipante } from "@/model/participante";
-import { Validation } from "../model";
+import { ARRAY_ERROR, Validation } from "../model";
 
 export interface ParticipanteFormModel {
   nome: string;
-  tipo: TipoParticipante;
+  tipoParticipante: TipoParticipante;
   pontuacao: number;
 }
 
@@ -14,20 +14,17 @@ export interface RankingFormModel {
 }
 
 export function validate(
-  formValues: RankingFormModel | null
-): Validation<RankingFormModel> {
-  const errors = new Validation<RankingFormModel>();
+  participantes: ParticipanteFormModel[] | null
+): Validation<ParticipanteFormModel[]> {
+  const errors = new Validation<ParticipanteFormModel[]>();
 
-  if (formValues?.participantes) {
-    if (formValues.participantes.length < 4) {
-      errors.setError(
-        "participantes",
-        "Deve possuir no mínimo 4 participantes"
-      );
+  if (participantes) {
+    if (participantes.length <= 3) {
+      errors.setError(ARRAY_ERROR, "Deve possuir no mínimo 4 participantes");
     }
-    if (formValues.participantes.length % 2 === 1) {
+    if (errors.isValid() && participantes.length % 2 === 1) {
       errors.setError(
-        "participantes",
+        ARRAY_ERROR,
         "A quantidade de participantes deve ser um número par"
       );
     }
