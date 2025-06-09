@@ -5,9 +5,11 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Validation } from "@/validator/model";
 
+export const ROOT_ERROR = "ROOT_ERROR";
+
 interface ErrorMessageProps<T> extends ThemedComponent {
   errors: Validation<T>;
-  name: keyof T | "ARRAY_ERROR";
+  name: keyof T | "ROOT_ERROR";
 }
 
 export function ErrorMessage<T>(props: ErrorMessageProps<T>) {
@@ -15,7 +17,8 @@ export function ErrorMessage<T>(props: ErrorMessageProps<T>) {
 
   const danger = useThemeColor({ light, dark }, "danger");
 
-  const message = errors?.errors[name];
+  const message =
+    name === ROOT_ERROR ? errors.getRootError() : errors.getErrors()?.[name];
 
   if (!message) {
     return null;
@@ -23,11 +26,11 @@ export function ErrorMessage<T>(props: ErrorMessageProps<T>) {
 
   return (
     <ThemedText
-      type="defaultSemiBold"
+      type="default"
       style={{ color: danger }}
       textBreakStrategy="balanced"
     >
-      {message}
+      {message.toString()}
     </ThemedText>
   );
 }

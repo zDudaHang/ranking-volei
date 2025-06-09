@@ -24,6 +24,8 @@ export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
       marginTop: 5,
     });
 
+    const hasError = !!rest.errorMessage;
+
     return (
       <Input
         {...rest}
@@ -44,8 +46,9 @@ export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
         ref={ref}
         placeholderTextColor={placeholder}
         labelStyle={{ color: text }}
-        errorStyle={{ color: danger }}
+        errorStyle={{ color: danger, fontSize: 16 }}
         containerStyle={{ paddingLeft: 0 }}
+        inputContainerStyle={hasError && { borderColor: danger }}
       />
     );
   }

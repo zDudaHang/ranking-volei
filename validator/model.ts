@@ -1,26 +1,38 @@
-export const ARRAY_ERROR = "ARRAY_ERROR";
-
-export type ErrorObject<FormModel> = { [ARRAY_ERROR]?: string } & Partial<{
-  [key in keyof FormModel]: string;
-}>;
+export type ErrorObject<DataType> = {
+  [K in keyof DataType]?: ErrorObject<DataType[K]> | string;
+};
 
 export class Validation<FormModel> {
-  errors: ErrorObject<FormModel>;
+  private rootError: string | undefined;
+  private errors: ErrorObject<FormModel>;
   private valid: boolean;
 
   constructor() {
     this.valid = true;
     this.errors = {};
+    this.rootError = undefined;
   }
 
-  setError(
-    key: keyof FormModel | "ARRAY_ERROR",
-    errorMessage: string | undefined
-  ): void {
+  setRootError(errorMessage: string | undefined): void {
     if (errorMessage) {
-      this.errors[ARRAY_ERROR] = errorMessage;
+      this.rootError = errorMessage;
       this.valid = false;
     }
+  }
+
+  getRootError(): string | undefined {
+    return this.rootError;
+  }
+
+  setError(key: keyof FormModel, errorMessage: string | undefined): void {
+    if (errorMessage) {
+      this.errors[key] = errorMessage;
+      this.valid = false;
+    }
+  }
+
+  getErrors(): ErrorObject<FormModel> {
+    return this.errors;
   }
 
   isValid(): boolean {

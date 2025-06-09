@@ -10,7 +10,7 @@ import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante"
 import { TipoParticipante } from "@/model/participante";
 
 import { Validation } from "@/validator/model";
-import { validate } from "@/validator/validator-adicionarParticipantes";
+import { validateParticipantes } from "@/validator/validator-adicionarParticipantes";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -20,9 +20,9 @@ export default function AdicionarAlunosView() {
     []
   );
   const { adicionarParticipantes } = useContext(RankingContext);
-  const [errors, setErrors] = useState<Validation<
-    ParticipanteFormModel[]
-  > | null>(null);
+  const [errors, setErrors] = useState<
+    Validation<ParticipanteFormModel[]> | undefined
+  >(undefined);
 
   const adicionarParticipante = (
     nome: string,
@@ -41,10 +41,13 @@ export default function AdicionarAlunosView() {
     setParticipantes([...participantes]);
   };
 
-  const handleClear = () => setParticipantes([]);
+  const handleClear = () => {
+    setParticipantes([]);
+    setErrors(undefined);
+  };
 
   const handleSubmit = () => {
-    const errors = validate(participantes);
+    const errors = validateParticipantes(participantes);
     if (errors.isValid()) {
       adicionarParticipantes(
         convertParticipanteFormModelToParticipante(participantes)
@@ -67,7 +70,7 @@ export default function AdicionarAlunosView() {
         <ThemedView style={styles.stepContainer}>
           <AdicionarParticipanteForm
             participantes={participantes}
-            errors={errors}
+            participantesErrors={errors}
             adicionar={adicionarParticipante}
             remover={removerAluno}
           />

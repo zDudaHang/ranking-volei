@@ -6,28 +6,36 @@ import { ThemedInput } from "../common/ThemedInput";
 import { ThemedText } from "../common/ThemedText";
 import { ThemedView } from "../common/ThemedView";
 import { ThemedCheckbox } from "../common/ThemedCheckBox";
-import { Participante, TipoParticipante } from "@/model/participante";
+import { TipoParticipante } from "@/model/participante";
 import { ThemedButton } from "../common/ThemedButton";
-import { ARRAY_ERROR, Validation } from "@/validator/model";
-import { ErrorMessage } from "../error/ErrorMessage";
+import { Validation } from "@/validator/model";
+import { ErrorMessage, ROOT_ERROR } from "../error/ErrorMessage";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
+import { validateAdicionarParticipante } from "@/validator/validator-adicionarParticipantes";
 
 interface AdicionarParticipanteFormProps {
   participantes: ParticipanteFormModel[];
-  errors: Validation<ParticipanteFormModel[]> | null;
+  participantesErrors: Validation<ParticipanteFormModel[]> | undefined;
   adicionar: (nome: string, tipoParticipante: TipoParticipante) => void;
   remover: (index: number) => void;
+}
+
+export interface AdicionarParticipanteForm {
+  nome: string | undefined;
+  tipoParticipante: TipoParticipante;
 }
 
 export function AdicionarParticipanteForm(
   props: AdicionarParticipanteFormProps
 ) {
-  const { participantes, errors, adicionar, remover } = props;
+  const { participantes, participantesErrors, adicionar, remover } = props;
 
   const [nome, setNome] = useState<string | undefined>();
   const [tipoParticipante, setTipoParticipante] = useState<TipoParticipante>(
     TipoParticipante.ALUNO
   );
+  const [errors, setErrors] =
+    useState<Validation<AdicionarParticipanteForm> | null>(null);
 
   const nomeRef = useRef<Input & TextInput>(null);
 
@@ -36,9 +44,19 @@ export function AdicionarParticipanteForm(
   };
 
   const handleAdicionar = () => {
-    if (nome) {
-      adicionar(nome, tipoParticipante);
-      nomeRef.current?.clear();
+    const errors = validateAdicionarParticipante(
+      { nome, tipoParticipante },
+      participantes
+    );
+    if (errors.isValid()) {
+      if (nome) {
+        adicionar(nome, tipoParticipante);
+        nomeRef.current?.clear();
+        setNome(undefined);
+        setErrors(null);
+      }
+    } else {
+      setErrors(errors);
     }
   };
 
@@ -68,6 +86,7 @@ export function AdicionarParticipanteForm(
         returnKeyType="next"
         blurOnSubmit={false}
         required
+        errorMessage={errors?.getErrors()["nome"]}
       />
 
       <ThemedView
@@ -93,10 +112,12 @@ export function AdicionarParticipanteForm(
       </ThemedButton>
 
       <ThemedText type="subtitle" style={{ marginTop: 16, marginBottom: 8 }}>
-        Participantes adicionados ({participantes.length})
+        Participantes adicionados
       </ThemedText>
 
-      {errors && <ErrorMessage errors={errors} name={ARRAY_ERROR} />}
+      {participantesErrors && (
+        <ErrorMessage errors={participantesErrors} name={ROOT_ERROR} />
+      )}
 
       {!hasParticipantes && (
         <ThemedText type="secondary">Nenhum participante adicionado</ThemedText>
