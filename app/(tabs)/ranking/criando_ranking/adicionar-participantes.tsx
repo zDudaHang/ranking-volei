@@ -2,10 +2,12 @@ import { AdicionarParticipanteForm } from "@/components/adicionar/AdicionarParti
 import { AvancarButton } from "@/components/common/AvancarButton";
 import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
+import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
 import { convertParticipanteFormModelToParticipante } from "@/converter/converter-adicionarParticipante";
+import { useRankingStorage } from "@/hooks/useRankingStorage";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 import { TipoParticipante } from "@/model/participante";
 
@@ -16,13 +18,19 @@ import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 
 export default function AdicionarAlunosView() {
-  const [participantes, setParticipantes] = useState<ParticipanteFormModel[]>(
-    []
-  );
-  const { adicionarParticipantes } = useContext(RankingContext);
+  const onCompleteStore = () =>
+    router.navigate("/ranking/gerenciando_ranking/definir-duplas");
+
+  const { store, loading } = useRankingStorage({ onCompleteStore });
+
+  const { ranking, adicionarParticipantes } = useContext(RankingContext);
+
   const [errors, setErrors] = useState<
     Validation<ParticipanteFormModel[]> | undefined
   >(undefined);
+  const [participantes, setParticipantes] = useState<ParticipanteFormModel[]>(
+    []
+  );
 
   const adicionarParticipante = (
     nome: string,
@@ -48,11 +56,11 @@ export default function AdicionarAlunosView() {
 
   const handleSubmit = () => {
     const errors = validateParticipantes(participantes);
-    if (errors.isValid()) {
+    if (errors.isValid() && ranking) {
       adicionarParticipantes(
         convertParticipanteFormModelToParticipante(participantes)
       );
-      router.navigate("/ranking/criando_ranking/confirmacao-cadastro");
+      store(ranking);
     } else {
       setErrors(errors);
     }
@@ -85,8 +93,18 @@ export default function AdicionarAlunosView() {
           padding: 12,
         }}
       >
-        <LimparButton onPress={handleClear} />
-        <AvancarButton onPress={handleSubmit} />
+        <LimparButton onPress={handleClear} loading={loading} />
+        <ThemedButton
+          size="lg"
+          onPress={handleSubmit}
+          loading={loading}
+          icon={{
+            name: "account-multiple-check",
+            type: "material-community",
+          }}
+        >
+          Criar ranking
+        </ThemedButton>
       </ThemedView>
     </>
   );

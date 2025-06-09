@@ -1,14 +1,19 @@
-import { ThemedButton } from "./ThemedButton";
+import { ThemedButton, ThemedButtonProps } from "./ThemedButton";
 
-interface AvancarButtonProps {
+interface AvancarButtonProps extends ThemedButtonProps {
   onPress: () => void;
 }
 
 export function AvancarButton(props: AvancarButtonProps) {
-  const { onPress } = props;
+  const { onPress, ...rest } = props;
 
   return (
-    <ThemedButton size="lg" onPress={onPress} icon={{ name: "navigate-next" }}>
+    <ThemedButton
+      {...rest}
+      size="lg"
+      onPress={onPress}
+      icon={{ name: "navigate-next" }}
+    >
       Avançar
     </ThemedButton>
   );

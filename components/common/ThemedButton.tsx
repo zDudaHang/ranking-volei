@@ -7,7 +7,7 @@ interface IconProp {
   type?: string;
 }
 
-interface ThemedButtonProps
+export interface ThemedButtonProps
   extends Omit<ButtonProps, "color" | "icon">,
     ThemedComponent {
   color?: "primary" | "danger" | "secondary";
