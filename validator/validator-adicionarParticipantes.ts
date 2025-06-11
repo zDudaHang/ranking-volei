@@ -1,4 +1,4 @@
-import { Validation } from "./model";
+import { REQUIRED, Validation } from "./model";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 import { AdicionarParticipanteForm } from "@/components/adicionar/AdicionarParticipanteForm";
 import { isEmpty } from "lodash";
@@ -34,7 +34,7 @@ export function validateAdicionarParticipante(
       isEmpty(adicionarParticipanteForm.nome) ||
       isBlank(adicionarParticipanteForm.nome)
     ) {
-      errors.setError("nome", "Preenchimento obrigatório");
+      errors.setError("nome", REQUIRED);
     }
 
     if (errors.isValid()) {

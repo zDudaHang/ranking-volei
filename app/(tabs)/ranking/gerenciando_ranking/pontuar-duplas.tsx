@@ -6,14 +6,16 @@ import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { PontuarDupla } from "@/components/dupla/PontuarDupla";
 import { DuplasContext } from "@/context/DuplasContext";
+import { Validation } from "@/validator/model";
+import { validatePontuacoes } from "@/validator/validator-pontuarDuplas";
 import { router } from "expo-router";
 import React, { useContext, useRef, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 
 export default function PontuarDuplasView() {
-  const { duplasAtuais, historicoDuplas, adicionarDuplasHistorico } =
-    useContext(DuplasContext);
+  const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext);
   const [pontuacoes, setPontuacoes] = useState<string[]>([]);
+  const [errors, setErrors] = useState<Validation<string[]> | null>(null);
 
   const refs = useRef<TextInput[]>([]);
 
@@ -50,19 +52,30 @@ export default function PontuarDuplasView() {
   };
 
   const handleSubmit = () => {
-    salvarPontuacoes();
-    router.navigate("/ranking/gerenciando_ranking/definir-duplas");
+    const errors = validatePontuacoes(pontuacoes, duplasAtuais);
+    if (errors.isValid()) {
+      salvarPontuacoes();
+      router.navigate("/ranking/gerenciando_ranking/definir-duplas");
+    } else {
+      setErrors(errors);
+    }
   };
 
   const handleClear = () => {
     setPontuacoes([]);
     refs.current.forEach((ref) => ref.clear());
     refs.current[0].focus();
+    setErrors(null);
   };
 
   const handleFinalizar = () => {
-    salvarPontuacoes();
-    router.navigate("/ranking/gerenciando_ranking/finalizar-ranking");
+    const errors = validatePontuacoes(pontuacoes, duplasAtuais);
+    if (errors.isValid()) {
+      salvarPontuacoes();
+      router.navigate("/ranking/gerenciando_ranking/finalizar-ranking");
+    } else {
+      setErrors(errors);
+    }
   };
 
   return (
@@ -84,6 +97,7 @@ export default function PontuarDuplasView() {
               pontuacao={pontuacoes[index]}
               onSubmitEditing={onSubmitEditing}
               onChangePontuacao={handleChangePontuacao}
+              errorMessage={errors?.getErrors()?.[index]}
             />
           ))}
         </ThemedView>
@@ -98,11 +112,7 @@ export default function PontuarDuplasView() {
         }}
       >
         <LimparButton onPress={handleClear} />
-        <ThemedButton
-          size="lg"
-          onPress={handleFinalizar}
-          icon={{ name: "group" }}
-        >
+        <ThemedButton size="lg" onPress={handleSubmit} icon={{ name: "group" }}>
           Escolher novas duplas
         </ThemedButton>
         <ThemedButton

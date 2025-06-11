@@ -15,7 +15,7 @@ import { validateAdicionarParticipante } from "@/validator/validator-adicionarPa
 
 interface AdicionarParticipanteFormProps {
   participantes: ParticipanteFormModel[];
-  participantesErrors: Validation<ParticipanteFormModel[]> | undefined;
+  participantesErrors: Validation<ParticipanteFormModel[]> | null;
   adicionar: (nome: string, tipoParticipante: TipoParticipante) => void;
   remover: (index: number) => void;
 }

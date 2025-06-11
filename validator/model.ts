@@ -2,6 +2,8 @@ export type ErrorObject<DataType> = {
   [K in keyof DataType]?: ErrorObject<DataType[K]> | string;
 };
 
+export const REQUIRED = "Preenchimento obrigatório";
+
 export class Validation<FormModel> {
   private rootError: string | undefined;
   private errors: ErrorObject<FormModel>;

@@ -23,8 +23,6 @@ export function DuplaRemovivel(props: DuplaRemovivelProps) {
     reset();
   };
 
-  console.log(dupla.getTiposParticipantes());
-
   return (
     <ListItem.Swipeable
       containerStyle={{

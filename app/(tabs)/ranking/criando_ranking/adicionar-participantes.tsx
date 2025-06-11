@@ -25,9 +25,9 @@ export default function AdicionarAlunosView() {
 
   const { ranking, adicionarParticipantes } = useContext(RankingContext);
 
-  const [errors, setErrors] = useState<
-    Validation<ParticipanteFormModel[]> | undefined
-  >(undefined);
+  const [errors, setErrors] = useState<Validation<
+    ParticipanteFormModel[]
+  > | null>(null);
   const [participantes, setParticipantes] = useState<ParticipanteFormModel[]>(
     []
   );
@@ -51,7 +51,7 @@ export default function AdicionarAlunosView() {
 
   const handleClear = () => {
     setParticipantes([]);
-    setErrors(undefined);
+    setErrors(null);
   };
 
   const handleSubmit = () => {

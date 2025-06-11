@@ -3,7 +3,7 @@ import { Participante, TipoParticipante } from "./participante";
 export class Dupla {
   private primeiroParticipante: Participante;
   private segundoParticipante: Participante;
-  private pontuacao: number;
+  private pontuacao: number | undefined;
 
   public constructor(
     primeiroParticipante: Participante,
@@ -11,7 +11,7 @@ export class Dupla {
   ) {
     this.primeiroParticipante = primeiroParticipante;
     this.segundoParticipante = segundoParticipante;
-    this.pontuacao = 0;
+    this.pontuacao = undefined;
   }
 
   public setPrimeiroParticipante(participante: Participante): void {
@@ -37,7 +37,7 @@ export class Dupla {
     return [this.primeiroParticipante, this.segundoParticipante];
   }
 
-  public getPontuacao(): number {
+  public getPontuacao(): number | undefined {
     return this.pontuacao;
   }
 

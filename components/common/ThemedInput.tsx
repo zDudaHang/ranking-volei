@@ -6,7 +6,10 @@ import { StyleProp, StyleSheet, TextInputProps, TextStyle } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 
-interface ThemedInputProps extends TextInputProps, InputProps, ThemedComponent {
+export interface ThemedInputProps
+  extends TextInputProps,
+    InputProps,
+    ThemedComponent {
   required?: boolean;
 }
 

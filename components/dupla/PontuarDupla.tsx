@@ -1,10 +1,10 @@
 import { InputRef } from "@/model/common";
 import { Fragment, forwardRef } from "react";
-import { ThemedInput } from "../common/ThemedInput";
+import { ThemedInput, ThemedInputProps } from "../common/ThemedInput";
 import { ThemedText } from "../common/ThemedText";
 import { Dupla } from "@/model/dupla";
 
-interface PontuarDuplaProps {
+interface PontuarDuplaProps extends Pick<ThemedInputProps, "errorMessage"> {
   dupla: Dupla;
   index: number;
   pontuacao: string | undefined;
@@ -14,8 +14,14 @@ interface PontuarDuplaProps {
 
 export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
   (props, ref) => {
-    const { dupla, index, pontuacao, onChangePontuacao, onSubmitEditing } =
-      props;
+    const {
+      dupla,
+      index,
+      pontuacao,
+      onChangePontuacao,
+      onSubmitEditing,
+      errorMessage,
+    } = props;
 
     if (!dupla) {
       return null;
@@ -38,6 +44,7 @@ export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
           onChangeText={handleChangePontuacao}
           onSubmitEditing={handleSubmitPontuacao}
           returnKeyType="next"
+          errorMessage={errorMessage}
         />
       </Fragment>
     );
