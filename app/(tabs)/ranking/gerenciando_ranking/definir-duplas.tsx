@@ -203,7 +203,7 @@ export default function DefinirDuplasView() {
           alignSelf: "center",
           gap: 8,
           width: "90%",
-          padding: 12,
+          padding: 20,
         }}
       >
         <LimparButton onPress={handleClear} />

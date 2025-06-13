@@ -54,7 +54,7 @@ export default function FinalizarRankingView() {
           alignSelf: "center",
           gap: 8,
           width: "90%",
-          padding: 12,
+          padding: 20,
         }}
       >
         <ThemedButton size="lg" loading={loading} onPress={handleSubmit}>

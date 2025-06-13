@@ -90,7 +90,7 @@ export default function AdicionarAlunosView() {
           alignSelf: "center",
           gap: 8,
           width: "90%",
-          padding: 12,
+          padding: 20,
         }}
       >
         <LimparButton onPress={handleClear} loading={loading} />

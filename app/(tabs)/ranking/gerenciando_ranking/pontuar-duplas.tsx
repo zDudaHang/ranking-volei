@@ -108,20 +108,32 @@ export default function PontuarDuplasView() {
           alignSelf: "center",
           gap: 8,
           width: "90%",
-          padding: 12,
+          padding: 20,
         }}
       >
         <LimparButton onPress={handleClear} />
-        <ThemedButton size="lg" onPress={handleSubmit} icon={{ name: "group" }}>
-          Escolher novas duplas
-        </ThemedButton>
-        <ThemedButton
-          size="lg"
-          onPress={handleFinalizar}
-          icon={{ name: "done-all" }}
+        <ThemedView
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: 8,
+          }}
         >
-          Finalizar
-        </ThemedButton>
+          <ThemedButton
+            size="lg"
+            onPress={handleSubmit}
+            icon={{ name: "account-multiple-plus", type: "material-community" }}
+          >
+            Definir duplas
+          </ThemedButton>
+          <ThemedButton
+            size="lg"
+            onPress={handleFinalizar}
+            icon={{ name: "done-all" }}
+          >
+            Finalizar
+          </ThemedButton>
+        </ThemedView>
       </ThemedView>
     </>
   );

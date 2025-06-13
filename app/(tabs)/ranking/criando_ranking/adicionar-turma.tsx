@@ -67,7 +67,7 @@ export default function AdicionarTurmaView() {
           alignSelf: "center",
           gap: 8,
           width: "90%",
-          padding: 12,
+          padding: 20,
         }}
       >
         <LimparButton onPress={handleClear} />
