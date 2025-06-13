@@ -1,4 +1,3 @@
-import { AvancarButton } from "@/components/common/AvancarButton";
 import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
@@ -6,6 +5,8 @@ import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { PontuarDupla } from "@/components/dupla/PontuarDupla";
 import { DuplasContext } from "@/context/DuplasContext";
+import { RankingContext } from "@/context/RankingContext";
+import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
 import { Validation } from "@/validator/model";
 import { validatePontuacoes } from "@/validator/validator-pontuarDuplas";
 import { router } from "expo-router";
@@ -16,6 +17,15 @@ export default function PontuarDuplasView() {
   const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext);
   const [pontuacoes, setPontuacoes] = useState<string[]>([]);
   const [errors, setErrors] = useState<Validation<string[]> | null>(null);
+
+  const { ranking, limparRankingAtual: clear } = useContext(RankingContext);
+
+  const onCompleteStore = () => {
+    router.navigate("/ranking/criando_ranking/adicionar-turma");
+    clear();
+  };
+
+  const { loading, store } = useHistoricoRankingStorage({ onCompleteStore });
 
   const refs = useRef<TextInput[]>([]);
 
@@ -51,7 +61,7 @@ export default function PontuarDuplasView() {
     adicionarDuplasHistorico(duplasComPontuacao);
   };
 
-  const handleSubmit = () => {
+  const handleDefinirDuplasClick = () => {
     const errors = validatePontuacoes(pontuacoes, duplasAtuais);
     if (errors.isValid()) {
       salvarPontuacoes();
@@ -68,15 +78,17 @@ export default function PontuarDuplasView() {
     setErrors(null);
   };
 
-  const handleFinalizar = () => {
+  const handleFinalizarClick = () => {
     const errors = validatePontuacoes(pontuacoes, duplasAtuais);
-    if (errors.isValid()) {
+    if (errors.isValid() && ranking) {
       salvarPontuacoes();
-      router.navigate("/ranking/gerenciando_ranking/finalizar-ranking");
+      store(ranking);
     } else {
       setErrors(errors);
     }
   };
+
+  console.log(loading);
 
   return (
     <>
@@ -111,7 +123,7 @@ export default function PontuarDuplasView() {
           padding: 20,
         }}
       >
-        <LimparButton onPress={handleClear} />
+        <LimparButton onPress={handleClear} disabled={loading} />
         <ThemedView
           style={{
             flexDirection: "row",
@@ -121,15 +133,16 @@ export default function PontuarDuplasView() {
         >
           <ThemedButton
             size="lg"
-            onPress={handleSubmit}
+            onPress={handleDefinirDuplasClick}
             icon={{ name: "account-multiple-plus", type: "material-community" }}
           >
             Definir duplas
           </ThemedButton>
           <ThemedButton
             size="lg"
-            onPress={handleFinalizar}
+            onPress={handleFinalizarClick}
             icon={{ name: "done-all" }}
+            loading={loading}
           >
             Finalizar
           </ThemedButton>

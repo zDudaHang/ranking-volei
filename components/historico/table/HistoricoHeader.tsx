@@ -72,12 +72,15 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
     }
   };
 
-  const handleRemove = async () => {
+  const closeDialog = () => setIsDialogVisible(false);
+
+  const handleConfirm = async () => {
     const uuids = rankingsSelecionados.map((ranking) => ranking.getUuid());
     const newHistorico = await remove(diaSelecionado, uuids);
     if (newHistorico) {
       onRemove([...newHistorico]);
     } else onRemove(newHistorico);
+    closeDialog();
   };
 
   const handleClickRemover = () => {
@@ -85,8 +88,6 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
       setIsDialogVisible(true);
     }
   };
-
-  const closeDialog = () => setIsDialogVisible(false);
 
   return (
     <ThemedView
@@ -103,7 +104,7 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
         isVisible={isDialogVisible}
         rankingsSeraoExcluidos={rankingsSelecionados}
         onBackdropPress={closeDialog}
-        onConfirm={handleRemove}
+        onConfirm={handleConfirm}
         onCancel={closeDialog}
       />
       <ThemedButton

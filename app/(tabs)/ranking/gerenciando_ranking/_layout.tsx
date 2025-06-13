@@ -58,7 +58,6 @@ export default function CriandoRankingRootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="definir-duplas" />
         <Stack.Screen name="pontuar-duplas" />
-        <Stack.Screen name="finalizar-ranking" />
       </Stack>
     </DuplasContext.Provider>
   );

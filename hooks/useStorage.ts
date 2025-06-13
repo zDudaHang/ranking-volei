@@ -22,21 +22,21 @@ export function useStorage<T>(
 ): UseStorageReturnValue<T> {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const store = (value: T, key: string) => {
+  const store = async (value: T, key: string) => {
     setLoading(true);
     const json = JSON.stringify(value);
     AsyncStorage.setItem(APP_KEY + key, json)
       .catch(console.error)
-      .then(() => {
-        setLoading(false);
+      .then(async () => {
         props?.onCompleteStore?.();
+        setLoading(false);
       });
   };
 
   const get = async (key: string): Promise<any | null> => {
     setLoading(true);
     const value = await AsyncStorage.getItem(APP_KEY + key);
-    await timeout(1000);
+
     if (value) {
       const parsed = JSON.parse(value);
       setLoading(false);
@@ -51,8 +51,8 @@ export function useStorage<T>(
     AsyncStorage.mergeItem(APP_KEY + key, JSON.stringify(newValue))
       .catch(console.error)
       .then(() => {
-        setLoading(false);
         props?.onCompleteUpdate?.();
+        setLoading(false);
       });
   };
 

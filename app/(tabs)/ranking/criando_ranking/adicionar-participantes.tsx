@@ -93,7 +93,7 @@ export default function AdicionarAlunosView() {
           padding: 20,
         }}
       >
-        <LimparButton onPress={handleClear} loading={loading} />
+        <LimparButton onPress={handleClear} disabled={loading} />
         <ThemedButton
           size="lg"
           onPress={handleSubmit}

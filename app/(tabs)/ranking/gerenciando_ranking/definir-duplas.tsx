@@ -125,12 +125,14 @@ export default function DefinirDuplasView() {
     }
   };
 
+  const closeDialog = () => setIsDialogVisible(false);
+
   const handleClickConfirmDialog = () => {
     sugerirDuplas();
-    setIsDialogVisible(false);
+    closeDialog;
   };
 
-  const handleClickCancelDialog = () => setIsDialogVisible(false);
+  const handleClickCancelDialog = () => closeDialog;
 
   const hasDuplasDefinidas = duplas.length > 0;
 
@@ -139,7 +141,7 @@ export default function DefinirDuplasView() {
       <ParallaxScrollView>
         <ConfirmacaoSugestaoDuplasDialog
           isVisible={isDialogVisible}
-          onBackdropPress={() => setIsDialogVisible(false)}
+          onBackdropPress={closeDialog}
           onConfirm={handleClickConfirmDialog}
           onCancel={handleClickCancelDialog}
         />

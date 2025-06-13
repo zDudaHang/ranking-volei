@@ -50,10 +50,11 @@ export function useHistoricoRankingStorage(
             historico.push(ranking);
             store(historico, key);
           }
+          setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   const getRanking = async (dia: Date): Promise<Ranking[] | null> => {
