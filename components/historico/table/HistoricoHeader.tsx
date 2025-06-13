@@ -8,38 +8,40 @@ import { asDdMmYyyyWithWeekDay, asHourAndMinutes } from "@/util/date-format";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { range, get } from "lodash";
 import { Share, Alert } from "react-native";
+import { ConfirmacaoRemoverRankingDialog } from "./ConfirmacaoRemoverRankingsDialog";
+import { useState } from "react";
 
 export interface HistoricoHeaderProps extends ThemedComponent {
   historico: Ranking[];
   diaSelecionado: Date;
-  uuidsSelecionados: string[];
-  setUuidsSelecionados: (novosUuidsSelecionados: string[]) => void;
+  rankingsSelecionados: Ranking[];
+  setRankingsSelecionados: (novosRankingsSelecionados: Ranking[]) => void;
   onRemove: (historico: Ranking[] | null) => void;
 }
 
 export function HistoricoHeader(props: HistoricoHeaderProps) {
   const {
     diaSelecionado,
-    uuidsSelecionados,
+    rankingsSelecionados,
     historico,
-    setUuidsSelecionados,
+    setRankingsSelecionados,
     onRemove,
     light,
     dark,
   } = props;
 
   const primary = useThemeColor({ light, dark }, "primary");
-  const { get, remove, loading } = useHistoricoRankingStorage();
+  const { remove, loading } = useHistoricoRankingStorage();
+  const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
 
   const isTodosSelecionados =
-    historico.length > 0 && historico.length === uuidsSelecionados.length;
+    historico.length > 0 && historico.length === rankingsSelecionados.length;
 
   const handleSelectAll = () => {
     if (isTodosSelecionados) {
-      setUuidsSelecionados([]);
+      setRankingsSelecionados([]);
     } else {
-      const todosUuids = historico.map((ranking) => ranking.getUuid());
-      setUuidsSelecionados(todosUuids);
+      setRankingsSelecionados(historico);
     }
   };
 
@@ -48,23 +50,19 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
       diaSelecionado
     )}\n\n`;
 
-    uuidsSelecionados.forEach((uuid) => {
-      const ranking = historico.find((r) => r.getUuid() === uuid);
-
-      if (ranking) {
-        const horario = ranking.getTurma().horario;
-        if (horario) {
-          message = message.concat(`Turma das ${asHourAndMinutes(horario)}\n`);
-        }
-
-        const participantes = ranking.getParticipantes();
-        participantes.forEach(
-          (participante) =>
-            (message = message.concat(participante.toString(), "\n"))
-        );
-
-        message = message.concat("\n");
+    rankingsSelecionados.forEach((ranking) => {
+      const horario = ranking.getTurma().horario;
+      if (horario) {
+        message = message.concat(`Turma das ${asHourAndMinutes(horario)}\n`);
       }
+
+      const participantes = ranking.getParticipantes();
+      participantes.forEach(
+        (participante) =>
+          (message = message.concat(participante.toString(), "\n"))
+      );
+
+      message = message.concat("\n");
     });
 
     try {
@@ -75,11 +73,20 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
   };
 
   const handleRemove = async () => {
-    const newHistorico = await remove(diaSelecionado, uuidsSelecionados);
+    const uuids = rankingsSelecionados.map((ranking) => ranking.getUuid());
+    const newHistorico = await remove(diaSelecionado, uuids);
     if (newHistorico) {
       onRemove([...newHistorico]);
     } else onRemove(newHistorico);
   };
+
+  const handleClickRemover = () => {
+    if (rankingsSelecionados.length > 0) {
+      setIsDialogVisible(true);
+    }
+  };
+
+  const closeDialog = () => setIsDialogVisible(false);
 
   return (
     <ThemedView
@@ -92,6 +99,13 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
         padding: 8,
       }}
     >
+      <ConfirmacaoRemoverRankingDialog
+        isVisible={isDialogVisible}
+        rankingsSeraoExcluidos={rankingsSelecionados}
+        onBackdropPress={closeDialog}
+        onConfirm={handleRemove}
+        onCancel={closeDialog}
+      />
       <ThemedButton
         icon={{
           name: isTodosSelecionados
@@ -105,7 +119,7 @@ export function HistoricoHeader(props: HistoricoHeaderProps) {
       <ThemedButton icon={{ name: "share" }} onPress={handleShare} size="sm" />
       <ThemedButton
         icon={{ name: "delete" }}
-        onPress={handleRemove}
+        onPress={handleClickRemover}
         size="sm"
         loading={loading}
       />

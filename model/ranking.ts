@@ -52,6 +52,10 @@ export class Ranking {
     this.uuid = uuid;
   }
 
+  public equals(other: Ranking): boolean {
+    return this.uuid === other.getUuid();
+  }
+
   public calcularPontuacoes(duplas: Dupla[]): void {
     const pontuacoesPorParticipante = new Map<Participante, number>();
 
@@ -63,7 +67,7 @@ export class Ranking {
       const [primeiroParticipante, segundoParticipante] =
         dupla.getParticipantes();
 
-      const pontuacao = dupla.getPontuacao();
+      const pontuacao = dupla.getPontuacao() ?? 0;
 
       const pontuacaoAtualPrimeiroParticipante =
         pontuacoesPorParticipante.get(primeiroParticipante) ?? 0;

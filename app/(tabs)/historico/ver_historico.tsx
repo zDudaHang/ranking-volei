@@ -6,6 +6,7 @@ import { HistoricoTable } from "@/components/historico/table/HistoricoTable";
 import { DiaPicker } from "@/components/picker/DiaPicker";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
 import { Ranking } from "@/model/ranking";
+import { hasRanking } from "@/util/historico";
 import { compareAsc } from "date-fns";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -18,8 +19,11 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
   const { get, loading } = useHistoricoRankingStorage();
   const [historico, setHistorico] = useState<Ranking[] | null>(null);
   const [diaSelecionado, setDiaSelecionado] = useState<Date>(hoje);
-  const [uuidsSelecionados, setUuidsSelecionados] = useState<string[]>([]);
-  const isSelected = (uuid: string) => uuidsSelecionados.includes(uuid);
+  const [rankingsSelecionados, setRankingsSelecionados] = useState<Ranking[]>(
+    []
+  );
+  const isSelected = (ranking: Ranking) =>
+    hasRanking(rankingsSelecionados, ranking);
 
   const handleBuscar = () => {
     get(diaSelecionado).then((historicoAtual) => {
@@ -77,10 +81,10 @@ export default function VerHistoricoView(props: VerHistoricoViewProps) {
             <HistoricoTable
               diaSelecionado={diaSelecionado}
               historico={historicoOrdenadoPorHorario}
-              uuidsSelecionados={uuidsSelecionados}
+              rankingsSelecionados={rankingsSelecionados}
               isSelected={isSelected}
               loading={loading}
-              setUuidsSelecionados={setUuidsSelecionados}
+              setRankingsSelecionados={setRankingsSelecionados}
               onRemove={handleRemove}
             />
           </>

@@ -2,10 +2,12 @@ import { ThemedView } from "@/components/common/ThemedView";
 import { HistoricoHeader, HistoricoHeaderProps } from "./HistoricoHeader";
 import { HistoricoRow } from "./HistoricoRow";
 import { ThemedText } from "@/components/common/ThemedText";
+import { Ranking } from "@/model/ranking";
+import { hasRanking } from "@/util/historico";
 interface HistoricoTableProps
   extends Omit<HistoricoHeaderProps, "light" | "dark"> {
   loading: boolean;
-  isSelected(uuid: string): boolean;
+  isSelected(ranking: Ranking): boolean;
 }
 
 export function HistoricoTable(props: HistoricoTableProps) {
@@ -13,20 +15,20 @@ export function HistoricoTable(props: HistoricoTableProps) {
     loading,
     diaSelecionado,
     historico,
-    uuidsSelecionados,
-    setUuidsSelecionados,
+    rankingsSelecionados,
+    setRankingsSelecionados,
     onRemove,
     isSelected,
   } = props;
 
-  const handleCheckboxPress = (uuidSelecionado: string) => {
-    if (uuidsSelecionados.includes(uuidSelecionado)) {
-      const novosUuidsSelecionados = uuidsSelecionados.filter(
-        (indice) => indice !== uuidSelecionado
+  const handleCheckboxPress = (ranking: Ranking) => {
+    if (hasRanking(rankingsSelecionados, ranking)) {
+      const novosUuidsSelecionados = rankingsSelecionados.filter(
+        (r) => !r.equals(ranking)
       );
-      setUuidsSelecionados(novosUuidsSelecionados);
+      setRankingsSelecionados(novosUuidsSelecionados);
     } else {
-      setUuidsSelecionados([...uuidsSelecionados, uuidSelecionado]);
+      setRankingsSelecionados([...rankingsSelecionados, ranking]);
     }
   };
 
@@ -44,8 +46,8 @@ export function HistoricoTable(props: HistoricoTableProps) {
       <HistoricoHeader
         diaSelecionado={diaSelecionado}
         historico={historico}
-        uuidsSelecionados={uuidsSelecionados}
-        setUuidsSelecionados={setUuidsSelecionados}
+        rankingsSelecionados={rankingsSelecionados}
+        setRankingsSelecionados={setRankingsSelecionados}
         onRemove={onRemove}
       />
       {hasHistorico &&
@@ -54,7 +56,7 @@ export function HistoricoTable(props: HistoricoTableProps) {
             key={index}
             ranking={ranking}
             index={index}
-            isSelected={isSelected(ranking.getUuid())}
+            isSelected={isSelected(ranking)}
             onPress={handleCheckboxPress}
           />
         ))}

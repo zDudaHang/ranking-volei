@@ -12,7 +12,6 @@ import { RankingContext } from "@/context/RankingContext";
 import { Dupla } from "@/model/dupla";
 import { Participante } from "@/model/participante";
 import { hasDuplaInParticipantesRestantes } from "@/util/duplas-possiveis";
-import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { sample } from "lodash";
 import React, { useContext, useState } from "react";
