@@ -18,7 +18,7 @@ export default function TabLayout(props: TabLayoutProps) {
         options={{
           title: "Ranking",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons size={32} name="sports-volleyball" color={color} />
+            <MaterialIcons size={28} name="sports-volleyball" color={color} />
           ),
         }}
       />
@@ -27,16 +27,7 @@ export default function TabLayout(props: TabLayoutProps) {
         options={{
           title: "Histórico",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons size={32} name="history" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Settings",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons size={32} name="settings" color={color} />
+            <MaterialIcons size={28} name="history" color={color} />
           ),
         }}
       />
