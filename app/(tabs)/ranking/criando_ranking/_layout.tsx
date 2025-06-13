@@ -5,7 +5,7 @@ export default function CriandoRankingRootLayout() {
   return (
     <Stack
       screenOptions={{
-        headerTitle: "Criando um ranking",
+        headerShown: false,
       }}
     >
       <Stack.Screen name="adicionar-turma" />

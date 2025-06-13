@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     gap: 8,
+    marginTop: 32,
   },
   stepContainer: {
     gap: 8,

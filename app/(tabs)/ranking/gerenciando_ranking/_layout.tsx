@@ -55,7 +55,7 @@ export default function CriandoRankingRootLayout() {
         adicionarDuplasHistorico,
       }}
     >
-      <Stack screenOptions={{ headerTitle: "Gerenciando o ranking" }}>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="definir-duplas" />
         <Stack.Screen name="pontuar-duplas" />
         <Stack.Screen name="finalizar-ranking" />
