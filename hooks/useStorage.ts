@@ -67,7 +67,3 @@ export function useStorage<T>(
 
   return { store, get, loading, update, clear };
 }
-
-function timeout(delay: number) {
-  return new Promise((res) => setTimeout(res, delay));
-}

@@ -87,6 +87,8 @@ export function AdicionarParticipanteForm(
         blurOnSubmit={false}
         required
         errorMessage={errors?.getErrors()["nome"]}
+        clearable
+        onClear={() => setNome(undefined)}
       />
 
       <ThemedView

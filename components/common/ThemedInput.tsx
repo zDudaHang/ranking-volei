@@ -11,11 +11,21 @@ export interface ThemedInputProps
     InputProps,
     ThemedComponent {
   required?: boolean;
+  clearable?: boolean;
+  onClear?: () => void;
 }
 
 export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
   (props, ref) => {
-    const { light, dark, style, required = false, ...rest } = props;
+    const {
+      light,
+      dark,
+      style,
+      required = false,
+      clearable = false,
+      onClear,
+      ...rest
+    } = props;
 
     const text = useThemeColor({ light, dark }, "text");
 
@@ -31,6 +41,14 @@ export const ThemedInput = forwardRef<InputRef, ThemedInputProps>(
 
     return (
       <Input
+        rightIcon={
+          clearable && {
+            name: "close",
+            size: 32,
+            color: placeholder,
+            onPress: onClear,
+          }
+        }
         {...rest}
         label={
           <ThemedView style={{ marginTop: 10 }}>

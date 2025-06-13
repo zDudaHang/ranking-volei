@@ -1,6 +1,4 @@
 import { AdicionarParticipanteForm } from "@/components/adicionar/AdicionarParticipanteForm";
-import { AvancarButton } from "@/components/common/AvancarButton";
-import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
@@ -93,7 +91,6 @@ export default function AdicionarAlunosView() {
           padding: 20,
         }}
       >
-        <LimparButton onPress={handleClear} disabled={loading} />
         <ThemedButton
           size="lg"
           onPress={handleSubmit}
