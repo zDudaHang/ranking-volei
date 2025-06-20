@@ -1,11 +1,12 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedComponent } from "@/model/common";
-import { Participante, TipoParticipante } from "@/model/participante";
-import { ParticipanteFormModel } from "@/validator/criar-ranking/validator";
-import { Button, ListItem } from "@rneui/base";
+import { TipoParticipante } from "@/model/participante";
+import { ListItem } from "@rneui/base";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
+import { ThemedButton } from "../common/ThemedButton";
+import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 
 interface ParticipanteRemovivelProps extends ThemedComponent {
   index: number;
@@ -16,32 +17,16 @@ interface ParticipanteRemovivelProps extends ThemedComponent {
 export function ParticipanteRemovivel(props: ParticipanteRemovivelProps) {
   const { index, participante, light, dark, onPress } = props;
 
-  const danger = useThemeColor({ light, dark }, "danger");
   const placeholder = useThemeColor({ light, dark }, "placeholder");
 
-  const handlePress = (index: number, reset: () => void) => {
-    onPress(index);
-    reset();
-  };
+  const handlePress = (index: number) => onPress(index);
 
   return (
-    <ListItem.Swipeable
+    <ListItem
       containerStyle={{
         backgroundColor: "white",
         borderRadius: 8,
       }}
-      rightContent={(reset) => (
-        <Button
-          title="Remover"
-          color={danger}
-          onPress={() => handlePress(index, reset)}
-          icon={{ name: "delete", color: "white", size: 32 }}
-          buttonStyle={{
-            minHeight: "100%",
-            borderRadius: 8,
-          }}
-        />
-      )}
     >
       <ListItemContent>
         <ListItemTitle>{participante.nome}</ListItemTitle>
@@ -58,7 +43,14 @@ export function ParticipanteRemovivel(props: ParticipanteRemovivelProps) {
             : "Professor(a)"}
         </ListItemSubtitle>
       </ListItemContent>
-      <ListItem.Chevron />
-    </ListItem.Swipeable>
+      <ThemedButton
+        type="clear"
+        icon={{
+          name: "close",
+        }}
+        color="secondary"
+        onPress={() => handlePress(index)}
+      />
+    </ListItem>
   );
 }
