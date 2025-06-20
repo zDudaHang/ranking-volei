@@ -6,16 +6,24 @@ import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { ConfirmacaoSugestaoDuplasDialog } from "@/components/dupla/ConfirmacaoSugestaoDuplasDialog";
 import { DuplaView } from "@/components/dupla/DuplaView";
+import { ErrorMessage } from "@/components/error/ErrorMessage";
 import { ParticipanteView } from "@/components/participante/ParticipanteView";
 import { DuplasContext } from "@/context/DuplasContext";
 import { RankingContext } from "@/context/RankingContext";
 import { Dupla } from "@/model/dupla";
 import { Participante } from "@/model/participante";
 import { hasDuplaInParticipantesRestantes } from "@/util/duplas-possiveis";
+import { Validation } from "@/validator/model-errorObject";
+import { validateDefinirDuplas } from "@/validator/validator-definirDuplas";
 import { router } from "expo-router";
 import { sample } from "lodash";
 import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
+
+export interface DefinirDuplasFormModel {
+  participantesRestantes: Participante[];
+  duplas: Dupla[];
+}
 
 export default function DefinirDuplasView() {
   const { ranking } = useContext(RankingContext);
@@ -30,6 +38,9 @@ export default function DefinirDuplasView() {
     Participante[]
   >(ranking?.getParticipantes() ?? []);
   const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
+
+  const [errors, setErrors] =
+    useState<Validation<DefinirDuplasFormModel> | null>(null);
 
   if (!ranking) {
     return null;
@@ -79,8 +90,13 @@ export default function DefinirDuplasView() {
   };
 
   const handleSubmit = () => {
-    definirDuplasAtuais(duplas);
-    router.navigate("/ranking/gerenciando_ranking/pontuar-duplas");
+    const errors = validateDefinirDuplas(participantesRestantes);
+    if (errors.isValid()) {
+      definirDuplasAtuais(duplas);
+      router.navigate("/ranking/gerenciando_ranking/pontuar-duplas");
+    } else {
+      setErrors(errors);
+    }
   };
 
   const hasParticipantesRestantes = participantesRestantes.length > 0;
@@ -163,6 +179,9 @@ export default function DefinirDuplasView() {
               onPress={handleClickSugerirDuplas}
             />
           </ThemedView>
+          {errors && (
+            <ErrorMessage errors={errors} name="participantesRestantes" />
+          )}
           {!hasParticipantesRestantes && (
             <ThemedText type="secondary">
               Nenhum participante sobrando

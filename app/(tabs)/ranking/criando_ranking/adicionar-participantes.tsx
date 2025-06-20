@@ -47,11 +47,6 @@ export default function AdicionarAlunosView() {
     setParticipantes([...participantes]);
   };
 
-  const handleClear = () => {
-    setParticipantes([]);
-    setErrors(null);
-  };
-
   const handleSubmit = () => {
     const errors = validateParticipantes(participantes);
     if (errors.isValid() && ranking) {
