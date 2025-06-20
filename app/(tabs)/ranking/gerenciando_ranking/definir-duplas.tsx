@@ -179,9 +179,6 @@ export default function DefinirDuplasView() {
               onPress={handleClickSugerirDuplas}
             />
           </ThemedView>
-          {errors && (
-            <ErrorMessage errors={errors} name="participantesRestantes" />
-          )}
           {!hasParticipantesRestantes && (
             <ThemedText type="secondary">
               Nenhum participante sobrando
@@ -200,6 +197,7 @@ export default function DefinirDuplasView() {
 
         <ThemedView style={styles.stepContainer}>
           <ThemedText type="subtitle">Duplas definidas</ThemedText>
+          {errors && <ErrorMessage errors={errors} name="duplas" />}
           {!hasDuplasDefinidas && (
             <ThemedText type="secondary">Nenhuma dupla definida</ThemedText>
           )}
