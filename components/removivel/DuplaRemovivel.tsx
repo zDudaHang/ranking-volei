@@ -5,6 +5,7 @@ import { Button, ListItem } from "@rneui/base";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import { ListItemSubtitle } from "@rneui/base/dist/ListItem/ListItem.Subtitle";
 import { ListItemTitle } from "@rneui/base/dist/ListItem/ListItem.Title";
+import { ThemedButton } from "../common/ThemedButton";
 
 interface DuplaRemovivelProps extends ThemedComponent {
   index: number;
@@ -15,32 +16,16 @@ interface DuplaRemovivelProps extends ThemedComponent {
 export function DuplaRemovivel(props: DuplaRemovivelProps) {
   const { index, dupla, light, dark, onPress } = props;
 
-  const danger = useThemeColor({ light, dark }, "danger");
   const placeholder = useThemeColor({ light, dark }, "placeholder");
 
-  const handlePress = (index: number, reset: () => void) => {
-    onPress(index);
-    reset();
-  };
+  const handlePress = (index: number) => onPress(index);
 
   return (
-    <ListItem.Swipeable
+    <ListItem
       containerStyle={{
         backgroundColor: "white",
         borderRadius: 8,
       }}
-      rightContent={(reset) => (
-        <Button
-          title="Remover"
-          color={danger}
-          onPress={() => handlePress(index, reset)}
-          icon={{ name: "delete", color: "white", size: 32 }}
-          buttonStyle={{
-            minHeight: "100%",
-            borderRadius: 8,
-          }}
-        />
-      )}
     >
       <ListItemContent>
         <ListItemTitle>{dupla.getNomes()}</ListItemTitle>
@@ -55,7 +40,14 @@ export function DuplaRemovivel(props: DuplaRemovivelProps) {
           {dupla.getTiposParticipantes()}
         </ListItemSubtitle>
       </ListItemContent>
-      <ListItem.Chevron />
-    </ListItem.Swipeable>
+      <ThemedButton
+        type="clear"
+        icon={{
+          name: "close",
+        }}
+        color="secondary"
+        onPress={() => handlePress(index)}
+      />
+    </ListItem>
   );
 }

@@ -78,11 +78,6 @@ export default function DefinirDuplasView() {
     }
   };
 
-  const handleClear = () => {
-    setDuplas([]);
-    setParticipantesRestantes(ranking.getParticipantes());
-  };
-
   const handleSubmit = () => {
     definirDuplasAtuais(duplas);
     router.navigate("/ranking/gerenciando_ranking/pontuar-duplas");
@@ -208,7 +203,6 @@ export default function DefinirDuplasView() {
           padding: 20,
         }}
       >
-        <LimparButton onPress={handleClear} />
         <AvancarButton onPress={handleSubmit} />
       </ThemedView>
     </>
