@@ -140,10 +140,10 @@ export default function DefinirDuplasView() {
 
   const handleClickConfirmDialog = () => {
     sugerirDuplas();
-    closeDialog;
+    closeDialog();
   };
 
-  const handleClickCancelDialog = () => closeDialog;
+  const handleClickCancelDialog = () => closeDialog();
 
   const hasDuplasDefinidas = duplas.length > 0;
 
