@@ -43,16 +43,16 @@ export function ConfirmacaoRemoverRankingDialog(
       onBackdropPress={onBackdropPress}
       overlayStyle={{ backgroundColor: "white" }}
     >
-      <DialogTitle title="Sugestão de duplas" />
+      <DialogTitle title="Exclusão de rankings do histórico" />
       <ThemedText type="default" style={{ paddingTop: 10, paddingBottom: 10 }}>
         Serão{" "}
         <ThemedText type="defaultSemiBold">
-          excluídas os seguintes rankings:{" "}
+          excluídos os seguintes rankings:{" "}
         </ThemedText>
         {horariosSeraoExcluidos.join(", ")}
       </ThemedText>
       <ThemedText type="default" style={{ paddingTop: 10, paddingBottom: 10 }}>
-        Deseja confirma essa ação?
+        Deseja confirmar essa ação?
       </ThemedText>
       <DialogActions>
         <DialogButton
@@ -60,14 +60,14 @@ export function ConfirmacaoRemoverRankingDialog(
           titleStyle={{ color: primary }}
           onPress={onConfirm}
         >
-          Confirmar
+          Sim, excluir
         </DialogButton>
         <DialogButton
           type="clear"
           titleStyle={{ color: primary }}
           onPress={onCancel}
         >
-          Cancelar
+          Não, cancelar
         </DialogButton>
       </DialogActions>
     </Dialog>

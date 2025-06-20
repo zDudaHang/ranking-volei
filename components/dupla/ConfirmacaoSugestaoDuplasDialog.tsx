@@ -29,8 +29,10 @@ export function ConfirmacaoSugestaoDuplasDialog(
       <DialogTitle title="Sugestão de duplas" />
       <ThemedText type="default" style={{ paddingTop: 10, paddingBottom: 10 }}>
         Serão{" "}
-        <ThemedText type="defaultSemiBold">excluídas as duplas </ThemedText>
-        já definidas.
+        <ThemedText type="defaultSemiBold">
+          excluídas as duplas já definidas
+        </ThemedText>{" "}
+        para podermos sugerir duplas novas.
       </ThemedText>
       <ThemedText type="default" style={{ paddingTop: 10, paddingBottom: 10 }}>
         Deseja confirma essa ação?
@@ -41,14 +43,14 @@ export function ConfirmacaoSugestaoDuplasDialog(
           titleStyle={{ color: primary }}
           onPress={onConfirm}
         >
-          Confirmar
+          Sim, excluir
         </DialogButton>
         <DialogButton
           type="clear"
           titleStyle={{ color: primary }}
           onPress={onCancel}
         >
-          Cancelar
+          Não, cancelar
         </DialogButton>
       </DialogActions>
     </Dialog>
