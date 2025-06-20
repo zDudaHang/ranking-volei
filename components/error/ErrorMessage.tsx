@@ -3,7 +3,7 @@ import { ThemedText } from "../common/ThemedText";
 import { ThemedView } from "../common/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Validation } from "@/validator/model";
+import { Validation } from "@/validator/model-errorObject";
 
 export const ROOT_ERROR = "ROOT_ERROR";
 

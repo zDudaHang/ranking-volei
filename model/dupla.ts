@@ -1,9 +1,11 @@
 import { Participante, TipoParticipante } from "./participante";
+import uuid from "react-native-uuid";
 
 export class Dupla {
   private primeiroParticipante: Participante;
   private segundoParticipante: Participante;
   private pontuacao: number | undefined;
+  private uuid: string;
 
   public constructor(
     primeiroParticipante: Participante,
@@ -12,6 +14,7 @@ export class Dupla {
     this.primeiroParticipante = primeiroParticipante;
     this.segundoParticipante = segundoParticipante;
     this.pontuacao = undefined;
+    this.uuid = uuid.v4();
   }
 
   public setPrimeiroParticipante(participante: Participante): void {
@@ -39,6 +42,10 @@ export class Dupla {
 
   public getPontuacao(): number | undefined {
     return this.pontuacao;
+  }
+
+  public getUuid(): string {
+    return this.uuid;
   }
 
   public getNomes(): string {

@@ -1,25 +1,28 @@
 import { isEmpty } from "lodash";
-import { REQUIRED, Validation } from "./model";
+import { REQUIRED, Validation } from "./model-errorObject";
 import { isBlank } from "./util";
 import { Dupla } from "@/model/dupla";
 
 export function validatePontuacoes(
-  pontuacoes: string[],
+  pontuacaoByDuplaUuid: Map<string, string>,
   duplas: Dupla[]
-): Validation<string[]> {
-  const errors = new Validation<string[]>();
+): Map<string, string> {
+  const errors = new Map<string, string>();
 
-  if (pontuacoes.length !== duplas.length) {
-    const pontuacoesOutBorderIndex = pontuacoes.length;
-    duplas.slice(pontuacoesOutBorderIndex).forEach((_, index) => {
-      errors.setError(pontuacoesOutBorderIndex + index, REQUIRED);
+  if (pontuacaoByDuplaUuid.size !== duplas.length) {
+    const duplasSemPontuacao = duplas.filter(
+      (dupla) => !pontuacaoByDuplaUuid.has(dupla.getUuid())
+    );
+    duplasSemPontuacao.forEach((dupla) => {
+      errors.set(dupla.getUuid(), REQUIRED);
     });
   } else {
-    pontuacoes.forEach((pontuacao, index) => {
-      errors.setError(
-        index,
-        validatePontuacao(pontuacao, duplas[index]).getRootError()
-      );
+    pontuacaoByDuplaUuid.forEach((pontuacao, uuid) => {
+      const dupla = duplas.find((d) => d.getUuid() === uuid);
+      const rootError = validatePontuacao(pontuacao, dupla).getRootError();
+      if (rootError) {
+        errors.set(uuid, rootError);
+      }
     });
   }
 

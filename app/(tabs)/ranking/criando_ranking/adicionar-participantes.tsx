@@ -9,7 +9,7 @@ import { useRankingStorage } from "@/hooks/useRankingStorage";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 import { TipoParticipante } from "@/model/participante";
 
-import { Validation } from "@/validator/model";
+import { Validation } from "@/validator/model-errorObject";
 import { validateParticipantes } from "@/validator/validator-adicionarParticipantes";
 import { router } from "expo-router";
 import { useContext, useState } from "react";

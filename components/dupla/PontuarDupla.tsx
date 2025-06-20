@@ -8,8 +8,9 @@ interface PontuarDuplaProps extends Pick<ThemedInputProps, "errorMessage"> {
   dupla: Dupla;
   index: number;
   pontuacao: string | undefined;
-  onChangePontuacao: (index: number, pontuacao: string) => void;
+  onChangePontuacao: (uuid: string, pontuacao: string) => void;
   onSubmitEditing: (index: number) => void;
+  onClearPontuacao: (uuid: string) => void;
 }
 
 export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
@@ -18,9 +19,10 @@ export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
       dupla,
       index,
       pontuacao,
+      errorMessage,
       onChangePontuacao,
       onSubmitEditing,
-      errorMessage,
+      onClearPontuacao,
     } = props;
 
     if (!dupla) {
@@ -30,7 +32,9 @@ export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
     const handleSubmitPontuacao = () => onSubmitEditing(index);
 
     const handleChangePontuacao = (pontuacao: string) =>
-      onChangePontuacao(index, pontuacao);
+      onChangePontuacao(dupla.getUuid(), pontuacao);
+
+    const handleClear = () => onClearPontuacao(dupla.getUuid());
 
     return (
       <Fragment>
@@ -40,11 +44,13 @@ export const PontuarDupla = forwardRef<InputRef, PontuarDuplaProps>(
           label="Pontuação"
           placeholder="Exemplo: 8"
           value={pontuacao}
-          keyboardType="numeric"
+          keyboardType="decimal-pad"
           onChangeText={handleChangePontuacao}
           onSubmitEditing={handleSubmitPontuacao}
           returnKeyType="next"
           errorMessage={errorMessage}
+          clearable
+          onClear={handleClear}
         />
       </Fragment>
     );

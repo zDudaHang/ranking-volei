@@ -8,7 +8,7 @@ import { ThemedView } from "../common/ThemedView";
 import { ThemedCheckbox } from "../common/ThemedCheckBox";
 import { TipoParticipante } from "@/model/participante";
 import { ThemedButton } from "../common/ThemedButton";
-import { Validation } from "@/validator/model";
+import { Validation } from "@/validator/model-errorObject";
 import { ErrorMessage, ROOT_ERROR } from "../error/ErrorMessage";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 import { validateAdicionarParticipante } from "@/validator/validator-adicionarParticipantes";

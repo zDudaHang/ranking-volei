@@ -1,4 +1,3 @@
-import { LimparButton } from "@/components/common/LimparButton";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
@@ -7,7 +6,7 @@ import { PontuarDupla } from "@/components/dupla/PontuarDupla";
 import { DuplasContext } from "@/context/DuplasContext";
 import { RankingContext } from "@/context/RankingContext";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
-import { Validation } from "@/validator/model";
+import { Validation } from "@/validator/model-errorObject";
 import { validatePontuacoes } from "@/validator/validator-pontuarDuplas";
 import { router } from "expo-router";
 import React, { useContext, useRef, useState } from "react";
@@ -15,8 +14,10 @@ import { StyleSheet, TextInput } from "react-native";
 
 export default function PontuarDuplasView() {
   const { duplasAtuais, adicionarDuplasHistorico } = useContext(DuplasContext);
-  const [pontuacoes, setPontuacoes] = useState<string[]>([]);
-  const [errors, setErrors] = useState<Validation<string[]> | null>(null);
+  const [pontuacaoByDuplaUuid, setPontuacaoByDuplaUuid] = useState<
+    Map<string, string>
+  >(new Map());
+  const [errors, setErrors] = useState<Map<string, string>>(new Map());
 
   const { ranking, limparRankingAtual: clear } = useContext(RankingContext);
 
@@ -45,14 +46,14 @@ export default function PontuarDuplasView() {
     }
   };
 
-  const handleChangePontuacao = (index: number, pontuacao: string) => {
-    pontuacoes[index] = pontuacao;
-    setPontuacoes([...pontuacoes]);
+  const handleChangePontuacao = (uuid: string, pontuacao: string) => {
+    pontuacaoByDuplaUuid.set(uuid, pontuacao);
+    setPontuacaoByDuplaUuid(new Map(pontuacaoByDuplaUuid));
   };
 
   const salvarPontuacoes = () => {
-    const duplasComPontuacao = duplasAtuais.map((dupla, index) => {
-      const pontuacao = pontuacoes[index];
+    const duplasComPontuacao = duplasAtuais.map((dupla) => {
+      const pontuacao = pontuacaoByDuplaUuid.get(dupla.getUuid());
       if (pontuacao) {
         dupla.setPontuacao(Number(pontuacao));
       }
@@ -62,8 +63,8 @@ export default function PontuarDuplasView() {
   };
 
   const handleDefinirDuplasClick = () => {
-    const errors = validatePontuacoes(pontuacoes, duplasAtuais);
-    if (errors.isValid()) {
+    const errors = validatePontuacoes(pontuacaoByDuplaUuid, duplasAtuais);
+    if (errors.size === 0) {
       salvarPontuacoes();
       router.navigate("/ranking/gerenciando_ranking/definir-duplas");
     } else {
@@ -71,24 +72,20 @@ export default function PontuarDuplasView() {
     }
   };
 
-  const handleClear = () => {
-    setPontuacoes([]);
-    refs.current.forEach((ref) => ref.clear());
-    refs.current[0].focus();
-    setErrors(null);
+  const handleClear = (uuidToRemove: string) => {
+    pontuacaoByDuplaUuid.delete(uuidToRemove);
+    setPontuacaoByDuplaUuid(new Map(pontuacaoByDuplaUuid));
   };
 
   const handleFinalizarClick = () => {
-    const errors = validatePontuacoes(pontuacoes, duplasAtuais);
-    if (errors.isValid() && ranking) {
+    const errors = validatePontuacoes(pontuacaoByDuplaUuid, duplasAtuais);
+    if (errors.size === 0 && ranking) {
       salvarPontuacoes();
       store(ranking);
     } else {
       setErrors(errors);
     }
   };
-
-  console.log(loading);
 
   return (
     <>
@@ -106,10 +103,11 @@ export default function PontuarDuplasView() {
               ref={(element) => addRef(element, index)}
               dupla={dupla}
               index={index}
-              pontuacao={pontuacoes[index]}
+              pontuacao={pontuacaoByDuplaUuid.get(dupla.getUuid())}
+              errorMessage={errors.get(dupla.getUuid())}
               onSubmitEditing={onSubmitEditing}
               onChangePontuacao={handleChangePontuacao}
-              errorMessage={errors?.getErrors()?.[index]}
+              onClearPontuacao={handleClear}
             />
           ))}
         </ThemedView>
@@ -123,7 +121,6 @@ export default function PontuarDuplasView() {
           padding: 20,
         }}
       >
-        <LimparButton onPress={handleClear} disabled={loading} />
         <ThemedView
           style={{
             flexDirection: "row",
