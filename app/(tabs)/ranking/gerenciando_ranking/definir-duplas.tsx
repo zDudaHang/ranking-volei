@@ -160,28 +160,14 @@ export default function DefinirDuplasView() {
           <ThemedText type="title">Duplas</ThemedText>
           <ThemedText type="secondary">
             Defina as duplas selecionando os participantes ou clicando no botão
-            abaixo para sugerir duplas.
+            'Sugerir duplas'.
           </ThemedText>
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
-          <ThemedView
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            <ThemedText type="subtitle">Participantes restantes</ThemedText>
-            <ThemedButton
-              type="outline"
-              size="sm"
-              icon={{ name: "shuffle" }}
-              onPress={handleClickSugerirDuplas}
-            />
-          </ThemedView>
+          <ThemedText type="subtitle">Participantes restantes</ThemedText>
           {!hasParticipantesRestantes && (
             <ThemedText type="secondary">
-              Nenhum participante sobrando
+              Nenhum participante restante
             </ThemedText>
           )}
           {participantesRestantes.map((participante, index) => (
@@ -194,6 +180,13 @@ export default function DefinirDuplasView() {
             />
           ))}
         </ThemedView>
+
+        <ThemedButton
+          icon={{ name: "shuffle-variant", type: "material-community" }}
+          onPress={handleClickSugerirDuplas}
+        >
+          Sugerir duplas
+        </ThemedButton>
 
         <ThemedView style={styles.stepContainer}>
           <ThemedText type="subtitle">Duplas definidas</ThemedText>
