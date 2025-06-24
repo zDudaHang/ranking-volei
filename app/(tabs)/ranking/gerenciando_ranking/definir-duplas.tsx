@@ -160,7 +160,7 @@ export default function DefinirDuplasView() {
           <ThemedText type="title">Duplas</ThemedText>
           <ThemedText type="secondary">
             Defina as duplas selecionando os participantes ou clicando no botão
-            'Sugerir duplas'.
+            'Sugerir duplas'
           </ThemedText>
         </ThemedView>
         <ThemedView style={styles.stepContainer}>

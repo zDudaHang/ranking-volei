@@ -1,6 +1,6 @@
 import { REQUIRED, Validation } from "./model-errorObject";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
-import { AdicionarParticipanteForm } from "@/components/adicionar/AdicionarParticipanteForm";
+import { AdicionarParticipanteForm } from "@/components/adicionar-participantes/AdicionarParticipanteForm";
 import { isEmpty } from "lodash";
 import { isBlank } from "./util";
 

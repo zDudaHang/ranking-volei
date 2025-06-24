@@ -5,6 +5,12 @@ export function convertParticipanteFormModelToParticipante(
   participantes: ParticipanteFormModel[]
 ): Participante[] {
   return participantes.map(
-    (form) => new Participante(form.nome, form.tipoParticipante, form.pontuacao)
+    (form) =>
+      new Participante(
+        form.uuid,
+        form.nome,
+        form.tipoParticipante,
+        form.pontuacao
+      )
   );
 }

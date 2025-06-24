@@ -6,7 +6,6 @@ import { PontuarDupla } from "@/components/dupla/PontuarDupla";
 import { DuplasContext } from "@/context/DuplasContext";
 import { RankingContext } from "@/context/RankingContext";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
-import { Validation } from "@/validator/model-errorObject";
 import { validatePontuacoes } from "@/validator/validator-pontuarDuplas";
 import { router } from "expo-router";
 import React, { useContext, useRef, useState } from "react";
@@ -22,6 +21,7 @@ export default function PontuarDuplasView() {
   const { ranking, limparRankingAtual: clear } = useContext(RankingContext);
 
   const onCompleteStore = () => {
+    router.dismissAll();
     router.navigate("/ranking/criando_ranking/adicionar-turma");
     clear();
   };

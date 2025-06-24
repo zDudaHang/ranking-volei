@@ -3,12 +3,13 @@ import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { RankingContext } from "@/context/RankingContext";
 
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import React, { useContext, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { DiaPicker } from "@/components/picker/DiaPicker";
 import { HorarioPicker } from "@/components/picker/HorarioPicker";
 import { AvancarButton } from "@/components/common/AvancarButton";
+import { usePreventRemove } from "@react-navigation/native";
 
 export default function AdicionarTurmaView() {
   const hoje = new Date();

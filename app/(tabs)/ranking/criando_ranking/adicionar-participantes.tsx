@@ -1,4 +1,4 @@
-import { AdicionarParticipanteForm } from "@/components/adicionar/AdicionarParticipanteForm";
+import { AdicionarParticipanteForm } from "@/components/adicionar-participantes/AdicionarParticipanteForm";
 import ParallaxScrollView from "@/components/common/ParallaxScrollView";
 import { ThemedButton } from "@/components/common/ThemedButton";
 import { ThemedText } from "@/components/common/ThemedText";
@@ -14,12 +14,13 @@ import { validateParticipantes } from "@/validator/validator-adicionarParticipan
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
+import uuid from "react-native-uuid";
 
 export default function AdicionarAlunosView() {
-  const onCompleteStore = () =>
-    router.navigate("/ranking/gerenciando_ranking/definir-duplas");
-
-  const { store, loading } = useRankingStorage({ onCompleteStore });
+  const { store, loading } = useRankingStorage({
+    onCompleteStore: () =>
+      router.navigate("/ranking/gerenciando_ranking/definir-duplas"),
+  });
 
   const { ranking, adicionarParticipantes } = useContext(RankingContext);
 
@@ -38,6 +39,7 @@ export default function AdicionarAlunosView() {
       nome,
       tipoParticipante,
       pontuacao: 0,
+      uuid: uuid.v4(),
     };
     setParticipantes([...participantes, novoParticipante]);
   };

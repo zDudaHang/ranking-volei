@@ -1,3 +1,5 @@
+import uuid from "react-native-uuid";
+
 export enum TipoParticipante {
   ALUNO,
   PROFESSOR,
@@ -7,8 +9,15 @@ export class Participante {
   private nome: string;
   private tipo: TipoParticipante;
   private pontuacao: number;
+  private uuid: string;
 
-  public constructor(nome: string, tipo: TipoParticipante, pontuacao?: number) {
+  public constructor(
+    uuid: string,
+    nome: string,
+    tipo: TipoParticipante,
+    pontuacao?: number
+  ) {
+    this.uuid = uuid;
     this.nome = nome;
     this.tipo = tipo;
     this.pontuacao = pontuacao ?? 0;
@@ -36,6 +45,10 @@ export class Participante {
 
   public getPontuacao(): number {
     return this.pontuacao;
+  }
+
+  public getUuid(): string {
+    return this.uuid;
   }
 
   public toString(): string {

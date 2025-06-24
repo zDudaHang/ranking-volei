@@ -1,7 +1,6 @@
 import { Input } from "@rneui/base";
 import { useRef, useState } from "react";
 import { TextInput } from "react-native";
-import { ParticipanteRemovivel } from "../removivel/ParticipanteRemovivel";
 import { ThemedInput } from "../common/ThemedInput";
 import { ThemedText } from "../common/ThemedText";
 import { ThemedView } from "../common/ThemedView";
@@ -12,6 +11,7 @@ import { Validation } from "@/validator/model-errorObject";
 import { ErrorMessage, ROOT_ERROR } from "../error/ErrorMessage";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
 import { validateAdicionarParticipante } from "@/validator/validator-adicionarParticipantes";
+import { ParticipantesView } from "./ParticipantesView";
 
 interface AdicionarParticipanteFormProps {
   participantes: ParticipanteFormModel[];
@@ -125,14 +125,7 @@ export function AdicionarParticipanteForm(
         <ThemedText type="secondary">Nenhum participante adicionado</ThemedText>
       )}
 
-      {participantes.map((participante, index) => (
-        <ParticipanteRemovivel
-          key={`participante-${index}`}
-          participante={participante}
-          index={index}
-          onPress={remover}
-        />
-      ))}
+      <ParticipantesView participantes={participantes} onPress={remover} />
     </>
   );
 }
