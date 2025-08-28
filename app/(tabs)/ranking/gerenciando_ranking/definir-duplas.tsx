@@ -31,8 +31,9 @@ export default function DefinirDuplasView() {
   const { definirDuplasAtuais, duplasPossiveis } = useContext(DuplasContext);
   const router = useRouter();
 
-  const [primeiroIntegranteDupla, setPrimeiroIntegranteDupla] =
-    useState<Participante>();
+  const [primeiroIntegranteDupla, setPrimeiroIntegranteDupla] = useState<
+    Participante | undefined
+  >(undefined);
 
   const [duplas, setDuplas] = useState<Dupla[]>([]);
   const [participantesRestantes, setParticipantesRestantes] = useState<
@@ -90,11 +91,18 @@ export default function DefinirDuplasView() {
     }
   };
 
+  const clear = () => {
+    setParticipantesRestantes(ranking.getParticipantes());
+    setPrimeiroIntegranteDupla(undefined);
+    setDuplas([]);
+  };
+
   const handleSubmit = () => {
     const errors = validateDefinirDuplas(participantesRestantes);
     if (errors.isValid()) {
       definirDuplasAtuais(duplas);
-      router.navigate("/ranking/gerenciando_ranking/pontuar-duplas");
+      router.navigate("./pontuar-duplas");
+      clear();
     } else {
       setErrors(errors);
     }

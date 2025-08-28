@@ -67,7 +67,8 @@ export default function PontuarDuplasView() {
     const errors = validatePontuacoes(pontuacaoByDuplaUuid, duplasAtuais);
     if (errors.size === 0) {
       salvarPontuacoes();
-      router.navigate("./definir-duplas");
+      router.dismissAll();
+      router.replace("./definir-duplas");
     } else {
       setErrors(errors);
     }
