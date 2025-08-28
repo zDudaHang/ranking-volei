@@ -12,7 +12,9 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ranking } from "@/model/ranking";
 import { RankingContext } from "@/context/RankingContext";
-import { Participante, TipoParticipante } from "@/model/participante";
+import { Participante } from "@/model/participante";
+import { useNavigationContainerRef } from "expo-router";
+import { useReactNavigationDevTools } from "@bam.tech/react-navigation-visualizer-dev-plugin";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,6 +29,9 @@ export default function RootLayout() {
   const [rankingAtual, setRankingAtual] = useState<Ranking>(
     new Ranking({ horario: null, dia: null }, [])
   );
+
+  const navigationRef = useNavigationContainerRef();
+  useReactNavigationDevTools(navigationRef);
 
   const adicionarTurma = (horario: Date, dia: Date) => {
     rankingAtual.setTurma({ dia, horario });

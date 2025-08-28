@@ -15,7 +15,7 @@ import { Participante } from "@/model/participante";
 import { hasDuplaInParticipantesRestantes } from "@/util/duplas-possiveis";
 import { Validation } from "@/validator/model-errorObject";
 import { validateDefinirDuplas } from "@/validator/validator-definirDuplas";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { sample } from "lodash";
 import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -29,6 +29,7 @@ export default function DefinirDuplasView() {
   const { ranking } = useContext(RankingContext);
 
   const { definirDuplasAtuais, duplasPossiveis } = useContext(DuplasContext);
+  const router = useRouter();
 
   const [primeiroIntegranteDupla, setPrimeiroIntegranteDupla] =
     useState<Participante>();

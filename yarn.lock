@@ -770,6 +770,14 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
+"@bam.tech/react-navigation-visualizer-dev-plugin@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@bam.tech/react-navigation-visualizer-dev-plugin/-/react-navigation-visualizer-dev-plugin-0.1.9.tgz#5f14b183689a9f962815788b1aedfe847ad14104"
+  integrity sha512-c1egv14+77DJ4xHF4KegjCH5SZ7VToY7Ui8o8dC3H/Bv7Fx609vzJUw1lt2j96O8UibFehmhh8o5AAkkLWkjgA==
+  dependencies:
+    "@react-navigation/devtools" "^7.0.1"
+    nanoid "^5.0.8"
+
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
@@ -1551,6 +1559,15 @@
     react-is "^19.1.0"
     use-latest-callback "^0.2.3"
     use-sync-external-store "^1.5.0"
+
+"@react-navigation/devtools@^7.0.1":
+  version "7.0.38"
+  resolved "https://registry.yarnpkg.com/@react-navigation/devtools/-/devtools-7.0.38.tgz#0dcca4acf8092c38dc9f3c0713d632c09e071dda"
+  integrity sha512-cnRGu7ZUa/J6leOIiDXKyWCg1s547xIqDmZMqh5IXIAsWNqE72QOK/4//rAk2VcHLsq30K0/O+sRD1crFyJZSw==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    nanoid "^3.3.11"
+    stacktrace-parser "^0.1.11"
 
 "@react-navigation/elements@^2.4.0":
   version "2.4.0"
@@ -4611,6 +4628,11 @@ nanoid@^3.3.11, nanoid@^3.3.7:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.11.tgz#4f4f112cefbe303202f2199838128936266d185b"
   integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
 
+nanoid@^5.0.8:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-5.1.5.tgz#f7597f9d9054eb4da9548cdd53ca70f1790e87de"
+  integrity sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==
+
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
@@ -5646,7 +5668,7 @@ stacktrace-js@^2.0.2:
     stack-generator "^2.0.5"
     stacktrace-gps "^3.0.4"
 
-stacktrace-parser@^0.1.10:
+stacktrace-parser@^0.1.10, stacktrace-parser@^0.1.11:
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/stacktrace-parser/-/stacktrace-parser-0.1.11.tgz#c7c08f9b29ef566b9a6f7b255d7db572f66fabc4"
   integrity sha512-WjlahMgHmCJpqzU8bIBy4qtsZdU9lRlcZE3Lvyej6t4tuOuv1vk57OW3MBrj6hXBFx/nNoC9MPMTcr5YA7NQbg==

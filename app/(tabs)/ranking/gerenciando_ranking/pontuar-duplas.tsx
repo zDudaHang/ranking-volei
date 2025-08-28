@@ -7,7 +7,7 @@ import { DuplasContext } from "@/context/DuplasContext";
 import { RankingContext } from "@/context/RankingContext";
 import { useHistoricoRankingStorage } from "@/hooks/useHistoricoRankingStorage";
 import { validatePontuacoes } from "@/validator/validator-pontuarDuplas";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useContext, useRef, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 
@@ -17,12 +17,13 @@ export default function PontuarDuplasView() {
     Map<string, string>
   >(new Map());
   const [errors, setErrors] = useState<Map<string, string>>(new Map());
+  const router = useRouter();
 
   const { ranking, limparRankingAtual: clear } = useContext(RankingContext);
 
   const onCompleteStore = () => {
     router.dismissAll();
-    router.navigate("/ranking/criando_ranking/adicionar-turma");
+    router.replace("/ranking/criando_ranking/adicionar-turma");
     clear();
   };
 
@@ -66,7 +67,7 @@ export default function PontuarDuplasView() {
     const errors = validatePontuacoes(pontuacaoByDuplaUuid, duplasAtuais);
     if (errors.size === 0) {
       salvarPontuacoes();
-      router.navigate("/ranking/gerenciando_ranking/definir-duplas");
+      router.navigate("./definir-duplas");
     } else {
       setErrors(errors);
     }

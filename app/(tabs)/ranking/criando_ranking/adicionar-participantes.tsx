@@ -11,15 +11,19 @@ import { TipoParticipante } from "@/model/participante";
 
 import { Validation } from "@/validator/model-errorObject";
 import { validateParticipantes } from "@/validator/validator-adicionarParticipantes";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import uuid from "react-native-uuid";
 
 export default function AdicionarAlunosView() {
+  const router = useRouter();
+
   const { store, loading } = useRankingStorage({
-    onCompleteStore: () =>
-      router.navigate("/ranking/gerenciando_ranking/definir-duplas"),
+    onCompleteStore: () => {
+      router.dismissAll();
+      router.replace("/ranking/gerenciando_ranking/definir-duplas");
+    },
   });
 
   const { ranking, adicionarParticipantes } = useContext(RankingContext);
