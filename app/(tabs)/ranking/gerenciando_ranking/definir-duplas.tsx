@@ -6,6 +6,7 @@ import { ThemedText } from "@/components/common/ThemedText";
 import { ThemedView } from "@/components/common/ThemedView";
 import { ConfirmacaoSugestaoDuplasDialog } from "@/components/dupla/ConfirmacaoSugestaoDuplasDialog";
 import { DuplaView } from "@/components/dupla/DuplaView";
+import { SugestaoDuplasDisabledDialog } from "@/components/dupla/SugestaoDuplasDisabledDialog";
 import { ErrorMessage } from "@/components/error/ErrorMessage";
 import { ParticipanteView } from "@/components/participante/ParticipanteView";
 import { DuplasContext } from "@/context/DuplasContext";
@@ -15,8 +16,9 @@ import { Participante } from "@/model/participante";
 import { hasDuplaInParticipantesRestantes } from "@/util/duplas-possiveis";
 import { Validation } from "@/validator/model-errorObject";
 import { validateDefinirDuplas } from "@/validator/validator-definirDuplas";
+import { Tooltip } from "@rneui/base";
 import { useRouter } from "expo-router";
-import { sample } from "lodash";
+import { noop, sample } from "lodash";
 import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 
@@ -28,7 +30,8 @@ export interface DefinirDuplasFormModel {
 export default function DefinirDuplasView() {
   const { ranking } = useContext(RankingContext);
 
-  const { definirDuplasAtuais, duplasPossiveis } = useContext(DuplasContext);
+  const { definirDuplasAtuais, duplasPossiveis, reiniciarSugestaoDuplas } =
+    useContext(DuplasContext);
   const router = useRouter();
 
   const [primeiroIntegranteDupla, setPrimeiroIntegranteDupla] = useState<
@@ -36,10 +39,17 @@ export default function DefinirDuplasView() {
   >(undefined);
 
   const [duplas, setDuplas] = useState<Dupla[]>([]);
+
   const [participantesRestantes, setParticipantesRestantes] = useState<
     Participante[]
   >(ranking?.getParticipantes() ?? []);
-  const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
+
+  const [
+    isConfirmacaoSugestaoDuplasDialogVisible,
+    setIsConfirmacaoSugestaoDuplaDialogVisible,
+  ] = useState<boolean>(false);
+  const [isSugestaoDuplasDisabledVisible, setIsSugestaoDuplasDisabledVisible] =
+    useState<boolean>(false);
 
   const [errors, setErrors] =
     useState<Validation<DefinirDuplasFormModel> | null>(null);
@@ -112,8 +122,8 @@ export default function DefinirDuplasView() {
   const hasDuplas = duplas.length > 0;
 
   const sugerirDuplas = () => {
-    let participantesRestantes = ranking.getParticipantes();
-    let duplasRestantes = duplasPossiveis;
+    let participantesRestantes = [...ranking.getParticipantes()];
+    let duplasRestantes = [...duplasPossiveis];
 
     const duplasSugeridas: Dupla[] = [];
 
@@ -137,33 +147,56 @@ export default function DefinirDuplasView() {
     setDuplas(duplasSugeridas);
   };
 
+  const closeConfirmacaoSugestaoDuplaDialog = () =>
+    setIsConfirmacaoSugestaoDuplaDialogVisible(false);
+
+  const handleClickConfirmSugestaoDuplaDialog = () => {
+    sugerirDuplas();
+    closeConfirmacaoSugestaoDuplaDialog();
+  };
+
+  const handleClickCancelSugestaoDuplaDialog = () =>
+    closeConfirmacaoSugestaoDuplaDialog();
+
+  const closeSugestaoDuplasDialog = () =>
+    setIsSugestaoDuplasDisabledVisible(false);
+
+  const hasDuplasDefinidas = duplas.length > 0;
+  const quantidadeDuplasNecessarias = ranking.getParticipantes().length / 2;
+  const notHasMaisSugestoesDuplas =
+    !hasParticipantesRestantes &&
+    duplasPossiveis.length <= quantidadeDuplasNecessarias;
+
   const handleClickSugerirDuplas = () => {
-    if (hasDuplas) {
-      setIsDialogVisible(true);
+    if (notHasMaisSugestoesDuplas) {
+      setIsSugestaoDuplasDisabledVisible(true);
+    } else if (hasDuplas) {
+      setIsConfirmacaoSugestaoDuplaDialogVisible(true);
     } else {
       sugerirDuplas();
     }
   };
 
-  const closeDialog = () => setIsDialogVisible(false);
-
-  const handleClickConfirmDialog = () => {
+  const handleClickConfirmSugestaoDuplasDisabledDialog = () => {
+    reiniciarSugestaoDuplas();
     sugerirDuplas();
-    closeDialog();
+    closeSugestaoDuplasDialog();
   };
-
-  const handleClickCancelDialog = () => closeDialog();
-
-  const hasDuplasDefinidas = duplas.length > 0;
 
   return (
     <>
       <ParallaxScrollView>
         <ConfirmacaoSugestaoDuplasDialog
-          isVisible={isDialogVisible}
-          onBackdropPress={closeDialog}
-          onConfirm={handleClickConfirmDialog}
-          onCancel={handleClickCancelDialog}
+          isVisible={isConfirmacaoSugestaoDuplasDialogVisible}
+          onBackdropPress={closeConfirmacaoSugestaoDuplaDialog}
+          onConfirm={handleClickConfirmSugestaoDuplaDialog}
+          onCancel={handleClickCancelSugestaoDuplaDialog}
+        />
+        <SugestaoDuplasDisabledDialog
+          isVisible={isSugestaoDuplasDisabledVisible}
+          onBackdropPress={closeSugestaoDuplasDialog}
+          onConfirm={handleClickConfirmSugestaoDuplasDisabledDialog}
+          onCancel={closeSugestaoDuplasDialog}
         />
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title">Duplas</ThemedText>

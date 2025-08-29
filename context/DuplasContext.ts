@@ -7,6 +7,7 @@ interface DuplasContext {
   duplasPossiveis: Dupla[];
   definirDuplasAtuais: (duplas: Dupla[]) => void;
   adicionarDuplasHistorico: (duplas: Dupla[]) => void;
+  reiniciarSugestaoDuplas: () => void;
 }
 
 export const DuplasContext = createContext<DuplasContext>({
@@ -15,4 +16,5 @@ export const DuplasContext = createContext<DuplasContext>({
   duplasPossiveis: [],
   definirDuplasAtuais: () => null,
   adicionarDuplasHistorico: () => null,
+  reiniciarSugestaoDuplas: () => null,
 });

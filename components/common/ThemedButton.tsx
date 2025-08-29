@@ -29,7 +29,10 @@ export function ThemedButton(props: ThemedButtonProps) {
 
   const themeColor = useThemeColor({ light, dark }, color);
   const hasIcon = !!icon;
-  const iconColor = hasIcon && isSolid ? "white" : themeColor;
+
+  const secondary = useThemeColor({ light, dark }, "secondary");
+  const solidIconColor = props.disabled ? secondary : "white";
+  const iconColor = hasIcon && isSolid ? solidIconColor : themeColor;
 
   return (
     <Button

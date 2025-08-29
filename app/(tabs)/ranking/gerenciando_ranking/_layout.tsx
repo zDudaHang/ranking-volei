@@ -35,6 +35,9 @@ export default function CriandoRankingRootLayout() {
     ranking?.calcularPontuacoes(duplasJahUtilizadas);
   };
 
+  const reiniciarSugestaoDuplas = () =>
+    setDuplasPossiveis(gerarDuplasPossiveis(ranking?.getParticipantes()));
+
   if (!ranking) {
     return <Redirect href="/(tabs)/ranking/criando_ranking/adicionar-turma" />;
   }
@@ -53,6 +56,7 @@ export default function CriandoRankingRootLayout() {
         duplasPossiveis,
         definirDuplasAtuais,
         adicionarDuplasHistorico,
+        reiniciarSugestaoDuplas,
       }}
     >
       <Stack screenOptions={{ headerShown: false }}>
