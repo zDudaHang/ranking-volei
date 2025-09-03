@@ -27,27 +27,29 @@ export function DuplaRemovivel(props: DuplaRemovivelProps) {
         borderRadius: 8,
       }}
     >
-      <ListItemContent>
-        <ListItemTitle>{dupla.getNomes()}</ListItemTitle>
-        <ListItemSubtitle
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            color: placeholder,
+      <>
+        <ListItemContent>
+          <ListItemTitle>{dupla.getNomes()}</ListItemTitle>
+          <ListItemSubtitle
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              color: placeholder,
+            }}
+          >
+            {dupla.getTiposParticipantes()}
+          </ListItemSubtitle>
+        </ListItemContent>
+        <ThemedButton
+          type="clear"
+          icon={{
+            name: "close",
           }}
-        >
-          {dupla.getTiposParticipantes()}
-        </ListItemSubtitle>
-      </ListItemContent>
-      <ThemedButton
-        type="clear"
-        icon={{
-          name: "close",
-        }}
-        color="secondary"
-        onPress={() => handlePress(index)}
-      />
+          color="secondary"
+          onPress={() => handlePress(index)}
+        />
+      </>
     </ListItem>
   );
 }

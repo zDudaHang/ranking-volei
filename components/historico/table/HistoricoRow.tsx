@@ -46,31 +46,33 @@ export function HistoricoRow(props: HistoricoRowProps) {
         }}
         onPress={handlePress}
       >
-        <ListItemCheckBox
-          checked={isSelected}
-          iconType="material"
-          checkedIcon="check-box"
-          checkedColor={primary}
-          uncheckedIcon="check-box-outline-blank"
-          uncheckedColor={primary}
-          size={32}
-          onPress={handlePress}
-        />
-        <ListItemContent>
-          <ListItemTitle
-            style={{
-              color: text,
-            }}
-          >
-            {asHourAndMinutes(horario)}
-          </ListItemTitle>
-        </ListItemContent>
-        <MaterialCommunityIcons
-          size={32}
-          name="podium"
-          color={primary}
-          onPress={handleIconPress}
-        />
+        <>
+          <ListItemCheckBox
+            checked={isSelected}
+            iconType="material"
+            checkedIcon="check-box"
+            checkedColor={primary}
+            uncheckedIcon="check-box-outline-blank"
+            uncheckedColor={primary}
+            size={32}
+            onPress={handlePress}
+          />
+          <ListItemContent>
+            <ListItemTitle
+              style={{
+                color: text,
+              }}
+            >
+              {asHourAndMinutes(horario)}
+            </ListItemTitle>
+          </ListItemContent>
+          <MaterialCommunityIcons
+            size={32}
+            name="podium"
+            color={primary}
+            onPress={handleIconPress}
+          />
+        </>
       </ListItem>
       <Dialog isVisible={open} onBackdropPress={() => setOpen(false)}>
         <Dialog.Title title="Pontuações" />

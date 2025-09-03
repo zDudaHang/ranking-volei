@@ -8,6 +8,7 @@ import { ThemedButton } from "../common/ThemedButton";
 import { ThemedComponent } from "@/model/common";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ParticipanteFormModel } from "@/model/form/model-adicionarParticipante";
+import { ThemedText } from "../common/ThemedText";
 
 interface ParticipantesViewProps extends ThemedComponent {
   participantes: ParticipanteFormModel[];
@@ -28,29 +29,31 @@ export function ParticipantesView(props: ParticipantesViewProps) {
       }}
       key={participante.uuid}
     >
-      <ListItemContent>
-        <ListItemTitle>{participante.nome}</ListItemTitle>
-        <ListItemSubtitle
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            color: placeholder,
+      <>
+        <ListItemContent>
+          <ListItemTitle>{participante.nome}</ListItemTitle>
+          <ListItemSubtitle
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              color: placeholder,
+            }}
+          >
+            {participante.tipoParticipante === TipoParticipante.ALUNO
+              ? "Aluno(a)"
+              : "Professor(a)"}
+          </ListItemSubtitle>
+        </ListItemContent>
+        <ThemedButton
+          type="clear"
+          icon={{
+            name: "close",
           }}
-        >
-          {participante.tipoParticipante === TipoParticipante.ALUNO
-            ? "Aluno(a)"
-            : "Professor(a)"}
-        </ListItemSubtitle>
-      </ListItemContent>
-      <ThemedButton
-        type="clear"
-        icon={{
-          name: "close",
-        }}
-        color="secondary"
-        onPress={() => handlePress(index)}
-      />
+          color="secondary"
+          onPress={() => handlePress(index)}
+        />
+      </>
     </ListItem>
   ));
 }
