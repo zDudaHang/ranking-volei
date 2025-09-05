@@ -64,6 +64,13 @@
     "experiments": {
       "typedRoutes": true
     },
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8d340280-1b6b-4d09-85c0-b415ad845478"
+      }
+    },
+    "owner": "zdudahang"
   }
 }
